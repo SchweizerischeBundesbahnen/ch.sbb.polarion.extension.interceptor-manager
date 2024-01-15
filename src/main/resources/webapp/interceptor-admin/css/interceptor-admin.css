@@ -1,0 +1,45 @@
+#hooks-settings-header {
+    margin-bottom: 5px;
+}
+
+#hooks-reload-container {
+    text-align: end;
+}
+
+#hooks-reload-button {
+    background: none !important;
+    border: none;
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#enable-hook-container {
+    margin-bottom: 10px;
+}
+
+#hooks-choose-container {
+    margin-bottom: 20px;
+}
+
+#hooks-choose-container div {
+    display: inline-block;
+    margin: 15px 5px;
+}
+
+#hooks-choose-container label {
+    border: 1px solid #004D73;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#hook-description-container {
+    font-size: 13px;
+    margin-bottom: 10px;
+    padding: 16px 4px 16px 36px;
+    background: #D8E4F1 url("/polarion/ria/images/msginfo.png") 10px 18px no-repeat;
+}
+
+#enable-hook-label {
+    font-weight: bold;
+}
