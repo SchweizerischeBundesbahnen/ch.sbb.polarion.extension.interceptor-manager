@@ -30,7 +30,7 @@
         <!-- Test dependencies -->
         <junit.version>5.10.1</junit.version>
         <mockito.version>5.8.0</mockito.version>
-        <assertj-core.version>3.24.2</assertj-core.version>
+        <assertj-core.version>3.25.1</assertj-core.version>
 
         <!-- JaCoCo -->
         <jacoco.version>0.8.11</jacoco.version>
