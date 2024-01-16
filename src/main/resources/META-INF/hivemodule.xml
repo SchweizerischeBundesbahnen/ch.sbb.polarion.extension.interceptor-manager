@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module id="ch.sbb.polarion.extension.interceptor" version="1.0.0">
+
+    <service-point id="dataServiceInterceptorFactory" visibility="private" interface="org.apache.hivemind.ServiceInterceptorFactory">
+        <invoke-factory>
+            <construct class="ch.sbb.polarion.extension.interceptor.DataServiceInterceptorFactory">
+            </construct>
+        </invoke-factory>
+    </service-point>
+
+    <implementation service-id="com.polarion.platform.persistence.dataservice.dataService">
+        <interceptor service-id="dataServiceInterceptorFactory" />
+    </implementation>
+
+    <service-point id="workItemInterceptorFactory" visibility="private" interface="org.apache.hivemind.ServiceInterceptorFactory">
+        <invoke-factory>
+            <construct class="ch.sbb.polarion.extension.interceptor.ActionInterceptorFactory">
+                <service>com.polarion.platform.persistence.dataservice.dataService</service>
+            </construct>
+        </invoke-factory>
+    </service-point>
+
+    <implementation service-id="com.polarion.platform.alm.tracker.workitemFactory">
+        <interceptor service-id="workItemInterceptorFactory" />
+    </implementation>
+
+    <!-- Intercepting for Plan Factory -->
+
+    <service-point id="planInterceptorFactory" visibility="private" interface="org.apache.hivemind.ServiceInterceptorFactory">
+        <invoke-factory>
+            <construct class="ch.sbb.polarion.extension.interceptor.ActionInterceptorFactory">
+                <service>com.polarion.platform.persistence.dataservice.dataService</service>
+            </construct>
+        </invoke-factory>
+    </service-point>
+
+    <implementation service-id="com.polarion.platform.alm.tracker.planFactory">
+        <interceptor service-id="planInterceptorFactory" />
+    </implementation>
+
+    <!-- Intercepting for Test Run Factory -->
+
+    <service-point id="testrunInterceptorFactory" visibility="private" interface="org.apache.hivemind.ServiceInterceptorFactory">
+        <invoke-factory>
+            <construct class="ch.sbb.polarion.extension.interceptor.ActionInterceptorFactory">
+                <service>com.polarion.platform.persistence.dataservice.dataService</service>
+            </construct>
+        </invoke-factory>
+    </service-point>
+
+    <implementation service-id="com.polarion.platform.alm.tracker.testrunFactory">
+        <interceptor service-id="testrunInterceptorFactory" />
+    </implementation>
+
+    <!-- Administration -->
+
+    <contribution configuration-id="com.polarion.xray.webui.administrationPageExtenders">
+        <extender name="About"
+                  parentNodeName="Interceptor"
+                  parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
+                  iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
+                  pageUrl="/polarion/interceptor-admin/pages/about.jsp"
+                  projectScope="false"
+                  repositoryScope="true"/>
+        <extender name="REST API"
+                  parentNodeName="Interceptor"
+                  parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
+                  iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
+                  pageUrl="/polarion/interceptor/rest/swagger"
+                  projectScope="false"
+                  repositoryScope="true"/>
+        <extender name="Settings"
+                  parentNodeName="Interceptor"
+                  parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
+                  iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
+                  pageUrl="/polarion/interceptor-admin/pages/settings.jsp?scope=$scope$"
+                  projectScope="false"
+                  repositoryScope="true"/>
+    </contribution>
+</module>
