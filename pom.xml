@@ -103,6 +103,26 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>s3Deploy</id>
+            <distributionManagement>
+                <repository>
+                    <id>s3</id>
+                    <name>S3 bucket</name>
+                    <url>s3://sbb-polarion-maven-repo/polarion.mvn</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>githubDeploy</id>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>Github package</name>
+                    <url>https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor</url>
+                </repository>
+            </distributionManagement>
+        </profile>
     </profiles>
 
     <dependencies>
