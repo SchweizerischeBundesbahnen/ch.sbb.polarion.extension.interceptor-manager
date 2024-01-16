@@ -29,7 +29,7 @@
 
         <!-- Test dependencies -->
         <junit.version>5.10.1</junit.version>
-        <mockito.version>5.8.0</mockito.version>
+        <mockito.version>5.9.0</mockito.version>
         <assertj-core.version>3.25.1</assertj-core.version>
 
         <!-- JaCoCo -->
