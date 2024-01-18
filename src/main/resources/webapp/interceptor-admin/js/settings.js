@@ -54,7 +54,7 @@ function readSelectedHook() {
         contentType: 'application/json',
         onOk: (responseText) => {
             document.getElementById('hook-description-container').innerHTML =
-                "Affected item type: <b>" + getItemTypeName(Hooks.selectedHook.itemType) + "</b><br>" +
+                "Affected item type(s): <b>" + Hooks.selectedHook.itemTypes.map(t => getItemTypeName(t)).join(", ") + "</b><br>" +
                 "Interceptor action type: <b>" + getInterceptorTypeName(Hooks.selectedHook.actionType) + "</b><br>" +
                 Hooks.selectedHook.description;
             parseAndSetSettings(responseText, true);

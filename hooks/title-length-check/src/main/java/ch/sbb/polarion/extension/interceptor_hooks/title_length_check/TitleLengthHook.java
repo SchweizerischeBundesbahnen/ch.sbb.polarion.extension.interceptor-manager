@@ -7,19 +7,21 @@ import com.polarion.alm.tracker.model.IWorkItem;
 import com.polarion.core.util.logging.Logger;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
 public class TitleLengthHook extends ActionHook {
 
     private static final String SETTINGS_ERROR_MESSAGE = "errorMessage";
     private static final String SETTINGS_MAX_LENGTH = "titleMaxLength";
     private static final String MAX_LENGTH_VARIABLE = "{%s}".formatted(SETTINGS_MAX_LENGTH);
-    private static final String DEFAULT_ERROR_MESSAGE = "Title length is over the limit (" + MAX_LENGTH_VARIABLE + " symbols). Please correct it before save WI";
+    private static final String DEFAULT_ERROR_MESSAGE = "Title length is over the limit (" + MAX_LENGTH_VARIABLE + " symbols). Please correct it before saving";
     private static final int DEFAULT_MAX_LENGTH = 256;
     private static final String VERSION = "1.0.0";
     private static final Logger logger = Logger.getLogger(TitleLengthHook.class);
 
     public TitleLengthHook() {
-        super(ItemType.WORKITEM, ActionType.SAVE, VERSION, "Validates title length");
+        super(List.of(ItemType.WORKITEM, ItemType.MODULE), ActionType.SAVE, VERSION, "Validates title length");
     }
 
     @Override
