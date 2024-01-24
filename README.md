@@ -11,8 +11,7 @@ mvn clean package
 
 ## Installation to Polarion
 
-To install extension to Polarion `ch.sbb.polarion.extension.interceptor-<version>.jar`
-should be copied to `<polarion_home>/polarion/extensions/interceptor/eclipse/plugins`
+To install extension to Polarion `ch.sbb.polarion.extension.interceptor-<version>.jar` should be copied to `<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor/eclipse/plugins`.
 It can be done manually or automated using maven build:
 ```
 mvn clean install -P install-to-local-polarion
@@ -26,4 +25,4 @@ Use Administration -> Interceptor -> Settings page to enable/disable or set spec
 
 
 ## Hooks installation
-Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/interceptor/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
+Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
