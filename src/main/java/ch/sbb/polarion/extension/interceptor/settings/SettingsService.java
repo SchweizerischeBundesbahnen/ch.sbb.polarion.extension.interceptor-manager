@@ -60,8 +60,7 @@ public class SettingsService {
             }
         };
 
-        ReadOnlyTransaction existingTransaction = TransactionalExecutor.currentTransaction();
-        if (existingTransaction == null || existingTransaction.isReadOnly()) {
+        if (TransactionalExecutor.currentTransaction() == null) {
             TransactionalExecutor.executeInWriteTransaction(transaction -> {
                 runnable.run();
                 return null;

@@ -44,7 +44,11 @@ public class HookSettings implements Settings<HookModel> {
             }
             ILocation defaultLocation = ScopeUtils.getDefaultLocation().append(relativeLocation());
             if (!settingsService.exists(defaultLocation)) {
-                save(ScopeUtils.SCOPE_DEFAULT, defaultValues());
+                try {
+                    return save(ScopeUtils.SCOPE_DEFAULT, defaultValues());
+                } catch (Exception e) {
+                    return defaultValues();
+                }
             }
             value = settingsService.read(defaultLocation, null);
         }
@@ -52,19 +56,20 @@ public class HookSettings implements Settings<HookModel> {
     }
 
     @Override
-    public void save(@NotNull String scope, @NotNull HookModel what) {
+    public HookModel save(@NotNull String scope, @NotNull HookModel what) {
         final ILocation contextLocation = ScopeUtils.getContextLocation(scope);
-        save(contextLocation, what);
+        return save(contextLocation, what);
     }
 
     @Override
-    public void save(@NotNull ILocation contextLocation, @NotNull HookModel what) {
+    public HookModel save(@NotNull ILocation contextLocation, @NotNull HookModel what) {
         final ILocation location = contextLocation.append(relativeLocation());
         what.setBundleTimestamp(currentBundleTimestamp());
         what.setHookVersion(hook.getVersion());
         String content = toString(what);
         settingsService.save(location, content);
         hook.loadSettings(true);
+        return what;
     }
 
     public @NotNull List<Revision> listRevisions(ILocation location) {
