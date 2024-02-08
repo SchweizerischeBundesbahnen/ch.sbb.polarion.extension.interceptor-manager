@@ -16,9 +16,9 @@ public interface Settings<T extends SettingsModel> {
 
     T read(@NotNull ILocation contextLocation, String revisionName);
 
-    void save(@NotNull String scope, @NotNull T what);
+    T save(@NotNull String scope, @NotNull T what);
 
-    void save(@NotNull ILocation contextLocation, @NotNull T what);
+    T save(@NotNull ILocation contextLocation, @NotNull T what);
 
     @NotNull T defaultValues();
 
