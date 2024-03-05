@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/compare/v1.1.0...v1.1.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* Fix settings save in nested transaction. ([#23](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/23)) ([775269b](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/775269b7c6ad7f05f2275289ba3809e91f698098))
+
 ## [1.1.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/compare/v1.0.0...v1.1.0) (2024-01-18)
 
 
