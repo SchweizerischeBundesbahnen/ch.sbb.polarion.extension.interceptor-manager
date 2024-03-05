@@ -123,6 +123,21 @@
                 </repository>
             </distributionManagement>
         </profile>
+        <profile>
+            <id>repsyDeploy</id>
+            <distributionManagement>
+                <repository>
+                    <id>repsy</id>
+                    <name>repsy.io</name>
+                    <url>https://repo.repsy.io/mvn/sbb/polarion</url>
+                </repository>
+                <snapshotRepository>
+                    <id>repsy</id>
+                    <name>repsy.io</name>
+                    <url>https://repo.repsy.io/mvn/sbb/polarion</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
     </profiles>
 
     <dependencies>
