@@ -31,15 +31,6 @@ jobs:
                 }
               },
               {
-                "id": "github",
-                "name": "github.com",
-                "url": "https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor",
-                "releases": {
-                  "enabled": "true",
-                  "updatePolicy": "never"
-                }
-              },
-              {
                 "id": "repsy",
                 "name": "repsy.io",
                 "url": "https://repo.repsy.io/mvn/sbb/polarion",
