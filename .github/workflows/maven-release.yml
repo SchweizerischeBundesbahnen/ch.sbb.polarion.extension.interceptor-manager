@@ -31,6 +31,15 @@ jobs:
                 }
               },
               {
+                "id": "github",
+                "name": "github.com",
+                "url": "https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor",
+                "releases": {
+                  "enabled": "true",
+                  "updatePolicy": "never"
+                }
+              },
+              {
                 "id": "repsy",
                 "name": "repsy.io",
                 "url": "https://repo.repsy.io/mvn/sbb/polarion",
@@ -58,9 +67,29 @@ jobs:
                 "password": "${{ secrets.CH_SBB_POLARION_REPSY_PASSWORD }}"
               }
             ]
-          active_profiles: >
+          profiles: >
             [
-              "github"
+              {
+                "id": "s3Deploy",
+                "properties":
+                {
+                  "altDeploymentRepository": "s3::default::s3://sbb-polarion-maven-repo/polarion.mvn"
+                }
+              },
+              {
+                "id": "githubDeploy",
+                "properties":
+                {
+                  "altDeploymentRepository": "github::default::https://maven.pkg.github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor"
+                }
+              },
+              {
+                "id": "repsyDeploy",
+                "properties":
+                {
+                  "altDeploymentRepository": "repsy::default::https://repo.repsy.io/mvn/sbb/polarion"
+                }
+              }
             ]
       - name: Print settings.xml
         run: cat /home/runner/.m2/settings.xml
@@ -68,12 +97,13 @@ jobs:
         run: mvn --batch-mode clean package
       - name: Extract artefact version
         id: artefact_version
-        run: echo ::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        run: echo ::set-output name=version::$(mvn help:evaluate -Dexpression=project.version
+          -q -DforceStdout)
       - name: Publish to S3 bucket
         if: ${{ !endsWith(steps.artefact_version.outputs.version, '-SNAPSHOT') }}
         run: mvn --batch-mode deploy -Ps3Deploy
       - name: Publish to repsy.io
-        # if: ${{ !endsWith(steps.artefact_version.outputs.version, '-SNAPSHOT') }}
+        if: ${{ !endsWith(steps.artefact_version.outputs.version, '-SNAPSHOT') }}
         run: mvn --batch-mode deploy -PrepsyDeploy
       - name: Publish to GitHub Packages
         if: ${{ !endsWith(steps.artefact_version.outputs.version, '-SNAPSHOT') }}
