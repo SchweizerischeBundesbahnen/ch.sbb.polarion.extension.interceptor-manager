@@ -1,29 +1,34 @@
-const Hooks = {
-    list: [],
-    selectedHook: undefined
-};
-InterceptorContext.init({
+const DEFAULT_SETTING_NAME = 'Default';
+SbbCommon.init({
+    extension: 'interceptor',
+    setting: 'hook',
+    scope: SbbCommon.getValueById('scope'),
     initCodeInput: true,
     propertiesHighlighting: true
 });
 
-function saveSettings() {
-    InterceptorContext.hideActionAlerts();
+const Hooks = {
+    list: [],
+    selectedHook: undefined
+};
 
-    InterceptorContext.callAsync({
-        method: 'POST',
-        url: `/polarion/interceptor/rest/internal/settings/${Hooks.selectedHook.name}`,
+function saveSettings() {
+    SbbCommon.hideActionAlerts();
+
+    SbbCommon.callAsync({
+        method: 'PUT',
+        url: `/polarion/${SbbCommon.extension}/rest/internal/hook-settings/${Hooks.selectedHook.name}/content`,
         contentType: 'application/json',
         body: JSON.stringify({
-            'enabled': InterceptorContext.getCheckboxValueById('enable-hook'),
-            'properties': InterceptorContext.getValueById('properties-input')
+            'enabled': SbbCommon.getCheckboxValueById('enable-hook'),
+            'properties': SbbCommon.getValueById('properties-input')
         }),
         onOk: () => {
-            InterceptorContext.showSaveSuccessAlert();
-            InterceptorContext.setNewerVersionNotificationVisible(false);
+            SbbCommon.showSaveSuccessAlert();
+            SbbCommon.setNewerVersionNotificationVisible(false);
             readAndFillRevisions();
         },
-        onError: () => InterceptorContext.showSaveErrorAlert()
+        onError: () => SbbCommon.showSaveErrorAlert()
     });
 }
 
@@ -46,11 +51,11 @@ function getInterceptorTypeName(hookType) {
 }
 
 function readSelectedHook() {
-    InterceptorContext.setLoadingErrorNotificationVisible(false);
+    SbbCommon.setLoadingErrorNotificationVisible(false);
 
-    InterceptorContext.callAsync({
+    SbbCommon.callAsync({
         method: 'GET',
-        url: `/polarion/interceptor/rest/internal/settings/${Hooks.selectedHook.name}`,
+        url: `/polarion/${SbbCommon.extension}/rest/internal/hook-settings/${Hooks.selectedHook.name}/content`,
         contentType: 'application/json',
         onOk: (responseText) => {
             document.getElementById('hook-description-container').innerHTML =
@@ -60,16 +65,16 @@ function readSelectedHook() {
             parseAndSetSettings(responseText, true);
             readAndFillRevisions();
         },
-        onError: () => InterceptorContext.setLoadingErrorNotificationVisible(true)
+        onError: () => SbbCommon.setLoadingErrorNotificationVisible(true)
     });
 }
 
 function readHooksList(reload) {
-    InterceptorContext.setLoadingErrorNotificationVisible(false);
+    SbbCommon.setLoadingErrorNotificationVisible(false);
 
-    InterceptorContext.callAsync({
+    SbbCommon.callAsync({
         method: 'GET',
-        url: `/polarion/interceptor/rest/internal/hooks?reload=${reload}`,
+        url: `/polarion/${SbbCommon.extension}/rest/internal/hooks?reload=${reload}`,
         contentType: 'application/json',
         onOk: (responseText) => {
             const hooks = JSON.parse(responseText);
@@ -78,11 +83,11 @@ function readHooksList(reload) {
             const container = document.getElementById('hooks-choose-container');
 
             let noHooks = Hooks.list.length === 0;
-            InterceptorContext.setNoHooksNotificationVisible(noHooks);
+            setNoHooksNotificationVisible(noHooks);
             let displayStyle = noHooks ? 'none' : 'block';
             container.style.display = displayStyle;
             document.getElementById('hook-settings-container').style.display = displayStyle;
-            document.getElementById('actions-container').style.display = displayStyle;
+            document.getElementsByClassName('actions-pane')[0].style.display = displayStyle;
             if (noHooks) {
                 return;
             }
@@ -117,7 +122,7 @@ function readHooksList(reload) {
             document.getElementById(Hooks.selectedHook.name).checked = true;
             readSelectedHook();
         },
-        onError: () => InterceptorContext.setLoadingErrorNotificationVisible(true)
+        onError: () => SbbCommon.setLoadingErrorNotificationVisible(true)
     });
 }
 
@@ -129,35 +134,49 @@ function cancelEdit() {
 
 function revertToDefault() {
     if (confirm("Are you sure you want to return the default values?")) {
-        InterceptorContext.setLoadingErrorNotificationVisible(false);
-        InterceptorContext.hideActionAlerts();
-
-        InterceptorContext.callAsync({
-            method: 'GET',
-            url: `/polarion/interceptor/rest/internal/settings/${Hooks.selectedHook.name}/default`,
-            contentType: 'application/json',
-            onOk: (responseText) => {
+        loadDefaultContent()
+            .then((responseText) => {
                 parseAndSetSettings(responseText);
-                InterceptorContext.showRevertedToDefaultAlert();
-            },
-            onError: () => InterceptorContext.setLoadingErrorNotificationVisible(true)
-        });
+                SbbCommon.showRevertedToDefaultAlert();
+            });
     }
 }
 
 function parseAndSetSettings(text, checkNewerVersion) {
     const settings = JSON.parse(text);
-    InterceptorContext.setCheckboxValueById('enable-hook', settings.enabled);
-    InterceptorContext.setValueById('properties-input', settings.properties);
+    SbbCommon.setCheckboxValueById('enable-hook', settings.enabled);
+    SbbCommon.setValueById('properties-input', settings.properties);
     if (checkNewerVersion && settings.hookVersion !== Hooks.selectedHook.version) {
-        InterceptorContext.setNewerVersionNotificationVisible(true);
+        SbbCommon.setNewerVersionNotificationVisible(true);
     }
 }
 
 function readAndFillRevisions() {
-    InterceptorContext.readAndFillRevisions({
+    SbbCommon.readAndFillRevisions({
         setting: Hooks.selectedHook.name,
         revertToRevisionCallback: (responseText) => parseAndSetSettings(responseText)
+    });
+}
+
+function setNoHooksNotificationVisible(visible) {
+    document.getElementById('no-hooks-registered').style.display = (visible ? 'block' : 'none')
+}
+
+function loadDefaultContent() {
+    return new Promise((resolve, reject) => {
+        SbbCommon.setLoadingErrorNotificationVisible(false);
+        SbbCommon.hideActionAlerts();
+
+        SbbCommon.callAsync({
+            method: 'GET',
+            url: `/polarion/${SbbCommon.extension}/rest/internal/hook-settings/${Hooks.selectedHook.name}/default-content`,
+            contentType: 'application/json',
+            onOk: (responseText) => resolve(responseText),
+            onError: () => {
+                SbbCommon.setLoadingErrorNotificationVisible(true);
+                reject();
+            }
+        });
     });
 }
 

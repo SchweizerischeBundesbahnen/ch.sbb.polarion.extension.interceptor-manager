@@ -1,8 +1,9 @@
 package ch.sbb.polarion.extension.interceptor.model;
 
-import ch.sbb.polarion.extension.interceptor.settings.SettingsRegistry;
+import ch.sbb.polarion.extension.generic.settings.NamedSettings;
+import ch.sbb.polarion.extension.generic.settings.NamedSettingsRegistry;
+import ch.sbb.polarion.extension.generic.settings.SettingId;
 import ch.sbb.polarion.extension.interceptor.settings.HookModel;
-import ch.sbb.polarion.extension.interceptor.util.ScopeUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.polarion.alm.projects.model.IUniqueObject;
@@ -46,7 +47,7 @@ public abstract class ActionHook {
 
     public HookModel loadSettings(boolean forceUpdate) {
         if (forceUpdate || settings == null) {
-            settings = SettingsRegistry.INSTANCE.getByHookName(getName()).read(ScopeUtils.SCOPE_DEFAULT, null);
+            settings = (HookModel) NamedSettingsRegistry.INSTANCE.getByFeatureName(getName()).read("", SettingId.fromName(NamedSettings.DEFAULT_NAME), null);
         }
         return settings;
     }

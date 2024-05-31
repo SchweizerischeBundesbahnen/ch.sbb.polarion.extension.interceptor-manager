@@ -1,5 +1,6 @@
 package ch.sbb.polarion.extension.interceptor.settings;
 
+import ch.sbb.polarion.extension.generic.settings.SettingsModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

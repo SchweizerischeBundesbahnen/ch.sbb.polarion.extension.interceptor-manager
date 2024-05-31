@@ -1,13 +1,12 @@
 package ch.sbb.polarion.extension.interceptor.model;
 
+import ch.sbb.polarion.extension.generic.settings.NamedSettingsRegistry;
 import ch.sbb.polarion.extension.interceptor.settings.HookSettings;
-import ch.sbb.polarion.extension.interceptor.settings.SettingsRegistry;
 import ch.sbb.polarion.extension.interceptor.util.HookJarUtils;
 import com.polarion.core.util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum HooksRegistry {
 
@@ -22,8 +21,8 @@ public enum HooksRegistry {
         hooks.clear();
         hooks.addAll(HookJarUtils.loadHooks());
         logger.info(hooks.size() + " hooks loaded.");
-        SettingsRegistry.INSTANCE
-                .register(HooksRegistry.HOOKS.list().stream().map(HookSettings::new).collect(Collectors.toList()));
+        NamedSettingsRegistry.INSTANCE.getAll().clear();
+        hooks.forEach(hook -> NamedSettingsRegistry.INSTANCE.getAll().add(new HookSettings(hook)));
     }
 
     public List<ActionHook> list() {
