@@ -1,6 +1,6 @@
 package ch.sbb.polarion.extension.interceptor.rest.controller;
 
-import ch.sbb.polarion.extension.interceptor.service.PolarionService;
+import ch.sbb.polarion.extension.generic.service.PolarionService;
 import ch.sbb.polarion.extension.interceptor.model.ActionHook;
 import ch.sbb.polarion.extension.interceptor.model.HooksRegistry;
 import io.swagger.v3.oas.annotations.Hidden;

@@ -29,5 +29,3 @@ replay_pid*
 
 target/
 *.iml
-hooks/*.iml
-dependency-reduced-pom.xml
