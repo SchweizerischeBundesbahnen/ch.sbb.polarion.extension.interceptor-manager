@@ -1,21 +1,22 @@
 package ch.sbb.polarion.extension.interceptor_hooks.plan_save;
 
 import ch.sbb.polarion.extension.interceptor.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor.model.HookExecutor;
 import ch.sbb.polarion.extension.interceptor.util.PropertiesUtils;
-import com.polarion.alm.projects.model.IUniqueObject;
 import com.polarion.alm.tracker.model.IPlan;
 import com.polarion.alm.tracker.model.IWorkItem;
 import com.polarion.core.util.logging.Logger;
+import com.polarion.platform.persistence.model.IPObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashSet;
 
 @SuppressWarnings("unused")
-public class PlanSaveHook extends ActionHook {
+public class PlanSaveHook extends ActionHook implements HookExecutor {
 
     private static final String SETTINGS_PROJECTS = "projects";
     private static final String SETTINGS_TEMPLATES = "templates";
-    private static final String VERSION = "1.0.0";
+    private static final String VERSION = "2.0.0";
     private static final Logger logger = Logger.getLogger(PlanSaveHook.class);
 
     public PlanSaveHook() {
@@ -23,7 +24,7 @@ public class PlanSaveHook extends ActionHook {
     }
 
     @Override
-    public String processAction(@NotNull IUniqueObject object) {
+    public void postAction(@NotNull IPObject object) {
         IPlan plan = (IPlan) object;
 
         logger.debug("Processing Plan: " + plan.getId());
@@ -50,8 +51,11 @@ public class PlanSaveHook extends ActionHook {
         } else {
             logger.debug("Unsupported project: " + plan.getProjectId() + " Supporting: " + getSettingsValue(SETTINGS_PROJECTS));
         }
+    }
 
-        return null;
+    @Override
+    public @NotNull HookExecutor getExecutor() {
+        return this; //there is no need to create a separate executor instance coz only 'post' action used
     }
 
     @Override

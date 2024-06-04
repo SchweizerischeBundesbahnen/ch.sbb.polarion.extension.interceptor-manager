@@ -1,8 +1,8 @@
 package ch.sbb.polarion.extension.interceptor_hooks.testrun;
 
 import ch.sbb.polarion.extension.interceptor.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor.model.HookExecutor;
 import ch.sbb.polarion.extension.interceptor.util.PropertiesUtils;
-import com.polarion.alm.projects.model.IUniqueObject;
 import com.polarion.alm.tracker.ITrackerService;
 import com.polarion.alm.tracker.model.ITestRecord;
 import com.polarion.alm.tracker.model.ITestRun;
@@ -10,6 +10,7 @@ import com.polarion.alm.tracker.model.ITestStepResult;
 import com.polarion.core.util.logging.Logger;
 import com.polarion.platform.core.PlatformContext;
 import com.polarion.platform.persistence.IEnumOption;
+import com.polarion.platform.persistence.model.IPObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -20,14 +21,14 @@ import java.util.List;
  * - Does not allow mark test case as passed if any of step not passed
  */
 @SuppressWarnings("unused")
-public class TestRunHook extends ActionHook {
+public class TestRunHook extends ActionHook implements HookExecutor {
 
     private static final String SETTINGS_PROJECTS = "projects";
     private static final String SETTINGS_ERROR_MESSAGE = "errorMessage";
     private static final String TEST_CASE_ID_VARIABLE = "{testCaseId}";
     private static final String STEP_NUMBER_VARIABLE = "{stepNumber}";
     private static final String DEFAULT_ERROR_MESSAGE = "Cannot save execution results for TC " + TEST_CASE_ID_VARIABLE + " as Passed because it does not match to result in step N" + STEP_NUMBER_VARIABLE;
-    private static final String VERSION = "1.0.0";
+    private static final String VERSION = "2.0.0";
     private static final ITrackerService trackerService = PlatformContext.getPlatform().lookupService(ITrackerService.class);
     private static final Logger logger = Logger.getLogger(TestRunHook.class);
 
@@ -36,7 +37,7 @@ public class TestRunHook extends ActionHook {
     }
 
     @Override
-    public String processAction(@NotNull IUniqueObject object) {
+    public String preAction(@NotNull IPObject object) {
         String returnMessage = null;
         ITestRun testRun = (ITestRun) object;
         try {
@@ -69,6 +70,11 @@ public class TestRunHook extends ActionHook {
             returnMessage = "Cannot update TestRun due to Exception: " + (e.getMessage() != null ? e.getMessage() : e.getClass());
         }
         return returnMessage;
+    }
+
+    @Override
+    public @NotNull HookExecutor getExecutor() {
+        return this; //there is no need to create a separate executor instance coz only 'pre' action used
     }
 
     @Override

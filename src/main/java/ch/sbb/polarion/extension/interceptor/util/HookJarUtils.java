@@ -11,6 +11,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 @UtilityClass
@@ -49,8 +50,8 @@ public class HookJarUtils {
         if (jarFiles != null) {
             for (File jarFile : jarFiles) {
                 try {
-                    classList.add(loadClass(jarFile));
-                } catch (Throwable e) {
+                    classList.add(loadJarReturnHookClass(jarFile));
+                } catch (Exception e) {
                     logger.error("Cannot load jar file " + jarFile.getPath(), e);
                 }
             }
@@ -58,16 +59,28 @@ public class HookJarUtils {
         return classList;
     }
 
-    private Class loadClass(File jarFile) throws IOException, ClassNotFoundException {
-        try (JarInputStream jarInputStream = new JarInputStream(new FileInputStream(jarFile))) {
+    private Class loadJarReturnHookClass(File jarFile) throws IOException, ClassNotFoundException {
+        try (JarInputStream jarInputStream = new JarInputStream(new FileInputStream(jarFile));
+             URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{new URL("jar:file:" + jarFile.getAbsolutePath() + "!/")}, HookJarUtils.class.getClassLoader())) {
             String mainClassName = jarInputStream.getManifest().getMainAttributes().getValue(MAIN_CLASS_MANIFEST_ATTRIBUTE);
-            if (mainClassName != null) {
-                //closing urlClassLoader allows us to remove initial jar file after its load
-                try (URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{jarFile.toURI().toURL()}, HookJarUtils.class.getClassLoader())) {
-                    return Class.forName(mainClassName, true, urlClassLoader);
+
+            //load all classes from jar and return hook class which name must be declared in the manifest
+            Class hookClass = null;
+            JarEntry jarEntry;
+            while ((jarEntry = jarInputStream.getNextJarEntry()) != null) {
+                if (jarEntry.getName().endsWith(".class")) {
+                    String className = jarEntry.getName().replace("/", ".").replace(".class", "");
+                    Class clazz = urlClassLoader.loadClass(className);
+                    if (className.equals(mainClassName)) {
+                        hookClass = clazz;
+                    }
                 }
-            } else {
+            }
+
+            if (hookClass == null) {
                 throw new ClassNotFoundException("Jar file " + jarFile.getPath() + " does not contain " + MAIN_CLASS_MANIFEST_ATTRIBUTE + " attribute in the MANIFEST");
+            } else {
+                return hookClass;
             }
         }
     }

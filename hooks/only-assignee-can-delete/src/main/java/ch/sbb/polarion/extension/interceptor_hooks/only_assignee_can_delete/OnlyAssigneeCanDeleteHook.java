@@ -1,8 +1,8 @@
 package ch.sbb.polarion.extension.interceptor_hooks.only_assignee_can_delete;
 
 import ch.sbb.polarion.extension.interceptor.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor.model.HookExecutor;
 import ch.sbb.polarion.extension.interceptor.util.PropertiesUtils;
-import com.polarion.alm.projects.model.IUniqueObject;
 import com.polarion.alm.projects.model.IUser;
 import com.polarion.alm.tracker.ITrackerService;
 import com.polarion.alm.tracker.model.IWorkItem;
@@ -15,14 +15,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 
 @SuppressWarnings({"unused", "unchecked", "rawtypes"})
-public class OnlyAssigneeCanDeleteHook extends ActionHook {
+public class OnlyAssigneeCanDeleteHook extends ActionHook implements HookExecutor {
 
     private static final String SETTINGS_PROJECTS = "projects";
     private static final String SETTINGS_ERROR_MESSAGE = "errorMessage";
     private static final String SETTINGS_DELETE_UNASSIGNED = "deleteUnassigned";
     private static final boolean DEFAULT_DELETE_UNASSIGNED = true;
     private static final String DEFAULT_ERROR_MESSAGE = "Only assignee user can delete WI!";
-    private static final String VERSION = "1.0.0";
+    private static final String VERSION = "2.0.0";
     private static final ITrackerService trackerService = PlatformContext.getPlatform().lookupService(ITrackerService.class);
     private static final Logger logger = Logger.getLogger(OnlyAssigneeCanDeleteHook.class);
 
@@ -32,7 +32,7 @@ public class OnlyAssigneeCanDeleteHook extends ActionHook {
     }
 
     @Override
-    public String processAction(@NotNull IUniqueObject object) {
+    public String preAction(@NotNull IPObject object) {
         boolean deleteUnassigned = DEFAULT_DELETE_UNASSIGNED;
         String deleteUnassignedStringValue = getSettingsValue(SETTINGS_DELETE_UNASSIGNED);
         try {
@@ -61,6 +61,11 @@ public class OnlyAssigneeCanDeleteHook extends ActionHook {
         }
 
         return returnMessage;
+    }
+
+    @Override
+    public @NotNull HookExecutor getExecutor() {
+        return this; //there is no need to create a separate executor instance coz only 'pre' action used
     }
 
     @Override
