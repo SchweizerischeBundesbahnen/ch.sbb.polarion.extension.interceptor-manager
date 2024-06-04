@@ -4,7 +4,7 @@
 
     <groupId>ch.sbb.polarion.extensions.interceptor-hooks</groupId>
     <artifactId>ch.sbb.polarion.extension.interceptor-hooks.plan-save</artifactId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>2.0.0</version>
     <packaging>jar</packaging>
 
     <properties>

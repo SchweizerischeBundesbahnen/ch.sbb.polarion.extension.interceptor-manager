@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.0.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/compare/v1.1.1...v2.0.0) (2024-06-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* save/delete methods proxy calls improvement, introduced separate pre&post hook methods
+* save/delete methods proxy calls improvement, introduced separa… ([#39](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/39))
+* ch.sbb.polarion.extension.generic usage ([#36](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/36))
+
+### Features
+
+* ch.sbb.polarion.extension.generic usage ([#36](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/36)) ([ca4ca3b](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/ca4ca3b418a2aadce21d2340fa651ee09703c601))
+* save/delete methods proxy calls improvement, introduced separa… ([#39](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/39)) ([3176de3](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/3176de34ea5842b292539b9cd981f3521f7e4af8))
+* save/delete methods proxy calls improvement, introduced separate pre&post hook methods ([3176de3](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/3176de34ea5842b292539b9cd981f3521f7e4af8))
+
 ## [1.1.1](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/compare/v1.1.0...v1.1.1) (2024-03-05)
 
 
