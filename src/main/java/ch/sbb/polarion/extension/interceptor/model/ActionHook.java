@@ -21,7 +21,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Base class for a hook.
+ */
 @Data
+@SuppressWarnings("java:S5993") //leave public constructors
 public abstract class ActionHook {
 
     public static final String ALL_WILDCARD = "*";
@@ -52,7 +56,13 @@ public abstract class ActionHook {
         return settings;
     }
 
-    public abstract String processAction(@NotNull IUniqueObject polarionObject);
+    /**
+     * Basic usage - instantiate executor only once and reuse its instance. But if both methods ('pre' & 'post') used
+     * in the same executor and 'post' wants to process some data which was produced by 'pre' - in this case it's a good idea to
+     * return a new instance here in order to prevent data rewrite by the concurrent executions.
+     */
+    @JsonIgnore
+    public abstract @NotNull HookExecutor getExecutor();
 
     @JsonProperty("name")
     public String getName() {

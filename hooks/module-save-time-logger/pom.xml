@@ -3,15 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.sbb.polarion.extensions.interceptor-hooks</groupId>
-    <artifactId>ch.sbb.polarion.extension.interceptor-hooks.only-assignee-can-delete</artifactId>
+    <artifactId>ch.sbb.polarion.extension.interceptor-hooks.module-save-time-logger</artifactId>
     <version>1.1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
         <ch.sbb.polarion.extension.interceptor.version>2.0.0</ch.sbb.polarion.extension.interceptor.version>
 
-        <maven-jar-plugin.Automatic-Module-Name>ch.sbb.polarion.extension.interceptor_hooks.only_assignee_can_delete</maven-jar-plugin.Automatic-Module-Name>
-        <maven-jar-plugin.Extension-Context>only-assignee-can-delete</maven-jar-plugin.Extension-Context>
+        <maven-jar-plugin.Automatic-Module-Name>ch.sbb.polarion.extension.interceptor_hooks.module_save_time_logger</maven-jar-plugin.Automatic-Module-Name>
+        <maven-jar-plugin.Extension-Context>module-save-time-logger</maven-jar-plugin.Extension-Context>
 
         <interceptor.artifactId>ch.sbb.polarion.extension.interceptor</interceptor.artifactId>
         <hooks.folder.name>hooks</hooks.folder.name>
@@ -106,12 +106,6 @@
         <dependency>
             <groupId>com.polarion.alm.tracker</groupId>
             <artifactId>tracker</artifactId>
-            <version>${polarion.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.polarion.platform</groupId>
-            <artifactId>platform</artifactId>
             <version>${polarion.version}</version>
             <scope>provided</scope>
         </dependency>
