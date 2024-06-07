@@ -26,3 +26,9 @@ Use Administration -> Interceptor -> Settings page to enable/disable or set spec
 
 ## Hooks installation
 Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
+
+## Upgrade
+
+### Upgrade from version 1.x.x to 2.0.0
+Version 2.0.0 requires the new hooks model therefore hooks built for 1.x.x will stop working. They must be replaced with the new ones built especially for v.2.0.0+.
+Also the new version introduced some significant internal settings model changes/improvements which have made old settings data incompatible. This means that during the first run all settings will be reset to their default values (unfortunately revisions history will be lost too).
