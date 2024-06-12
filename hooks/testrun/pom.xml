@@ -26,7 +26,7 @@
         <!-- Maven plugins -->
         <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
         <maven-jar-plugin.version>3.4.1</maven-jar-plugin.version>
-        <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.7.0</maven-dependency-plugin.version>
 
         <!-- Others -->
         <jetbrains.api.version>24.0.1</jetbrains.api.version>
