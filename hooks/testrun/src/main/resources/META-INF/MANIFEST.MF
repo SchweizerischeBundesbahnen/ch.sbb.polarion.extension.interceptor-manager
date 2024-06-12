@@ -1,2 +1,0 @@
-Name: TestRun validation hook for Polarion ALM Interceptor plugin
-Main-Class: ch.sbb.polarion.extension.interceptor_hooks.testrun.TestRunHook
