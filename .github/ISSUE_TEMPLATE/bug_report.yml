@@ -45,14 +45,12 @@ body:
   - type: input
     attributes:
       label: Extension Version
-      description: It can be found under https://<<host>>/polarion/#/project/dev/administration/<<Extension
-        Name>>/About
+      description: It can be found under https://<<host>>/polarion/#/project/dev/administration/<<Extension Name>>/About
     validations:
       required: true
   - type: textarea
     attributes:
       label: Anything else
-      description: Further hints, links, or references? Any additional information
-        probably helping in root cause analysis.
+      description: Further hints, links, or references? Any additional information probably helping in root cause analysis.
     validations:
       required: false
