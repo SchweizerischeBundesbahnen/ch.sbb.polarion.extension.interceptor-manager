@@ -44,8 +44,8 @@ function getItemTypeName(itemType) {
 
 function getInterceptorTypeName(hookType) {
     switch (hookType) {
-        case 'SAVE': return 'pre-save';
-        case 'DELETE': return 'pre-delete';
+        case 'SAVE': return 'save';
+        case 'DELETE': return 'delete';
     }
     return hookType;
 }
