@@ -1,2 +1,0 @@
-Name: Plan save hook for Polarion ALM Interceptor plugin
-Main-Class: ch.sbb.polarion.extension.interceptor_hooks.plan_save.PlanSaveHook
