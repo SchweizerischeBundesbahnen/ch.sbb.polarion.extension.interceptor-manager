@@ -60,7 +60,8 @@ function readSelectedHook() {
         onOk: (responseText) => {
             document.getElementById('hook-description-container').innerHTML =
                 "Affected item type(s): <b>" + Hooks.selectedHook.itemTypes.map(t => getItemTypeName(t)).join(", ") + "</b><br>" +
-                "Interceptor action type: <b>" + getInterceptorTypeName(Hooks.selectedHook.actionType) + "</b><br>" +
+                "Interceptor action type: <b>" + getInterceptorTypeName(Hooks.selectedHook.actionType) + "</b><br><br>" +
+                "Hook version: <b>" + Hooks.selectedHook.version + "</b><br><br>" +
                 Hooks.selectedHook.description;
             parseAndSetSettings(responseText, true);
             readAndFillRevisions();

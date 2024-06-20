@@ -4,6 +4,7 @@ import ch.sbb.polarion.extension.generic.settings.NamedSettings;
 import ch.sbb.polarion.extension.generic.settings.NamedSettingsRegistry;
 import ch.sbb.polarion.extension.generic.settings.SettingId;
 import ch.sbb.polarion.extension.interceptor.settings.HookModel;
+import ch.sbb.polarion.extension.interceptor.util.HookManifestUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.polarion.alm.projects.model.IUniqueObject;
@@ -14,6 +15,7 @@ import com.polarion.alm.tracker.model.IWorkItem;
 import com.polarion.core.util.StringUtils;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -38,14 +40,22 @@ public abstract class ActionHook {
     private String version;
     private String description;
 
-    public ActionHook(ItemType itemType, ActionType actionType, String version, String description) {
+    public ActionHook(@NotNull ItemType itemType, @NotNull ActionType actionType, @Nullable String description) {
+        this(Collections.singletonList(itemType), actionType, description);
+    }
+
+    public ActionHook(@NotNull ItemType itemType, @NotNull ActionType actionType, @Nullable String version, @Nullable String description) {
         this(Collections.singletonList(itemType), actionType, version, description);
     }
 
-    public ActionHook(List<ItemType> itemTypes, ActionType actionType, String version, String description) {
+    public ActionHook(@NotNull List<ItemType> itemTypes, @NotNull ActionType actionType, @Nullable String description) {
+        this(itemTypes, actionType, null, description);
+    }
+
+    public ActionHook(@NotNull List<ItemType> itemTypes, @NotNull ActionType actionType, @Nullable String version, @Nullable String description) {
         this.itemTypes = itemTypes;
         this.actionType = actionType;
-        this.version = version;
+        this.version = version == null ? HookManifestUtils.getHookVersion(getClass()) : version;
         this.description = description;
     }
 
