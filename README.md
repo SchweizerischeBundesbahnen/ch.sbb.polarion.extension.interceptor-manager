@@ -26,6 +26,7 @@ Use Administration -> Interceptor -> Settings page to enable/disable or set spec
 
 ## Hooks installation
 Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
+By default, newly added hooks are disabled and must be enabled manually.
 
 ## Upgrade
 
