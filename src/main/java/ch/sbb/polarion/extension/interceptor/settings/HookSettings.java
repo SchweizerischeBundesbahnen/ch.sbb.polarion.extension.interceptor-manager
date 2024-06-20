@@ -24,6 +24,10 @@ public class HookSettings extends GenericNamedSettings<HookModel> {
 
     @Override
     public @NotNull HookModel defaultValues() {
-        return HookModel.builder().enabled(true).hookVersion(hook.getVersion()).properties(hook.getDefaultSettings()).build();
+        return HookModel.builder()
+                .enabled(false)
+                .hookVersion(hook.getVersion())
+                .properties(hook.getDefaultSettings())
+                .build();
     }
 }
