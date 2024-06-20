@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/compare/v2.0.0...v2.1.0) (2024-06-20)
+
+
+### Features
+
+* Hook should be disabled by default. ([#49](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/49)) ([30409f7](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/30409f734047245a3011798b46b48eda5e678433))
+* the version of hook should not be stored in Java code, but read… ([#50](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/50)) ([d4c78c0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/d4c78c0ecd87637d006aa0f7e6daadced1807464))
+
 ## [2.0.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/compare/v1.1.1...v2.0.0) (2024-06-04)
 
 
