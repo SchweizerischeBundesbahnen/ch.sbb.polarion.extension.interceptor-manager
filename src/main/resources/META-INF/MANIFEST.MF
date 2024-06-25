@@ -1,3 +1,4 @@
+Support-Email: polarion-opensource@sbb.ch
 Bundle-Name: Interceptor Extension for Polarion ALM
 Require-Bundle: com.polarion.portal.tomcat,
  com.polarion.alm.ui,

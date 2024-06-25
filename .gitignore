@@ -29,5 +29,7 @@ replay_pid*
 
 target/
 *.iml
-hooks/*.iml
 dependency-reduced-pom.xml
+
+src/main/resources/webapp/*-admin/html/about.html
+README.html
