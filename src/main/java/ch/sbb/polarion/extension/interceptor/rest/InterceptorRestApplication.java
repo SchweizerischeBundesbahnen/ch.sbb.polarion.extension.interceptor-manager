@@ -1,6 +1,7 @@
 package ch.sbb.polarion.extension.interceptor.rest;
 
 import ch.sbb.polarion.extension.generic.rest.GenericRestApplication;
+import ch.sbb.polarion.extension.generic.rest.controller.NamedSettingsInternalController;
 import ch.sbb.polarion.extension.interceptor.rest.controller.HooksApiController;
 import ch.sbb.polarion.extension.interceptor.rest.controller.HooksInternalController;
 import ch.sbb.polarion.extension.interceptor.rest.controller.HooksSettingsApiController;
@@ -16,6 +17,7 @@ public class InterceptorRestApplication extends GenericRestApplication {
         return Set.of(
                 new HooksSettingsInternalController(),
                 new HooksSettingsApiController(),
+                new NamedSettingsInternalController(), // standard settings internal controller still needed for fetching revisions list (in common.js from generic extension)
                 new HooksInternalController(),
                 new HooksApiController()
         );
