@@ -20,14 +20,14 @@ import java.util.jar.Manifest;
 @SuppressWarnings("unused")
 public class HookManifestUtils {
 
-    public static final String BUNDLE_VERSION = "Bundle-Version";
+    public static final String HOOK_VERSION = "Hook-Version";
 
     public static @Nullable String getHookVersion(@NotNull Class<? extends ActionHook> hookClass) {
         try {
             Manifest manifest = loadManifestByClass(hookClass);
             if (manifest != null) {
                 Attributes attributes = manifest.getMainAttributes();
-                return attributes.getValue(BUNDLE_VERSION);
+                return attributes.getValue(HOOK_VERSION);
             } else {
                 return null;
             }
