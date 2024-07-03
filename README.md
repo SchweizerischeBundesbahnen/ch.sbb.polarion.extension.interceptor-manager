@@ -1,6 +1,6 @@
 # Polarion ALM extension to execute validation during save/delete actions
 
-This Polarion extension provides possibility to run custom Java code (via hooks), before Polarion saves/deletes a Work Item, Document or Test Run.
+This Polarion extension provides possibility to run custom Java code (via hooks), before Polarion saves/deletes a Work Item, Document, Plan or Test Run.
 
 ## Build
 

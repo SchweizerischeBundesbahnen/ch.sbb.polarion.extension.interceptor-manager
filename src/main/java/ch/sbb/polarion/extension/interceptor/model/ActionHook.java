@@ -67,7 +67,7 @@ public abstract class ActionHook {
     }
 
     /**
-     * Basic usage - instantiate executor only once and reuse its instance. But if both methods ('pre' & 'post') used
+     * Basic usage - instantiate executor only once and reuse its instance. But if both methods ('pre' and 'post') used
      * in the same executor and 'post' wants to process some data which was produced by 'pre' - in this case it's a good idea to
      * return a new instance here in order to prevent data rewrite by the concurrent executions.
      */

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Secured
 @Path("/api")
-public class ApiController extends InternalController {
+public class HooksApiController extends HooksInternalController {
 
     @Override
     public List<ActionHook> getHooksList(Boolean reload) {
