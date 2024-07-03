@@ -41,7 +41,7 @@ public class HookManifestUtils {
 
         if (codeSource != null) {
             URL location = codeSource.getLocation();
-            Path jarPath = Paths.get(location.toURI());
+            Path jarPath = Paths.get(location.getPath());
 
             if (Files.isRegularFile(jarPath)) {
                 try (JarFile jarFile = new JarFile(jarPath.toFile())) {
