@@ -6,12 +6,12 @@ import lombok.experimental.UtilityClass;
 public class PropertiesUtils {
 
     /**
-     * Generates property string.<br/>
-     * Treats each pair of items as a property key & value respectively.<br/>
-     * E.g. arguments {'key1', 'value1', 'key2', 'value2'} will generate:<br/>
+     * Generates property string.
+     * Treats each pair of items as a property key and value respectively.
+     * E.g. arguments {'key1', 'value1', 'key2', 'value2'} will generate:
      * <code>
-     * key1=value1<br/>
-     * key2=value2<br/>
+     * key1=value1
+     * key2=value2
      * </code>
      */
     public String build(String... entries) {
@@ -24,14 +24,14 @@ public class PropertiesUtils {
     }
 
     /**
-     * Generates property string.<br/>
-     * Treats each first item as a property entry description and second & third item as a property key & value respectively.<br/>
-     * E.g. arguments {'first', 'key1', 'value1', 'second', 'key2', 'value2'} will generate:<br/>
+     * Generates property string.
+     * Treats each first item as a property entry description and second and third item as a property key and value respectively.
+     * E.g. arguments {'first', 'key1', 'value1', 'second', 'key2', 'value2'} will generate:
      * <code>
-     * #first<br/>
-     * key1=value1<br/>
-     * #second<br/>
-     * key2=value2<br/>
+     * #first
+     * key1=value1
+     * #second
+     * key2=value2
      * </code>
      */
     public static String buildWithDescription(String... entries) {

@@ -17,7 +17,7 @@ import java.util.List;
 @Tag(name = "Hooks")
 @Hidden
 @Path("/internal")
-public class InternalController {
+public class HooksInternalController {
 
     protected final PolarionService polarionService = new PolarionService();
 
