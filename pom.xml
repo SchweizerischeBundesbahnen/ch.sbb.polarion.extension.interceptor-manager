@@ -4,13 +4,44 @@
 
     <parent>
         <groupId>ch.sbb.polarion.extensions</groupId>
-        <artifactId>ch.sbb.polarion.extension.generic.parent-pom</artifactId>
-        <version>4.11.0</version>
+        <artifactId>ch.sbb.polarion.extension.generic</artifactId>
+        <version>6.0.1</version>
     </parent>
 
     <artifactId>ch.sbb.polarion.extension.interceptor</artifactId>
     <version>2.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+
+    <name>Polarion ALM extension to execute validation during save/delete actions</name>
+    <description>This Polarion extension provides possibility to run custom Java code (via hooks), before Polarion saves/deletes a Work Item, Document, Plan or Test Run.</description>
+    <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor</url>
+
+    <licenses>
+        <license>
+            <name>The SBB License, Version 1.0</name>
+            <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/blob/main/LICENSES/SBB.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>SBB Polarion Team</name>
+            <email>polarion-opensource@sbb.ch</email>
+            <organization>SBB AG</organization>
+            <organizationUrl>http://www.sbb.ch</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor.git</connection>
+        <developerConnection>scm:git:ssh://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor.git</developerConnection>
+        <url>http://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/tree/main</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues</url>
+    </issueManagement>
 
     <properties>
         <maven-jar-plugin.Extension-Context>interceptor</maven-jar-plugin.Extension-Context>
@@ -53,6 +84,16 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
