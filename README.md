@@ -11,7 +11,8 @@ mvn clean package
 
 ## Installation to Polarion
 
-To install extension to Polarion `ch.sbb.polarion.extension.interceptor-<version>.jar` should be copied to `<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor/eclipse/plugins`.
+To install extension to Polarion `ch.sbb.polarion.extension.interceptor-<version>.jar`
+should be copied to `<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor/eclipse/plugins`.
 It can be done manually or automated using maven build:
 ```bash
 mvn clean install -P install-to-local-polarion
