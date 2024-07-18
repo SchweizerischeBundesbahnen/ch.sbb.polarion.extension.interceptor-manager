@@ -38,6 +38,8 @@ function getItemTypeName(itemType) {
         case 'TESTRUN': return 'Test Run';
         case 'MODULE': return 'Module';
         case 'PLAN': return 'Plan';
+        case 'MODULE_COMMENT': return 'Module Comment';
+        case 'WORK_RECORD': return 'Work Record';
     }
     return itemType;
 }
