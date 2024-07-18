@@ -9,9 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.polarion.alm.projects.model.IUniqueObject;
 import com.polarion.alm.tracker.model.IModule;
+import com.polarion.alm.tracker.model.IModuleComment;
 import com.polarion.alm.tracker.model.IPlan;
 import com.polarion.alm.tracker.model.ITestRun;
 import com.polarion.alm.tracker.model.IWorkItem;
+import com.polarion.alm.tracker.model.IWorkRecord;
 import com.polarion.core.util.StringUtils;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
@@ -136,7 +138,9 @@ public abstract class ActionHook {
         WORKITEM(IWorkItem.class),
         TESTRUN(ITestRun.class),
         PLAN(IPlan.class),
-        MODULE(IModule.class);
+        MODULE(IModule.class),
+        MODULE_COMMENT(IModuleComment.class),
+        WORK_RECORD(IWorkRecord.class);
 
         final Class<? extends IUniqueObject> itemClass;
 
