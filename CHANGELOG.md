@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.3.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/compare/v2.2.0...v2.3.0) (2024-07-18)
+
+
+### Features
+
+* app icon added ([#60](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/60)) ([6999a3b](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/6999a3ba90fb18fab7ebc855d3965d5d6e99b991))
+* migration to generic v6.2.0 ([#62](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/62)) ([2d35fc9](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/2d35fc9c71adbc11616093be6658e82cede9c4ff))
+* support for IModuleComment and IWorkRecord ([#65](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/65)) ([e183022](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/e18302269df6bda6e87b8f3ac3f23410efcfcfb4)), closes [#64](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues/64)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.1.0 ([f327f3c](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/f327f3c5d0fb0704cd621b1b9ffdab8e8a480cd7))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.2.0 ([e1aaac9](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/e1aaac95955441bf598cdbacaa173601125d3684))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.3.0 ([8028b60](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/commit/8028b60d8f5dad297d885c6f7c9bc3f053c4d829))
+
 ## [2.2.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/compare/v2.1.0...v2.2.0) (2024-07-03)
 
 
