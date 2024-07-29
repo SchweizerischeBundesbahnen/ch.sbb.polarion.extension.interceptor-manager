@@ -1,8 +1,8 @@
-package ch.sbb.polarion.extension.interceptor;
+package ch.sbb.polarion.extension.interceptor_manager;
 
-import ch.sbb.polarion.extension.interceptor.model.ActionHook;
-import ch.sbb.polarion.extension.interceptor.model.HookExecutor;
-import ch.sbb.polarion.extension.interceptor.model.HooksRegistry;
+import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.HookExecutor;
+import ch.sbb.polarion.extension.interceptor_manager.model.HooksRegistry;
 import com.polarion.core.util.StringUtils;
 import com.polarion.core.util.exceptions.UserFriendlyRuntimeException;
 import com.polarion.core.util.logging.Logger;

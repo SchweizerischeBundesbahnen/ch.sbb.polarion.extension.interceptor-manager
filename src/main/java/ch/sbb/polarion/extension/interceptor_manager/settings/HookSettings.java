@@ -1,7 +1,7 @@
-package ch.sbb.polarion.extension.interceptor.settings;
+package ch.sbb.polarion.extension.interceptor_manager.settings;
 
 import ch.sbb.polarion.extension.generic.settings.GenericNamedSettings;
-import ch.sbb.polarion.extension.interceptor.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
 import org.jetbrains.annotations.NotNull;
 
 public class HookSettings extends GenericNamedSettings<HookModel> {

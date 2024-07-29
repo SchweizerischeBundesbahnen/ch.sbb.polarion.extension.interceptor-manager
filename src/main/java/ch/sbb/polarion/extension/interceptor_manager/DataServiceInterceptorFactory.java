@@ -1,7 +1,7 @@
-package ch.sbb.polarion.extension.interceptor;
+package ch.sbb.polarion.extension.interceptor_manager;
 
-import ch.sbb.polarion.extension.interceptor.model.ActionHook;
-import ch.sbb.polarion.extension.interceptor.model.HooksRegistry;
+import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.HooksRegistry;
 import com.polarion.platform.persistence.model.IPObject;
 import org.apache.hivemind.InterceptorStack;
 import org.apache.hivemind.ServiceInterceptorFactory;

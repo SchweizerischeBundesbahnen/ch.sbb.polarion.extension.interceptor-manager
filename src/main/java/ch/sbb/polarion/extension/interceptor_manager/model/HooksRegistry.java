@@ -1,8 +1,8 @@
-package ch.sbb.polarion.extension.interceptor.model;
+package ch.sbb.polarion.extension.interceptor_manager.model;
 
 import ch.sbb.polarion.extension.generic.settings.NamedSettingsRegistry;
-import ch.sbb.polarion.extension.interceptor.settings.HookSettings;
-import ch.sbb.polarion.extension.interceptor.util.HookJarUtils;
+import ch.sbb.polarion.extension.interceptor_manager.settings.HookSettings;
+import ch.sbb.polarion.extension.interceptor_manager.util.HookJarUtils;
 import com.polarion.core.util.logging.Logger;
 
 import java.util.ArrayList;

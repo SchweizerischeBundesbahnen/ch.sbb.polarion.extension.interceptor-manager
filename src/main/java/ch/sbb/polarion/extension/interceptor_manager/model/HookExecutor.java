@@ -1,4 +1,4 @@
-package ch.sbb.polarion.extension.interceptor.model;
+package ch.sbb.polarion.extension.interceptor_manager.model;
 
 import com.polarion.platform.persistence.model.IPObject;
 import org.jetbrains.annotations.NotNull;

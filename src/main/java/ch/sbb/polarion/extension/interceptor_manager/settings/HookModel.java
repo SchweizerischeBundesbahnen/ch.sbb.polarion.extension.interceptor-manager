@@ -1,4 +1,4 @@
-package ch.sbb.polarion.extension.interceptor.settings;
+package ch.sbb.polarion.extension.interceptor_manager.settings;
 
 import ch.sbb.polarion.extension.generic.settings.SettingsModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -1,10 +1,10 @@
-package ch.sbb.polarion.extension.interceptor.model;
+package ch.sbb.polarion.extension.interceptor_manager.model;
 
 import ch.sbb.polarion.extension.generic.settings.NamedSettings;
 import ch.sbb.polarion.extension.generic.settings.NamedSettingsRegistry;
 import ch.sbb.polarion.extension.generic.settings.SettingId;
-import ch.sbb.polarion.extension.interceptor.settings.HookModel;
-import ch.sbb.polarion.extension.interceptor.util.HookManifestUtils;
+import ch.sbb.polarion.extension.interceptor_manager.settings.HookModel;
+import ch.sbb.polarion.extension.interceptor_manager.util.HookManifestUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.polarion.alm.projects.model.IUniqueObject;

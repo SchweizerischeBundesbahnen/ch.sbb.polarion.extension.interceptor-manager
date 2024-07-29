@@ -1,5 +1,5 @@
 Support-Email: polarion-opensource@sbb.ch
-Bundle-Name: Interceptor Extension for Polarion ALM
+Bundle-Name: Interceptor Manager Extension for Polarion ALM
 Require-Bundle: com.polarion.portal.tomcat,
  com.polarion.alm.ui,
  com.polarion.alm.tracker,
@@ -10,4 +10,4 @@ Require-Bundle: com.polarion.portal.tomcat,
  org.springframework.spring-web,
  org.apache.commons.logging,
  org.apache.hivemind
-Export-Package: ch.sbb.polarion.extension.interceptor
+Export-Package: ch.sbb.polarion.extension.interceptor_manager

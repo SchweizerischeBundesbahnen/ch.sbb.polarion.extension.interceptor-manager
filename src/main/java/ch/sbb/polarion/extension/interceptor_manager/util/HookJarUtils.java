@@ -1,6 +1,6 @@
-package ch.sbb.polarion.extension.interceptor.util;
+package ch.sbb.polarion.extension.interceptor_manager.util;
 
-import ch.sbb.polarion.extension.interceptor.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
 import com.polarion.core.util.logging.Logger;
 import lombok.experimental.UtilityClass;
 

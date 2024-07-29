@@ -1,4 +1,4 @@
-package ch.sbb.polarion.extension.interceptor.util;
+package ch.sbb.polarion.extension.interceptor_manager.util;
 
 import lombok.experimental.UtilityClass;
 

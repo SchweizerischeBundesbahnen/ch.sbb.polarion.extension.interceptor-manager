@@ -1,8 +1,8 @@
-package ch.sbb.polarion.extension.interceptor.rest.controller;
+package ch.sbb.polarion.extension.interceptor_manager.rest.controller;
 
 import ch.sbb.polarion.extension.generic.service.PolarionService;
-import ch.sbb.polarion.extension.interceptor.model.ActionHook;
-import ch.sbb.polarion.extension.interceptor.model.HooksRegistry;
+import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.HooksRegistry;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

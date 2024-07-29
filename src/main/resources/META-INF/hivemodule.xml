@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module id="ch.sbb.polarion.extension.interceptor" version="1.0.0">
+<module id="ch.sbb.polarion.extension.interceptor_manager" version="1.0.0">
 
     <service-point id="dataServiceInterceptorFactory" visibility="private" interface="org.apache.hivemind.ServiceInterceptorFactory">
         <invoke-factory>
@@ -16,21 +16,21 @@
 
     <contribution configuration-id="com.polarion.xray.webui.administrationPageExtenders">
         <extender name="About"
-                  parentNodeName="Interceptor"
+                  parentNodeName="Interceptor Manager"
                   parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
                   iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
                   pageUrl="/polarion/interceptor-admin/pages/about.jsp"
                   projectScope="false"
                   repositoryScope="true"/>
         <extender name="REST API"
-                  parentNodeName="Interceptor"
+                  parentNodeName="Interceptor Manager"
                   parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
                   iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
                   pageUrl="/polarion/interceptor/rest/swagger"
                   projectScope="false"
                   repositoryScope="true"/>
         <extender name="Settings"
-                  parentNodeName="Interceptor"
+                  parentNodeName="Interceptor Manager"
                   parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
                   iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
                   pageUrl="/polarion/interceptor-admin/pages/settings.jsp?scope=$scope$"

@@ -11,8 +11,8 @@ mvn clean package
 
 ## Installation to Polarion
 
-To install extension to Polarion `ch.sbb.polarion.extension.interceptor-<version>.jar`
-should be copied to `<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor/eclipse/plugins`.
+To install extension to Polarion `ch.sbb.polarion.extension.interceptor-manager-<version>.jar`
+should be copied to `<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor-manager/eclipse/plugins`.
 It can be done manually or automated using maven build:
 ```bash
 mvn clean install -P install-to-local-polarion
@@ -23,12 +23,12 @@ Changes only take effect after restart of Polarion.
 
 ## Polarion configuration
 
-### Interceptor settings/customization
-Use Administration -> Interceptor -> Settings page to enable/disable or set specific properties for each existing hook.
+### Interceptor Manager settings/customization
+Use Administration -> Interceptor Manager -> Settings page to enable/disable or set specific properties for each existing hook.
 
 
 ### Hooks installation
-Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
+Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor_manager/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
 By default, newly added hooks are disabled and must be enabled manually.
 
 ## Upgrade
