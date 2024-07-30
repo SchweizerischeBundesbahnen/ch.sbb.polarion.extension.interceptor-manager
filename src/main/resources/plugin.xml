@@ -4,15 +4,15 @@
     <extension
             point="com.polarion.portal.tomcat.webapps">
         <webapp
-                name="polarion/interceptor"
-                contextRoot="webapp/interceptor">
+                name="polarion/interceptor-manager"
+                contextRoot="webapp/interceptor-manager">
         </webapp>
     </extension>
     <extension
             point="com.polarion.portal.tomcat.webapps">
         <webapp
-                name="polarion/interceptor-admin"
-                contextRoot="webapp/interceptor-admin">
+                name="polarion/interceptor-manager-admin"
+                contextRoot="webapp/interceptor-manager-admin">
         </webapp>
     </extension>
 </plugin>

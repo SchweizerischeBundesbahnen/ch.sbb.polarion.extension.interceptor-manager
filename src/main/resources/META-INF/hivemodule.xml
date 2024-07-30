@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module id="ch.sbb.polarion.extension.interceptor" version="1.0.0">
+<module id="ch.sbb.polarion.extension.interceptor_manager" version="1.0.0">
 
     <service-point id="dataServiceInterceptorFactory" visibility="private" interface="org.apache.hivemind.ServiceInterceptorFactory">
         <invoke-factory>
-            <construct class="ch.sbb.polarion.extension.interceptor.DataServiceInterceptorFactory">
+            <construct class="ch.sbb.polarion.extension.interceptor_manager.DataServiceInterceptorFactory">
             </construct>
         </invoke-factory>
     </service-point>
@@ -16,24 +16,24 @@
 
     <contribution configuration-id="com.polarion.xray.webui.administrationPageExtenders">
         <extender name="About"
-                  parentNodeName="Interceptor"
+                  parentNodeName="Interceptor Manager"
                   parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
                   iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
-                  pageUrl="/polarion/interceptor-admin/pages/about.jsp"
+                  pageUrl="/polarion/interceptor-manager-admin/pages/about.jsp"
                   projectScope="false"
                   repositoryScope="true"/>
         <extender name="REST API"
-                  parentNodeName="Interceptor"
+                  parentNodeName="Interceptor Manager"
                   parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
                   iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
-                  pageUrl="/polarion/interceptor/rest/swagger"
+                  pageUrl="/polarion/interceptor-manager/rest/swagger"
                   projectScope="false"
                   repositoryScope="true"/>
         <extender name="Settings"
-                  parentNodeName="Interceptor"
+                  parentNodeName="Interceptor Manager"
                   parentNodeIconUrl="/polarion/icons/default/topicIcons/documentsAndWiki.svg"
                   iconUrl="/polarion/icons/default/topicIconsSmall/documentsAndWiki.svg"
-                  pageUrl="/polarion/interceptor-admin/pages/settings.jsp?scope=$scope$"
+                  pageUrl="/polarion/interceptor-manager-admin/pages/settings.jsp?scope=$scope$"
                   projectScope="false"
                   repositoryScope="true"/>
     </contribution>

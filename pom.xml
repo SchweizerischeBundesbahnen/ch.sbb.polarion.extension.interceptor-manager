@@ -8,18 +8,18 @@
         <version>6.4.0</version>
     </parent>
 
-    <artifactId>ch.sbb.polarion.extension.interceptor</artifactId>
+    <artifactId>ch.sbb.polarion.extension.interceptor-manager</artifactId>
     <version>2.3.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Polarion ALM extension to execute validation during save/delete actions</name>
     <description>This Polarion extension provides possibility to run custom Java code (via hooks), before Polarion saves/deletes a Work Item, Document, Plan or Test Run.</description>
-    <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor</url>
+    <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager</url>
 
     <licenses>
         <license>
             <name>The SBB License, Version 1.0</name>
-            <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/blob/main/LICENSES/SBB.txt</url>
+            <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/blob/main/LICENSES/SBB.txt</url>
         </license>
     </licenses>
 
@@ -33,18 +33,19 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor.git</connection>
-        <developerConnection>scm:git:ssh://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor.git</developerConnection>
-        <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/tree/main</url>
+        <connection>scm:git:git://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager.git</connection>
+        <developerConnection>scm:git:ssh://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager.git</developerConnection>
+        <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/tree/main</url>
     </scm>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor/issues</url>
+        <url>https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues</url>
     </issueManagement>
 
     <properties>
-        <maven-jar-plugin.Extension-Context>interceptor</maven-jar-plugin.Extension-Context>
+        <maven-jar-plugin.Extension-Context>interceptor-manager</maven-jar-plugin.Extension-Context>
+        <maven-jar-plugin.Automatic-Module-Name>ch.sbb.polarion.extension.interceptor_manager</maven-jar-plugin.Automatic-Module-Name>
 
         <web.app.name>${maven-jar-plugin.Extension-Context}</web.app.name>
 
