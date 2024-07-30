@@ -10,4 +10,7 @@ Require-Bundle: com.polarion.portal.tomcat,
  org.springframework.spring-web,
  org.apache.commons.logging,
  org.apache.hivemind
-Export-Package: ch.sbb.polarion.extension.interceptor_manager
+Export-Package: ch.sbb.polarion.extension.interceptor_manager,
+ ch.sbb.polarion.extension.interceptor_manager.model,
+ ch.sbb.polarion.extension.interceptor_manager.settings,
+ ch.sbb.polarion.extension.interceptor_manager.util
