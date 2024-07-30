@@ -1,6 +1,6 @@
 const DEFAULT_SETTING_NAME = 'Default';
 SbbCommon.init({
-    extension: 'interceptor',
+    extension: 'interceptor-manager',
     setting: 'hook',
     scope: SbbCommon.getValueById('scope'),
     initCodeInput: true,

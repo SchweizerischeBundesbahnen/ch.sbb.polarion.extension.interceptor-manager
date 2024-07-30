@@ -28,10 +28,14 @@ Use Administration -> Interceptor Manager -> Settings page to enable/disable or 
 
 
 ### Hooks installation
-Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor_manager/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
+Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor-manager/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
 By default, newly added hooks are disabled and must be enabled manually.
 
 ## Upgrade
+
+### Upgrade from version 2.x.x to 3.0.0
+Version 3.0.0 has received significant change - project+package rename. Verify you're using the new subfolder name in the `extensions` folder.
+Also, this change prevents previous hooks versions from working. They must be replaced with the new ones built especially for v.3.0.0+. Note that doing this will reset hooks settings tho their default values, so do not forget to backup your actual settings to restore them after update. 
 
 ### Upgrade from version 1.x.x to 2.0.0
 Version 2.0.0 requires the new hooks model therefore hooks built for 1.x.x will stop working. They must be replaced with the new ones built especially for v.2.0.0+.

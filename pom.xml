@@ -8,8 +8,8 @@
         <version>6.4.0</version>
     </parent>
 
-    <artifactId>ch.sbb.polarion.extension.interceptor_manager</artifactId>
-    <version>2.3.1-SNAPSHOT</version>
+    <artifactId>ch.sbb.polarion.extension.interceptor-manager</artifactId>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
 
     <name>Polarion ALM extension to execute validation during save/delete actions</name>
@@ -45,6 +45,7 @@
 
     <properties>
         <maven-jar-plugin.Extension-Context>interceptor-manager</maven-jar-plugin.Extension-Context>
+        <maven-jar-plugin.Automatic-Module-Name>ch.sbb.polarion.extension.interceptor_manager</maven-jar-plugin.Automatic-Module-Name>
 
         <web.app.name>${maven-jar-plugin.Extension-Context}</web.app.name>
 

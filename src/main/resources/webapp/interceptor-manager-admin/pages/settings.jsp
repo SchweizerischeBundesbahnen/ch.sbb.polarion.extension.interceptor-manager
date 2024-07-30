@@ -4,7 +4,7 @@
 <%! String bundleTimestamp = ch.sbb.polarion.extension.generic.util.VersionUtils.getVersion().getBundleBuildTimestampDigitsOnly(); %>
 
 <head>
-    <title>Interceptor: Hooks settings</title>
+    <title>Interceptor Manager: Hooks settings</title>
     <link rel="stylesheet" href="../ui/generic/css/prism.css?bundle=<%= bundleTimestamp %>">
     <script type="text/javascript" src="../ui/generic/js/prism.js?bundle=<%= bundleTimestamp %>"></script>
     <link rel="stylesheet" href="../ui/generic/css/code-input.min.css?bundle=<%= bundleTimestamp %>">
@@ -16,7 +16,7 @@
 <body>
 
 <div class="standard-admin-page">
-    <h1 id="hooks-settings-header">Interceptor: Hooks settings</h1>
+    <h1 id="hooks-settings-header">Interceptor Manager: Hooks settings</h1>
 
     <div id="hooks-reload-container">
         <button id="hooks-reload-button" type="submit" onclick="readHooksList(true)" title="Reload jar files from the hooks containing folder">Reload hooks list</button>
@@ -43,7 +43,7 @@
                     <label id="enable-hook-label" for="enable-hook">Enable</label>
                 </div>
 
-                <div class="label-block" style="margin-top: 20px"><label>Interceptor properties</label></div>
+                <div class="label-block" style="margin-top: 20px"><label>Hook properties</label></div>
                 <code-input class="html-input vertical-resizable" id="properties-input" lang="properties" placeholder=""></code-input>
             </div>
         </div>
