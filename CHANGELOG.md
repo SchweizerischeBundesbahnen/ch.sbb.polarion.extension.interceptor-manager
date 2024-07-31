@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.0.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v2.3.0...v3.0.0) (2024-07-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename to interceptor-manager ([#71](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/71))
+
+### Features
+
+* rename to interceptor-manager ([#71](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/71)) ([1428df2](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/1428df22af27d3065dfe5f0ce2da010dbff8eaaa))
+
+
+### Bug Fixes
+
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.4.0 ([87abb10](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/87abb10905de2b4d72ac6c605ca8d1496c391030))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.5.0 ([2187282](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/21872821e50e78db0e67c1c50f8e99ed78214246))
+* more packages added to export-package in manifest ([#72](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/72)) ([839e8ef](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/839e8ef5d338f350a6a76ba3b789b18ce36cac84)), closes [#69](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/69)
+* UTF-8 for about.jsp ([#73](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/73)) ([50848c9](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/50848c97fa711496575010e81a27121f036d325f))
+
 ## [2.3.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v2.2.0...v2.3.0) (2024-07-18)
 
 
