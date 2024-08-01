@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.1](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.0.0...v3.0.1) (2024-08-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.5.1 ([de6c6cf](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/de6c6cfd577c95136b13605ad671de1d128fb0f5))
+* update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.ext… ([#77](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/77)) ([c3e5be8](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/c3e5be8c77bc11c6747e5c5d735f343a8c7a30c1))
+
 ## [3.0.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v2.3.0...v3.0.0) (2024-07-31)
 
 
