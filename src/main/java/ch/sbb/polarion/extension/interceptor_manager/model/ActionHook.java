@@ -5,6 +5,7 @@ import ch.sbb.polarion.extension.generic.settings.NamedSettingsRegistry;
 import ch.sbb.polarion.extension.generic.settings.SettingId;
 import ch.sbb.polarion.extension.interceptor_manager.settings.HookModel;
 import ch.sbb.polarion.extension.interceptor_manager.util.HookManifestUtils;
+import ch.sbb.polarion.extension.interceptor_manager.util.PropertiesUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.polarion.alm.projects.model.IUniqueObject;
@@ -20,16 +21,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Base class for a hook.
  */
 @Data
-@SuppressWarnings("java:S5993") //leave public constructors
+@SuppressWarnings({"unused", "java:S5993"}) //leave public constructors
 public abstract class ActionHook {
 
     public static final String ALL_WILDCARD = "*";
@@ -89,24 +93,51 @@ public abstract class ActionHook {
     @JsonIgnore
     public abstract String getDefaultSettings();
 
-    protected String getSettingsValue(String settingsId) {
-        return StringUtils.getEmptyIfNullTrimmed(loadSettings(false).getPropertiesMap().get(settingsId));
+    @NotNull
+    protected String getSettingsValue(@NotNull String settingsId, String... selectors) {
+        LinkedHashMap<String, String> valueMap = getSettingsValuesWithSelector(settingsId, selectors);
+        return StringUtils.getEmptyIfNullTrimmed(valueMap.isEmpty() ? null : valueMap.entrySet().iterator().next().getValue());
     }
 
-    @SuppressWarnings("unused")
-    protected boolean isCommaSeparatedSettingsHasItem(String itemToCheck, String settingsName) {
-        List<String> items = Arrays.asList(getSettingsValue(settingsName).split(","));
-        return items.contains(itemToCheck) || items.contains(ALL_WILDCARD);
+    protected boolean isCommaSeparatedSettingsHasItem(String itemToCheck, @NotNull String settingsId, String... selectors) {
+        String itemsString = getSettingsValue(settingsId, selectors);
+        return ALL_WILDCARD.equals(itemsString) || Stream.of(itemsString.split(",")).map(String::trim).anyMatch(s -> Objects.equals(s, itemToCheck));
     }
 
-    @SuppressWarnings("unused")
-    protected boolean isCommaSeparatedSettingsHasItem(String itemToCheck, String settingsName, String projectId) {
-        String itemsString = getSettingsValue(settingsName + DOT + projectId);
-        if(StringUtils.isEmpty(itemsString)) {
-            itemsString = getSettingsValue(settingsName + DOT + ALL_WILDCARD);
+    protected Boolean getSettingsValueAsBoolean(@NotNull String settingsId, String... selectors) {
+        String stringValue = getSettingsValue(settingsId, selectors);
+        return stringValue.isEmpty() ? null : Boolean.valueOf(stringValue);
+    }
+
+    protected Integer getSettingsValueAsInt(@NotNull String settingsId, String... selectors) {
+        String stringValue = getSettingsValue(settingsId, selectors);
+        return stringValue.isEmpty() ? null : Integer.valueOf(stringValue);
+    }
+
+    protected List<String> getSettingsValueAsList(@NotNull String settingsId, String... selectors) {
+        String stringValue = getSettingsValue(settingsId, selectors);
+        return stringValue.isEmpty() ? new ArrayList<>() : Stream.of(stringValue.split(",")).map(String::trim).toList();
+    }
+
+    protected LinkedHashMap<String, String> getSettingsValuesWithSelector(@NotNull String settingsId, String... selectors) {
+        return getSettingsValuesWithSelector(false, settingsId, selectors);
+    }
+
+    protected LinkedHashMap<String, String> getSettingsValuesWithSelector(boolean all, @NotNull String settingsId, String... selectors) {
+        LinkedHashMap<String, String> result = new LinkedHashMap<>();
+        String[] combinedSettingsIdWithSelectors = selectors == null ? new String[]{settingsId} :
+                Stream.concat(Stream.of(settingsId), Arrays.stream(selectors)).toArray(String[]::new);
+        List<String> selectorsCombinations = PropertiesUtils.generateSelectorsCombinations(combinedSettingsIdWithSelectors);
+        for (String combination : selectorsCombinations) {
+            String value = loadSettings(false).getPropertiesMap().get(combination);
+            if (value != null) {
+                result.put(combination, value);
+                if (!all) {
+                    break;
+                }
+            }
         }
-        List<String> items = Arrays.asList(itemsString.split(","));
-        return items.contains(itemToCheck) || items.contains(ALL_WILDCARD);
+        return result;
     }
 
     /**

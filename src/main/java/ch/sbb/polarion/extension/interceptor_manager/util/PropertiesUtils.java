@@ -2,6 +2,9 @@ package ch.sbb.polarion.extension.interceptor_manager.util;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @UtilityClass
 public class PropertiesUtils {
 
@@ -46,5 +49,42 @@ public class PropertiesUtils {
         }
 
         return builder.toString();
+    }
+
+    /**
+     * Generates comma-separated strings representing all possible combinations of the provided values in same order as they come in
+     * the input array and a character '*', e.g. for the input values ['projectId', 'typeId', 'fieldId'] the result must be as follows:
+     * <code>
+     * projectId.typeId.fieldId
+     * projectId.typeId.*
+     * projectId.*.fieldId=
+     * projectId.*.*
+     * *.typeId.fieldId
+     * *.typeId.*
+     * *.*.fieldId
+     * *.*.*
+     * </code>
+     *
+     * @param selectors array of selectors
+     * @return all possible combinations
+     */
+    public List<String> generateSelectorsCombinations(String... selectors) {
+        if (selectors.length == 0) {
+            return new ArrayList<>();
+        }
+        List<String> combinations = new ArrayList<>();
+        generateSelectorsCombinationsRecursive(selectors, 0, "", combinations);
+        return combinations;
+    }
+
+    private void generateSelectorsCombinationsRecursive(String[] values, int index, String current, List<String> combinations) {
+        if (index == values.length) {
+            combinations.add(current.substring(1)); // remove the leading "."
+            return;
+        }
+        // add the current value
+        generateSelectorsCombinationsRecursive(values, index + 1, current + "." + values[index], combinations);
+        // add the wildcard '*'
+        generateSelectorsCombinationsRecursive(values, index + 1, current + ".*", combinations);
     }
 }
