@@ -99,6 +99,7 @@ public abstract class ActionHook {
      *
      * @return null if the settings are valid and an error message if the settings are invalid (it will be displayed to the user)
      */
+    @SuppressWarnings("java:S1172") // parameter 'model' will be used by subclasses
     public String validateSettings(HookModel model) {
         return null;
     }
