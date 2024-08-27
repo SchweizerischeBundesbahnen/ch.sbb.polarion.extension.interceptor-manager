@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.1.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.0.2...v3.1.0) (2024-08-27)
+
+
+### Features
+
+* additional Methods in ActionHook to retrieve Settings ([#90](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/90)) ([fa910a1](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/fa910a18e1b9bdadc9809929f36af34731dfd8ca))
+* optional custom settings validation ([#93](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/93)) ([beba621](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/beba621261d32949dddd06b4f700b57287181cf4)), closes [#91](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/91)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.6.2 ([#85](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/85)) ([e931e58](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/e931e587aa08782228c9619508496ef54dd72431))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.6.3 ([267a220](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/267a220ab3aa26633c32669688e040c617f721af))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v6.7.0 ([eb7ac85](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/eb7ac8510926a46e6d9864f8592b9a390a66d581))
+
 ## [3.0.2](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.0.1...v3.0.2) (2024-08-08)
 
 
