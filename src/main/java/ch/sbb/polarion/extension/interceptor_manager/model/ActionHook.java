@@ -93,6 +93,16 @@ public abstract class ActionHook {
     @JsonIgnore
     public abstract String getDefaultSettings();
 
+
+    /**
+     * Called each time the settings are updated in the administration panel.
+     *
+     * @return null if the settings are valid and an error message if the settings are invalid (it will be displayed to the user)
+     */
+    public String validateSettings(HookModel model) {
+        return null;
+    }
+
     @NotNull
     protected String getSettingsValue(@NotNull String settingsId, String... selectors) {
         LinkedHashMap<String, String> valueMap = getSettingsValuesWithSelector(settingsId, selectors);
