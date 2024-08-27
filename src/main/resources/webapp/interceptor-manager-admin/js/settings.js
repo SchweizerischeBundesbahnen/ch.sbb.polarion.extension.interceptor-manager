@@ -28,7 +28,17 @@ function saveSettings() {
             SbbCommon.setNewerVersionNotificationVisible(false);
             readAndFillRevisions();
         },
-        onError: () => SbbCommon.showSaveErrorAlert()
+        onError: (status, errorMessage) => {
+            if (errorMessage) {
+                SbbCommon.showActionAlert({
+                    containerId: 'action-error',
+                    message: errorMessage,
+                    hideAlertByTimeout: false
+                });
+            } else {
+                SbbCommon.showSaveErrorAlert()
+            }
+        }
     });
 }
 
