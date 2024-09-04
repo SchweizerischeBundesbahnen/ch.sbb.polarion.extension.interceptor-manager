@@ -159,8 +159,8 @@ function parseAndSetSettings(text, checkNewerVersion) {
     const settings = JSON.parse(text);
     SbbCommon.setCheckboxValueById('enable-hook', settings.enabled);
     SbbCommon.setValueById('properties-input', settings.properties);
-    if (checkNewerVersion && settings.hookVersion !== Hooks.selectedHook.version) {
-        SbbCommon.setNewerVersionNotificationVisible(true);
+    if (checkNewerVersion) {
+        SbbCommon.setNewerVersionNotificationVisible(settings.hookVersion !== Hooks.selectedHook.version);
     }
 }
 
