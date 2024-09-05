@@ -1,7 +1,7 @@
 package ch.sbb.polarion.extension.interceptor_manager.rest;
 
 import ch.sbb.polarion.extension.generic.rest.GenericRestApplication;
-import ch.sbb.polarion.extension.generic.rest.controller.NamedSettingsInternalController;
+import ch.sbb.polarion.extension.generic.rest.controller.NamedSettingsApiController;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksApiController;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksInternalController;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksSettingsApiController;
@@ -9,6 +9,7 @@ import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksSettin
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class InterceptorManagerRestApplication extends GenericRestApplication {
 
@@ -17,10 +18,14 @@ public class InterceptorManagerRestApplication extends GenericRestApplication {
         return Set.of(
                 new HooksSettingsInternalController(),
                 new HooksSettingsApiController(),
-                new NamedSettingsInternalController(), // standard settings internal controller still needed for fetching revisions list (in common.js from generic extension)
                 new HooksInternalController(),
                 new HooksApiController()
         );
     }
 
+    @Override
+    protected @NotNull Set<Object> getGenericControllerSingletons() {
+        // we do not remove NamedSettingsInternalController because it is still needed for fetching revisions list (in common.js from generic extension)
+        return super.getGenericControllerSingletons().stream().filter(c -> !(c instanceof NamedSettingsApiController)).collect(Collectors.toSet());
+    }
 }
