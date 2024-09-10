@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.1.1](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.1.0...v3.1.1) (2024-09-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v7 ([#97](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/97)) ([d24ff1a](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/d24ff1aeeb3ce66ca42fae9d0047d38d0612b14a))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v7.1.0 ([4bb2eb8](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/4bb2eb829dac319c4c16f311487a2e5e4e4f5743))
+* extra settings-related block removed from REST API page ([#102](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/102)) ([6189551](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/61895510751382d8c09187e83b5d9544bf3df0a7)), closes [#101](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/101)
+* recalculate newer plugin version warning visibility when selecti… ([#100](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/100)) ([b460e3f](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/b460e3f7c9861bba9adb25981442fb00615e5ea1)), closes [#98](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/98)
+* recalculate newer plugin version warning visibility when selecting another hook ([b460e3f](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/b460e3f7c9861bba9adb25981442fb00615e5ea1))
+
 ## [3.1.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.0.2...v3.1.0) (2024-08-27)
 
 
