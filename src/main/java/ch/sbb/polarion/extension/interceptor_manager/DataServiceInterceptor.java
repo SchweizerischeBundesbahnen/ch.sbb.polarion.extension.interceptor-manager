@@ -3,6 +3,7 @@ package ch.sbb.polarion.extension.interceptor_manager;
 import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
 import ch.sbb.polarion.extension.interceptor_manager.model.HookExecutor;
 import ch.sbb.polarion.extension.interceptor_manager.model.HooksRegistry;
+import ch.sbb.polarion.extension.interceptor_manager.model.IActionHook;
 import com.polarion.core.util.StringUtils;
 import com.polarion.core.util.exceptions.UserFriendlyRuntimeException;
 import com.polarion.core.util.logging.Logger;
@@ -20,7 +21,7 @@ public class DataServiceInterceptor {
                 .filter(h -> h.isEnabled() &&
                         h.getActionType().equals(saveAction ? ActionHook.ActionType.SAVE : ActionHook.ActionType.DELETE) &&
                         h.getItemTypes().stream().anyMatch(type -> type.canProcess(polarionObject))
-                ).map(ActionHook::getExecutor).toList();
+                ).map(IActionHook::getExecutor).toList();
     }
 
     public void callExecutors(Object executorsListObject, boolean pre, IPObject polarionObject) {

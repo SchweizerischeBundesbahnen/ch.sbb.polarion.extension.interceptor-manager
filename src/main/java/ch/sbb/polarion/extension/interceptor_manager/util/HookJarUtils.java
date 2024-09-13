@@ -1,6 +1,7 @@
 package ch.sbb.polarion.extension.interceptor_manager.util;
 
 import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.IActionHook;
 import com.polarion.core.util.logging.Logger;
 import lombok.experimental.UtilityClass;
 
@@ -22,8 +23,8 @@ public class HookJarUtils {
     private static final String HOOKS_DIR = "hooks";
     private static final String MAIN_CLASS_MANIFEST_ATTRIBUTE = "Main-Class";
 
-    public List<ActionHook> loadHooks() {
-        List<ActionHook> hooks = new ArrayList<>();
+    public List<IActionHook> loadHooks() {
+        List<IActionHook> hooks = new ArrayList<>();
 
         for (Class hookClass : loadClasses(new File(getRootDir(), HOOKS_DIR).getPath())) {
             if (!ActionHook.class.isAssignableFrom(hookClass)) {
@@ -32,7 +33,7 @@ public class HookJarUtils {
             }
 
             try {
-                ActionHook actionHook = (ActionHook) hookClass.getConstructor().newInstance();
+                IActionHook actionHook = (IActionHook) hookClass.getConstructor().newInstance();
                 hooks.add(actionHook);
                 logger.info("Loaded hook " + actionHook.getName());
             } catch (Exception e) {

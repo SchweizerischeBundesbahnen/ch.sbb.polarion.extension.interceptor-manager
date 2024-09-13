@@ -3,6 +3,7 @@ package ch.sbb.polarion.extension.interceptor_manager.model;
 import ch.sbb.polarion.extension.generic.settings.NamedSettingsRegistry;
 import ch.sbb.polarion.extension.interceptor_manager.settings.HookSettings;
 import ch.sbb.polarion.extension.interceptor_manager.util.HookJarUtils;
+import ch.sbb.polarion.extension.interceptor_manager.osgi.OSGiUtils;
 import com.polarion.core.util.logging.Logger;
 
 import java.util.ArrayList;
@@ -14,18 +15,26 @@ public enum HooksRegistry {
 
     private static final Logger logger = Logger.getLogger(HooksRegistry.class);
 
-    private final List<ActionHook> hooks = new ArrayList<>();
+    private final List<IActionHook> hooks = new ArrayList<>();
 
     public synchronized void refresh() {
         logger.info("Loading hooks list...");
         hooks.clear();
         hooks.addAll(HookJarUtils.loadHooks());
+        hooks.addAll(OSGiUtils.lookupOSGiService(IActionHook.class));
         logger.info(hooks.size() + " hooks loaded.");
         NamedSettingsRegistry.INSTANCE.getAll().clear();
         hooks.forEach(hook -> NamedSettingsRegistry.INSTANCE.getAll().add(new HookSettings(hook)));
     }
 
-    public List<ActionHook> list() {
+    public synchronized void addHook(IActionHook actionHook) {
+        logger.info("Adding hook: " + actionHook.getClass().getSimpleName());
+        hooks.add(actionHook);
+        logger.info("New number of hooks: " + hooks.size());
+        NamedSettingsRegistry.INSTANCE.getAll().add(new HookSettings(actionHook));
+    }
+
+    public List<IActionHook> list() {
         return new ArrayList<>(hooks);
     }
 }

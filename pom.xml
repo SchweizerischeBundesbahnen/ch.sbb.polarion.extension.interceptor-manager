@@ -51,6 +51,8 @@
 
         <!--suppress UnresolvedMavenProperty -->
         <markdown2html-maven-plugin.failOnError>${env.MARKDOWN2HTML_MAVEN_PLUGIN_FAIL_ON_ERROR}</markdown2html-maven-plugin.failOnError>
+        <org.osgi.framework.version>1.10.0</org.osgi.framework.version>
+        <org.osgi.util.tracker.version>1.5.4</org.osgi.util.tracker.version>
     </properties>
 
     <dependencies>
@@ -64,6 +66,18 @@
             <groupId>org.apache.hivemind</groupId>
             <artifactId>hivemind-1.1.1</artifactId>
             <version>${polarion.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.framework</artifactId>
+            <version>${org.osgi.framework.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.util.tracker</artifactId>
+            <version>${org.osgi.util.tracker.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
