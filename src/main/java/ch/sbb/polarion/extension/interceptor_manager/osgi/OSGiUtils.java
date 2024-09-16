@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 public class OSGiUtils {
     private static final Logger logger = Logger.getLogger(OSGiUtils.class);
 
+    private OSGiUtils() {}
+
     public static <T> List<T> lookupOSGiService(Class<T> serviceInterface) {
         Bundle bundle = FrameworkUtil.getBundle(OSGiUtils.class);
         if (bundle == null) {
