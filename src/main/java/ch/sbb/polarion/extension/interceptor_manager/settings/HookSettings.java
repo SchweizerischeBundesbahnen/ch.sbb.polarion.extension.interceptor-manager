@@ -2,22 +2,22 @@ package ch.sbb.polarion.extension.interceptor_manager.settings;
 
 import ch.sbb.polarion.extension.generic.settings.GenericNamedSettings;
 import ch.sbb.polarion.extension.generic.settings.SettingsService;
-import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.IActionHook;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.Optional;
 
 public class HookSettings extends GenericNamedSettings<HookModel> {
-    private final ActionHook hook;
+    private final IActionHook hook;
 
-    public HookSettings(ActionHook hook) {
+    public HookSettings(IActionHook hook) {
         super(hook.getName());
         this.hook = hook;
     }
 
     @VisibleForTesting
-    public HookSettings(ActionHook hook, SettingsService settingsService) {
+    public HookSettings(IActionHook hook, SettingsService settingsService) {
         super(hook.getName(), settingsService);
         this.hook = hook;
     }

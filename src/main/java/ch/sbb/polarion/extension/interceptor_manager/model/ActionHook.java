@@ -34,7 +34,7 @@ import java.util.stream.Stream;
  */
 @Data
 @SuppressWarnings({"unused", "java:S5993"}) //leave public constructors
-public abstract class ActionHook {
+public abstract class ActionHook implements IActionHook {
 
     public static final String ALL_WILDCARD = "*";
     public static final String DOT = ".";
@@ -65,6 +65,7 @@ public abstract class ActionHook {
         this.description = description;
     }
 
+    @Override
     public HookModel loadSettings(boolean forceUpdate) {
         if (forceUpdate || settings == null) {
             settings = (HookModel) NamedSettingsRegistry.INSTANCE.getByFeatureName(getName()).read("", SettingId.fromName(NamedSettings.DEFAULT_NAME), null);
@@ -78,19 +79,23 @@ public abstract class ActionHook {
      * return a new instance here in order to prevent data rewrite by the concurrent executions.
      */
     @JsonIgnore
+    @Override
     public abstract @NotNull HookExecutor getExecutor();
 
     @JsonProperty("name")
+    @Override
     public String getName() {
         return getClass().getSimpleName();
     }
 
     @JsonProperty("enabled")
+    @Override
     public boolean isEnabled() {
         return loadSettings(false).isEnabled();
     }
 
     @JsonIgnore
+    @Override
     public abstract String getDefaultSettings();
 
 
@@ -100,6 +105,7 @@ public abstract class ActionHook {
      * @return null if the settings are valid and an error message if the settings are invalid (it will be displayed to the user)
      */
     @SuppressWarnings("java:S1172") // parameter 'model' will be used by subclasses
+    @Override
     public String validateSettings(HookModel model) {
         return null;
     }

@@ -1,7 +1,7 @@
 package ch.sbb.polarion.extension.interceptor_manager.rest.controller;
 
 import ch.sbb.polarion.extension.generic.service.PolarionService;
-import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.IActionHook;
 import ch.sbb.polarion.extension.interceptor_manager.model.HooksRegistry;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +25,7 @@ public class HooksInternalController {
     @GET
     @Path("/hooks")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ActionHook> getHooksList(@QueryParam("reload") Boolean reload) {
+    public List<IActionHook> getHooksList(@QueryParam("reload") Boolean reload) {
         if (Boolean.TRUE.equals(reload)) {
             HooksRegistry.HOOKS.refresh();
         }

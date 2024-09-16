@@ -1,7 +1,7 @@
 package ch.sbb.polarion.extension.interceptor_manager.settings;
 
 import ch.sbb.polarion.extension.generic.settings.SettingsService;
-import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
+import ch.sbb.polarion.extension.interceptor_manager.model.IActionHook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -16,7 +16,7 @@ class HookSettingsTest {
 
     @Test
     public void testValidate() {
-        ActionHook hook = mock(ActionHook.class);
+        IActionHook hook = mock(IActionHook.class);
 
         HookModel hookModel = mock(HookModel.class);
         HookSettings settings = new HookSettings(hook, mock(SettingsService.class));
