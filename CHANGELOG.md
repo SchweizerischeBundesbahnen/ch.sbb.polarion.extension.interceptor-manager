@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.1.1...v3.2.0) (2024-09-16)
+
+
+### Features
+
+* adapted interceptor-manager to support OSGi mechanism of hooks … ([#107](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/107)) ([4925661](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/4925661aed712cb424a25c4558979906379d804a)), closes [#106](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/106)
+
 ## [3.1.1](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.1.0...v3.1.1) (2024-09-10)
 
 
