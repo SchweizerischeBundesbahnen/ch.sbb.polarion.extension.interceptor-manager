@@ -8,19 +8,35 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class HooksRegistryTest {
 
     @Test
-    public void shouldThrowExceptionForHookLoadedNotFromJar() {
-        assertThatThrownBy(() -> HooksRegistry.HOOKS.addHook(new ActionHook(ActionHook.ItemType.PLAN, ActionHook.ActionType.DELETE, "Test hook") {
-            @Override
-            public @NotNull HookExecutor getExecutor() {
-                return new HookExecutor() {};
-            }
+    public void shouldThrowExceptionForHookLoadedNotFromJarWithoutVersion() {
+        assertThatThrownBy(() -> HooksRegistry.HOOKS.addHook(new MyActionHook()))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
-            @Override
-            public String getDefaultSettings() {
-                return "";
-            }
-        }))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("is not loaded from a JAR file");
+    @Test
+    public void shouldThrowExceptionForHookWithVersion() {
+        assertThatThrownBy(() -> HooksRegistry.HOOKS.addHook(new MyActionHook("test version")))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    private static class MyActionHook extends ActionHook {
+        public MyActionHook() {
+            this(null);
+        }
+
+        public MyActionHook(String version) {
+            super(ItemType.PLAN, ActionType.DELETE, version, "Test hook");
+        }
+
+        @Override
+        public @NotNull HookExecutor getExecutor() {
+            return new HookExecutor() {
+            };
+        }
+
+        @Override
+        public String getDefaultSettings() {
+            return "";
+        }
     }
 }
