@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.CodeSource;
@@ -40,24 +39,19 @@ public class HookManifestUtils {
 
     public static @Nullable Manifest loadManifestByClass(@NotNull Class<? extends ActionHook> hookClass) throws IOException {
         CodeSource codeSource = hookClass.getProtectionDomain().getCodeSource();
+        if (codeSource != null) {
+            URL location = codeSource.getLocation();
+            Path jarPath = Paths.get(location.getPath());
 
-        try {
-            if (codeSource != null) {
-                URL location = codeSource.getLocation();
-                Path jarPath = Paths.get(location.getPath());
-
-                if (Files.isRegularFile(jarPath)) {
-                    try (JarFile jarFile = new JarFile(jarPath.toFile())) {
-                        return jarFile.getManifest();
-                    }
-                } else {
-                    throw new IllegalArgumentException("The class %s is not loaded from a JAR file.".formatted(hookClass.getName()));
+            if (Files.isRegularFile(jarPath)) {
+                try (JarFile jarFile = new JarFile(jarPath.toFile())) {
+                    return jarFile.getManifest();
                 }
             } else {
-                throw new IllegalArgumentException("Could not determine the code source location.");
+                throw new IllegalArgumentException("The class %s is not loaded from a JAR file.".formatted(hookClass.getName()));
             }
-        } catch (InvalidPathException e) {
-            throw new IllegalArgumentException("Code location is not convertable to path: " + e.getMessage(), e);
+        } else {
+            throw new IllegalArgumentException("Could not determine the code source location.");
         }
     }
 }
