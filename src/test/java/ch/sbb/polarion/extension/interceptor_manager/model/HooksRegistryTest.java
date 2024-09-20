@@ -10,7 +10,7 @@ class HooksRegistryTest {
     @Test
     public void shouldThrowExceptionForHookLoadedNotFromJarWithoutVersion() {
         assertThatThrownBy(() -> HooksRegistry.HOOKS.addHook(new MyActionHook()))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
