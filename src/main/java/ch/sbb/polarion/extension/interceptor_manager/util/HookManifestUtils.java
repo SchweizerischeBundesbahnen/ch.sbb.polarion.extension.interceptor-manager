@@ -1,15 +1,14 @@
 package ch.sbb.polarion.extension.interceptor_manager.util;
 
 import ch.sbb.polarion.extension.interceptor_manager.model.ActionHook;
+import com.polarion.core.util.logging.Logger;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.CodeSource;
@@ -20,7 +19,7 @@ import java.util.jar.Manifest;
 @UtilityClass
 @SuppressWarnings("unused")
 public class HookManifestUtils {
-
+    private static final Logger logger = Logger.getLogger(HookManifestUtils.class);
     public static final String HOOK_VERSION = "Hook-Version";
 
     public static @Nullable String getHookVersion(@NotNull Class<? extends ActionHook> hookClass) {
@@ -32,32 +31,27 @@ public class HookManifestUtils {
             } else {
                 return null;
             }
-        } catch (IOException | URISyntaxException e) {
-            throw new IllegalStateException(e);
+        } catch (Exception e) {
+            logger.error("Cannot get hook version from Manifest: " + e.getMessage(), e);
+            return null;
         }
     }
 
-    public static @Nullable Manifest loadManifestByClass(@NotNull Class<? extends ActionHook> hookClass) throws IOException, URISyntaxException {
+    public static @Nullable Manifest loadManifestByClass(@NotNull Class<? extends ActionHook> hookClass) throws IOException {
         CodeSource codeSource = hookClass.getProtectionDomain().getCodeSource();
+        if (codeSource != null) {
+            URL location = codeSource.getLocation();
+            Path jarPath = Paths.get(location.getPath());
 
-        try {
-            if (codeSource != null) {
-                URL location = codeSource.getLocation();
-                Path jarPath = Paths.get(location.getPath());
-
-                if (Files.isRegularFile(jarPath)) {
-                    try (JarFile jarFile = new JarFile(jarPath.toFile())) {
-                        return jarFile.getManifest();
-                    }
-                } else {
-                    throw new IllegalArgumentException("The class %s is not loaded from a JAR file.".formatted(hookClass.getName()));
+            if (Files.isRegularFile(jarPath)) {
+                try (JarFile jarFile = new JarFile(jarPath.toFile())) {
+                    return jarFile.getManifest();
                 }
             } else {
-                throw new IllegalArgumentException("Could not determine the code source location.");
+                throw new IllegalArgumentException("The class %s is not loaded from a JAR file.".formatted(hookClass.getName()));
             }
-        } catch (InvalidPathException e) {
-            throw new IllegalArgumentException("Code location is not convertable to path: " + e.getMessage(), e);
+        } else {
+            throw new IllegalArgumentException("Could not determine the code source location.");
         }
     }
-
 }
