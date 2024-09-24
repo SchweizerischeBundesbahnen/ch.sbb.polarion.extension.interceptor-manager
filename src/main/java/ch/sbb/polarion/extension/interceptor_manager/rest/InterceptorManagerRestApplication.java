@@ -2,6 +2,7 @@ package ch.sbb.polarion.extension.interceptor_manager.rest;
 
 import ch.sbb.polarion.extension.generic.rest.GenericRestApplication;
 import ch.sbb.polarion.extension.generic.rest.controller.NamedSettingsApiController;
+import ch.sbb.polarion.extension.interceptor_manager.model.HooksRegistry;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksApiController;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksInternalController;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksSettingsApiController;
@@ -12,6 +13,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InterceptorManagerRestApplication extends GenericRestApplication {
+
+    public InterceptorManagerRestApplication() {
+        // Refresh actions hooks registry to process guice hooks after Google Guice platform was initialized
+        HooksRegistry.HOOKS.refresh();
+    }
 
     @Override
     protected @NotNull Set<Object> getExtensionControllerSingletons() {

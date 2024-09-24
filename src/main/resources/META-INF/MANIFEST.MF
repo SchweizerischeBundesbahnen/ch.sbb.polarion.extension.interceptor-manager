@@ -3,6 +3,7 @@ Bundle-Name: Interceptor Manager Extension for Polarion ALM
 Bundle-Activator: ch.sbb.polarion.extension.interceptor_manager.osgi.HooksBundleActivator
 Bundle-ActivationPolicy: lazy
 Require-Bundle: com.polarion.portal.tomcat,
+ com.polarion.platform.guice,
  com.polarion.alm.ui,
  com.polarion.alm.tracker,
  org.glassfish.jersey,

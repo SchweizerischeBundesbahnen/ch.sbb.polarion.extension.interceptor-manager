@@ -31,9 +31,10 @@ Use Administration -> Interceptor Manager -> Settings page to enable/disable or 
 #### Standalone jar hooks
 Copy hook jar to hooks folder (`<polarion_home>/polarion/extensions/ch.sbb.polarion.extension.interceptor-manager/eclipse/plugins/hooks`) and enforce hooks reloading from the settings page or restart Polarion.
 By default, newly added hooks are disabled and must be enabled manually.
-#### Hooks from Another Polarion Extension
-Hooks can be located in another Polarion extension. In this case, the extension should register the hooks as an OSGi service using the IActionHook interface.
-For more details, refer to the example at [Delete Non-resolved Module Comments as OSGi Service](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager.hook-samples/tree/main/hook-samples-osgi).
+#### Hooks from Different Polarion Extension
+Hooks can be located in another Polarion extension. In this case, the following two approaches to register the hooks are supported:
+ - OSGi Services, illustrated in example: [Delete Non-resolved Module Comments as OSGi Service](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager.hook-samples/tree/main/hook-samples-osgi)
+ - Google Guice, illustrated in example: [Delete Non-resolved Module Comments as Guice Module](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager.hook-samples/tree/main/hook-samples-guice)
 
 ## Upgrade
 
