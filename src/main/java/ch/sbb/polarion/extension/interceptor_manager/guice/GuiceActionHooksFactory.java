@@ -25,7 +25,9 @@ public class GuiceActionHooksFactory {
     @Inject
     @SuppressWarnings("unused")
     public void setActionHooks(Set<IActionHook> actionHooks) {
-        this.actionHooks.addAll(actionHooks);
-        logger.info("Added guice action hooks: " + actionHooks.size());
+        if (actionHooks != null) {
+            this.actionHooks.addAll(actionHooks);
+            logger.info("Added guice action hooks: " + actionHooks.size());
+        }
     }
 }
