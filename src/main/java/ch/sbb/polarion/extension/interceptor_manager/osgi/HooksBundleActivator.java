@@ -1,7 +1,6 @@
 package ch.sbb.polarion.extension.interceptor_manager.osgi;
 
 import ch.sbb.polarion.extension.interceptor_manager.model.IActionHook;
-import ch.sbb.polarion.extension.interceptor_manager.model.HooksRegistry;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -13,7 +12,6 @@ public class HooksBundleActivator implements BundleActivator {
     public void start(BundleContext bundleContext) {
         serviceTracker = new ServiceTracker<>(bundleContext, IActionHook.class, new HooksServiceTrackerCustomizer(bundleContext));
         serviceTracker.open();
-        HooksRegistry.HOOKS.refresh();
     }
 
     @Override
@@ -22,5 +20,4 @@ public class HooksBundleActivator implements BundleActivator {
             serviceTracker.close();
         }
     }
-
 }

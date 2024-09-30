@@ -1,9 +1,10 @@
 package ch.sbb.polarion.extension.interceptor_manager.model;
 
 import ch.sbb.polarion.extension.generic.settings.NamedSettingsRegistry;
+import ch.sbb.polarion.extension.interceptor_manager.guice.GuiceActionHooksFactory;
+import ch.sbb.polarion.extension.interceptor_manager.osgi.OSGiUtils;
 import ch.sbb.polarion.extension.interceptor_manager.settings.HookSettings;
 import ch.sbb.polarion.extension.interceptor_manager.util.HookJarUtils;
-import ch.sbb.polarion.extension.interceptor_manager.osgi.OSGiUtils;
 import com.polarion.core.util.logging.Logger;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public enum HooksRegistry {
         hooks.clear();
         hooks.addAll(HookJarUtils.loadHooks());
         hooks.addAll(OSGiUtils.lookupOSGiService(IActionHook.class));
+        hooks.addAll(GuiceActionHooksFactory.build().getActionHooks());
         logger.info(hooks.size() + " hooks loaded.");
         NamedSettingsRegistry.INSTANCE.getAll().clear();
         hooks.forEach(hook -> NamedSettingsRegistry.INSTANCE.getAll().add(new HookSettings(hook)));
