@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.3.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.2.0...v3.3.0) (2024-09-30)
+
+
+### Features
+
+* Added Google Guice ActionHooks support ([#113](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/113)) ([1d7e6af](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/1d7e6af300b71b6b25d2ac7eb96d0472d3005d60)), closes [#106](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/106)
+
+
+### Bug Fixes
+
+* Catch InvalidPathException and adapted registry test ([#110](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/110)) ([25fad55](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/25fad555c71c1ce0c736300274fb4fb1a812ab27)), closes [#106](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/106)
+
 ## [3.2.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v3.1.1...v3.2.0) (2024-09-16)
 
 
