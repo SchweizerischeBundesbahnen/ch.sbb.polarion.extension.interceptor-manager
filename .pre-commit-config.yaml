@@ -17,7 +17,7 @@ repos:
       - id: no-commit-to-branch
       - id: mixed-line-ending
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.19.2
+    rev: v8.19.3
     hooks:
       - id: gitleaks
   - repo: https://github.com/grigoriev/pre-commit-check-git-user
@@ -26,6 +26,6 @@ repos:
       - id: check-git-config-user-email
         args: [--templates, ^\S+\.\S+@sbb\.ch$]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.29.0
+    rev: v3.29.1
     hooks:
       - id: commitizen
