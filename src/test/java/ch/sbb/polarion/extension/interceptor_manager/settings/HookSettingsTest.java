@@ -1,5 +1,7 @@
 package ch.sbb.polarion.extension.interceptor_manager.settings;
 
+import ch.sbb.polarion.extension.generic.context.CurrentContextConfig;
+import ch.sbb.polarion.extension.generic.context.CurrentContextExtension;
 import ch.sbb.polarion.extension.generic.settings.SettingsService;
 import ch.sbb.polarion.extension.interceptor_manager.model.IActionHook;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class, CurrentContextExtension.class})
+@CurrentContextConfig("interceptor-manager")
 class HookSettingsTest {
 
     @Test
