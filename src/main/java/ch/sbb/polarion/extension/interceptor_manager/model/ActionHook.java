@@ -16,6 +16,7 @@ import com.polarion.alm.tracker.model.ITestRun;
 import com.polarion.alm.tracker.model.IWorkItem;
 import com.polarion.alm.tracker.model.IWorkRecord;
 import com.polarion.core.util.StringUtils;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,10 +41,19 @@ public abstract class ActionHook implements IActionHook {
     public static final String DOT = ".";
 
     @JsonIgnore
+    @Schema(hidden = true)
     protected HookModel settings;
+
+    @Schema(description = "List of item types associated with the hook")
     private List<ItemType> itemTypes;
+
+    @Schema(description = "Action type associated with the hook")
     private ActionType actionType;
+
+    @Schema(description = "Version of the hook")
     private String version;
+
+    @Schema(description = "Description of the hook")
     private String description;
 
     public ActionHook(@NotNull ItemType itemType, @NotNull ActionType actionType, @Nullable String description) {
@@ -160,8 +170,12 @@ public abstract class ActionHook implements IActionHook {
     /**
      * Interceptor actions type
      */
+    @Schema(description = "Represents the type of actions that can be intercepted")
     public enum ActionType {
+        @Schema(description = "Action to save an item")
         SAVE("save"),
+
+        @Schema(description = "Action to delete an item")
         DELETE("delete");
 
         final String methodName;
@@ -182,12 +196,24 @@ public abstract class ActionHook implements IActionHook {
     /**
      * Interceptor item type
      */
+    @Schema(description = "Represents the type of items that can be intercepted")
     public enum ItemType {
+        @Schema(description = "A work item")
         WORKITEM(IWorkItem.class),
+
+        @Schema(description = "A test run item")
         TESTRUN(ITestRun.class),
+
+        @Schema(description = "A plan item")
         PLAN(IPlan.class),
+
+        @Schema(description = "A module item")
         MODULE(IModule.class),
+
+        @Schema(description = "A comment associated with a module")
         MODULE_COMMENT(IModuleComment.class),
+
+        @Schema(description = "A work record item")
         WORK_RECORD(IWorkRecord.class);
 
         final Class<? extends IUniqueObject> itemClass;
@@ -199,6 +225,5 @@ public abstract class ActionHook implements IActionHook {
         public boolean canProcess(Object object) {
             return object != null && itemClass.isAssignableFrom(object.getClass());
         }
-
     }
 }
