@@ -36,6 +36,10 @@ Hooks can be located in another Polarion extension. In this case, the following 
  - OSGi Services, illustrated in example: [Delete Non-resolved Module Comments as OSGi Service](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager.hook-samples/tree/main/hook-samples-osgi)
  - Google Guice, illustrated in example: [Delete Non-resolved Module Comments as Guice Module](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager.hook-samples/tree/main/hook-samples-guice)
 
+### REST API
+
+This extension provides REST API. OpenAPI Specification can be obtained [here](docs/openapi.json).
+
 ## Upgrade
 
 ### Upgrade from version 2.x.x to 3.0.0
