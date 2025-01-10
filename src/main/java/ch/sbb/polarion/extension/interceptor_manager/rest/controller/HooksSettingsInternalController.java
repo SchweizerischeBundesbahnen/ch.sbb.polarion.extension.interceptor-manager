@@ -1,6 +1,6 @@
 package ch.sbb.polarion.extension.interceptor_manager.rest.controller;
 
-import ch.sbb.polarion.extension.generic.rest.controller.NamedSettingsInternalController;
+import ch.sbb.polarion.extension.generic.rest.controller.settings.NamedSettingsInternalController;
 import ch.sbb.polarion.extension.generic.settings.NamedSettings;
 import ch.sbb.polarion.extension.generic.settings.Revision;
 import ch.sbb.polarion.extension.generic.settings.SettingsModel;

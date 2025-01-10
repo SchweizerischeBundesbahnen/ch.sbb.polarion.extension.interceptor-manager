@@ -1,7 +1,7 @@
 package ch.sbb.polarion.extension.interceptor_manager.rest;
 
 import ch.sbb.polarion.extension.generic.rest.GenericRestApplication;
-import ch.sbb.polarion.extension.generic.rest.controller.NamedSettingsApiController;
+import ch.sbb.polarion.extension.generic.rest.controller.settings.NamedSettingsApiController;
 import ch.sbb.polarion.extension.interceptor_manager.model.HooksRegistry;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksApiController;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksInternalController;

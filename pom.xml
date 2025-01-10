@@ -5,7 +5,7 @@
     <parent>
         <groupId>ch.sbb.polarion.extensions</groupId>
         <artifactId>ch.sbb.polarion.extension.generic</artifactId>
-        <version>7.7.0</version>
+        <version>8.0.0</version>
     </parent>
 
     <artifactId>ch.sbb.polarion.extension.interceptor-manager</artifactId>
@@ -139,7 +139,7 @@
                     <outputFormat>JSON</outputFormat>
                     <sortOutput>true</sortOutput>
                     <resourcePackages>
-                        <package>ch.sbb.polarion.extension.generic.rest.controller</package>
+                        <package>ch.sbb.polarion.extension.generic.rest.controller.info</package>
                         <package>ch.sbb.polarion.extension.generic.rest.model</package>
                         <package>ch.sbb.polarion.extension.interceptor_manager.rest.controller</package>
                         <package>ch.sbb.polarion.extension.interceptor_manager.model</package>
