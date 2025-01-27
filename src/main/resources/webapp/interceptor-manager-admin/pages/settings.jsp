@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../ui/generic/css/code-input.min.css?bundle=<%= bundleTimestamp %>">
     <script type="text/javascript" src="../ui/generic/js/code-input.min.js?bundle=<%= bundleTimestamp %>"></script>
     <link rel="stylesheet" href="../ui/generic/css/common.css?bundle=<%= bundleTimestamp %>">
-    <link rel="stylesheet" href="../css/interceptor-admin.css?bundle=<%= bundleTimestamp %>">
+    <link rel="stylesheet" href="../css/interceptor-manager-admin.css?bundle=<%= bundleTimestamp %>">
 </head>
 
 <body>
