@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../ui/generic/js/code-input.min.js?bundle=<%= bundleTimestamp %>"></script>
     <link rel="stylesheet" href="../ui/generic/css/common.css?bundle=<%= bundleTimestamp %>">
     <link rel="stylesheet" href="../css/interceptor-manager-admin.css?bundle=<%= bundleTimestamp %>">
+    <script type="module" src="../js/modules/settings.js?bundle=<%= bundleTimestamp %>"></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
     <h1 id="hooks-settings-header">Interceptor Manager: Hooks settings</h1>
 
     <div id="hooks-reload-container">
-        <button id="hooks-reload-button" type="submit" onclick="readHooksList(true)" title="Reload jar files from the hooks containing folder">Reload hooks list</button>
+        <button id="hooks-reload-button" type="submit" title="Reload jar files from the hooks containing folder">Reload hooks list</button>
     </div>
 
     <div id="hooks-choose-container">
@@ -52,13 +53,7 @@
     <input id="scope" type="hidden" value="<%= request.getParameter("scope")%>"/>
 </div>
 
-<jsp:include page='/common/jsp/buttons.jsp'>
-    <jsp:param name="saveFunction" value="saveSettings()"/>
-    <jsp:param name="cancelFunction" value="cancelEdit()"/>
-    <jsp:param name="defaultFunction" value="revertToDefault()"/>
-</jsp:include>
+<jsp:include page='/common/jsp/buttons.jsp'/>
 
-<script type="text/javascript" src="../ui/generic/js/common.js?bundle=<%= bundleTimestamp %>"></script>
-<script type="text/javascript" src="../js/settings.js?bundle=<%= bundleTimestamp %>"></script>
 </body>
 </html>
