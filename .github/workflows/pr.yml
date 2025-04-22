@@ -19,4 +19,4 @@ jobs:
           python-version: 3.x
       - run: pip install commitizen
       - name: Check commit messages
-        run: cz check --rev-range origin/${GITHUB_BASE_REF}..
+        run: cz check --rev-range "origin/${GITHUB_BASE_REF}.."
