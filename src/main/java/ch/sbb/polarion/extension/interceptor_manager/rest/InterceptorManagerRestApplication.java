@@ -20,18 +20,18 @@ public class InterceptorManagerRestApplication extends GenericRestApplication {
     }
 
     @Override
-    protected @NotNull Set<Object> getExtensionControllerSingletons() {
+    protected @NotNull Set<Class<?>> getExtensionControllerClasses() {
         return Set.of(
-                new HooksSettingsInternalController(),
-                new HooksSettingsApiController(),
-                new HooksInternalController(),
-                new HooksApiController()
+                HooksSettingsInternalController.class,
+                HooksSettingsApiController.class,
+                HooksInternalController.class,
+                HooksApiController.class
         );
     }
 
     @Override
-    protected @NotNull Set<Object> getGenericControllerSingletons() {
+    protected @NotNull Set<Class<?>> getGenericControllerClasses() {
         // we do not remove NamedSettingsInternalController because it is still needed for fetching revisions list (in common.js from generic extension)
-        return super.getGenericControllerSingletons().stream().filter(c -> !(c instanceof NamedSettingsApiController)).collect(Collectors.toSet());
+        return super.getGenericControllerClasses().stream().filter(c -> !NamedSettingsApiController.class.equals(c)).collect(Collectors.toSet());
     }
 }
