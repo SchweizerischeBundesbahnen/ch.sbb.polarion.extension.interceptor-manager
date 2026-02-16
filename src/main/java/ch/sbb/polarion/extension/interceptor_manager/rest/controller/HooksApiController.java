@@ -3,9 +3,11 @@ package ch.sbb.polarion.extension.interceptor_manager.rest.controller;
 import ch.sbb.polarion.extension.generic.rest.filter.Secured;
 import ch.sbb.polarion.extension.interceptor_manager.model.IActionHook;
 
+import javax.inject.Singleton;
 import javax.ws.rs.Path;
 import java.util.List;
 
+@Singleton
 @Secured
 @Path("/api")
 public class HooksApiController extends HooksInternalController {
