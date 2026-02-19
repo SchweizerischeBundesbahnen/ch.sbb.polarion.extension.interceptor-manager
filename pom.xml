@@ -5,7 +5,7 @@
     <parent>
         <groupId>ch.sbb.polarion.extensions</groupId>
         <artifactId>ch.sbb.polarion.extension.generic</artifactId>
-        <version>14.0.0</version>
+        <version>14.1.0</version>
     </parent>
 
     <artifactId>ch.sbb.polarion.extension.interceptor-manager</artifactId>
@@ -48,6 +48,14 @@
         <maven-jar-plugin.Automatic-Module-Name>ch.sbb.polarion.extension.interceptor_manager</maven-jar-plugin.Automatic-Module-Name>
 
         <web.app.name>${maven-jar-plugin.Extension-Context}</web.app.name>
+
+        <!-- Extension-specific Require-Bundle (in addition to common ones from parent POM):
+            org.apache.hivemind
+        -->
+        <maven-jar-plugin.Require-Bundle.extension>org.apache.hivemind</maven-jar-plugin.Require-Bundle.extension>
+        <maven-jar-plugin.Require-Bundle>${maven-jar-plugin.Require-Bundle.common},${maven-jar-plugin.Require-Bundle.extension}</maven-jar-plugin.Require-Bundle>
+        <maven-jar-plugin.Import-Package>org.osgi.framework,org.osgi.util.tracker</maven-jar-plugin.Import-Package>
+
         <google.guice.version>7.0.0</google.guice.version>
 
         <!--suppress UnresolvedMavenProperty -->
