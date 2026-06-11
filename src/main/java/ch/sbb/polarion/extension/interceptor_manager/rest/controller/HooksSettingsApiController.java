@@ -6,8 +6,8 @@ import ch.sbb.polarion.extension.generic.settings.Revision;
 import ch.sbb.polarion.extension.generic.settings.SettingsModel;
 import org.jetbrains.annotations.NotNull;
 
-import javax.inject.Singleton;
-import javax.ws.rs.Path;
+import jakarta.inject.Singleton;
+import jakarta.ws.rs.Path;
 import java.util.List;
 
 @Singleton
