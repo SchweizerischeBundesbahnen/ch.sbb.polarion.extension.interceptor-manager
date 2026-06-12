@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.0.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v6.0.2...v7.0.0) (2026-06-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Polarion 2606 support ([#168](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/168))
+
+### Features
+
+* Polarion 2606 support ([#168](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/168)) ([4c87f5a](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/4c87f5a447f64591f18591c7d83e2e32f3cca684)), closes [#164](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/164)
+
 ## [6.0.2](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v6.0.1...v6.0.2) (2026-06-09)
 
 
