@@ -9,7 +9,7 @@
 #hooks-reload-button {
     background: none !important;
     border: none;
-    color: #069;
+    color: #007993;
     text-decoration: underline;
     cursor: pointer;
 }
@@ -28,7 +28,7 @@
 }
 
 #hooks-choose-container label {
-    border: 1px solid #004D73;
+    border: 1px solid #DEDEDE;
     padding: 10px;
     cursor: pointer;
 }
@@ -37,7 +37,7 @@
     font-size: 13px;
     margin-bottom: 10px;
     padding: 16px 4px 16px 36px;
-    background: #D8E4F1 url("/polarion/ria/images/msginfo.png") 10px 18px no-repeat;
+    background: #E5F2F4 url("/polarion/ria/images/msginfo.png") 10px 18px no-repeat;
 }
 
 #enable-hook-label {
