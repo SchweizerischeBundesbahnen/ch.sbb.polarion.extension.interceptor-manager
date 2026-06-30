@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.1.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v7.0.0...v7.1.0) (2026-06-30)
+
+
+### Features
+
+* align admin UI with Polarion 2606 theme ([#182](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/182)) ([68eb669](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/68eb669b121a4edbb36953708a4ef2ccb40b25a7)), closes [#181](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/181)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v15.1.0 ([#174](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/174)) ([70878cf](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/70878cf333bcdd68120fa700bd6706b43a047098))
+
 ## [7.0.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v6.0.2...v7.0.0) (2026-06-12)
 
 
