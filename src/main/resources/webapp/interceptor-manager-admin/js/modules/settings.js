@@ -139,7 +139,8 @@ function readHooksList(reload) {
                 Hooks.selectedHook = hooks[0];
             }
             if (reload) {
-                alert("Hooks list reloaded successfully. Total hooks: " + hooks.length);
+                ctx.getElementById('info-modal-content').innerText = "Hooks list reloaded successfully. Total hooks: " + hooks.length;
+                window.MicroModal.show('info-modal');
             }
             ctx.getElementById(Hooks.selectedHook.name).checked = true;
             readSelectedHook();
