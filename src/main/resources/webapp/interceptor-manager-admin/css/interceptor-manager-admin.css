@@ -31,6 +31,14 @@
     border: 1px solid #DEDEDE;
     padding: 10px;
     cursor: pointer;
+    /* Card lays out as "hook name" + radio (inline-flex from generic radios.css).
+       Add a gap so the text doesn't stick to the radio, and drop the radio's default
+       right margin so it sits symmetrically within the card padding. */
+    gap: 8px;
+}
+
+#hooks-choose-container label input[type="radio"] {
+    margin: 0;
 }
 
 #hook-description-container {
