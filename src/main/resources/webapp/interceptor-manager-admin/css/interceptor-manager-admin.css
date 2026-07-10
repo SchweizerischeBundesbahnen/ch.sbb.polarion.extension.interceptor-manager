@@ -44,8 +44,19 @@
 #hook-description-container {
     font-size: 13px;
     margin-bottom: 10px;
-    padding: 16px 4px 16px 36px;
-    background: #E5F2F4 url("/polarion/ria/images/msginfo.png") 10px 18px no-repeat;
+    padding: 16px;
+    background: #E5F2F4;
+    overflow: hidden; /* contain the floated icon */
+}
+/* Info icon floated so the (JS-injected, multi-line) text wraps beside it and it aligns with the
+   first line — a fixed background-position drifted between lines. */
+#hook-description-container::before {
+    content: "";
+    float: left;
+    width: 16px;
+    height: 16px;
+    margin: 1px 10px 0 0;
+    background: var(--sbb-info-icon) center / contain no-repeat;
 }
 
 #enable-hook-label {

@@ -34,7 +34,6 @@
             <jsp:include page='/common/jsp/notifications.jsp' />
 
             <div id="no-hooks-registered" class="alert alert-warning" style="display: none">
-                <img src="/polarion/ria/images/icon-indicatorWarning16.png?bundle=<%= bundleTimestamp %>" class="gwt-Image">
                 <span>No hooks found. Please refer documentation.</span>
             </div>
 
