@@ -6,11 +6,10 @@
     text-align: end;
 }
 
-/* "Reload hooks list" uses the shared link-style button (.sbb-btn--link from generic buttons.css):
-   teal accent text, underline on hover. The shared type is normal-weight (font: inherit); this
-   action is emphasised bold per design. */
-#hooks-reload-button {
-    font-weight: bold;
+/* "Reload hooks list" uses the generic .toolbar-button + the shared .sbb-icon-reload icon (Save-form
+   style). Only a touch more icon-to-label breathing room than the generic 5px is set here. */
+#hooks-reload-button .button-image {
+    padding-right: 8px;
 }
 
 #enable-hook-container {
@@ -21,40 +20,11 @@
     margin-bottom: 20px;
 }
 
-#hooks-choose-container div {
-    display: inline-block;
-    margin: 15px 5px;
-}
-
-#hooks-choose-container label {
-    border: 1px solid var(--sbb-control-border);
-    background: var(--sbb-control-bg);
-    padding: 10px;
-    cursor: pointer;
-    transition: box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
-    /* Card lays out as "hook name" + radio (inline-flex from generic radios.css).
-       Add a gap so the text doesn't stick to the radio, and drop the radio's default
-       right margin so it sits symmetrically within the card padding. */
-    gap: 8px;
-}
-
-/* Hover — soft lift, matching the shared control hover (--sbb-control-shadow-hover). */
-#hooks-choose-container label:hover {
-    box-shadow: var(--sbb-control-shadow-hover);
-}
-
-/* Selected hook card — teal accent per the shared control style: teal border + the shared light-teal
-   selection tint, bold label, and the radio's centre dot recoloured to the accent (overrides
-   --sbb-radio-dot, which the checked radio in radios.css reads via inheritance). */
-#hooks-choose-container label:has(input[type="radio"]:checked) {
-    border-color: var(--sbb-btn-accent);
-    background-color: var(--sbb-hover-tint);
-    font-weight: bold;
-    --sbb-radio-dot: var(--sbb-btn-accent);
-}
-
-#hooks-choose-container label input[type="radio"] {
-    margin: 0;
+/* The hook tab bar uses the shared generic tabs.css (via common.css); the active state is driven by a
+   JS .active class (settings.js) since the hook count is dynamic. Only the top spacing under the
+   reload button is added here. */
+#hooks-choose-container .tabs {
+    margin-top: 15px;
 }
 
 #hook-description-container {
