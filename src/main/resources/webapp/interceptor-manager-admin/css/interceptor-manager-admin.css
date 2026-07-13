@@ -6,12 +6,10 @@
     text-align: end;
 }
 
-#hooks-reload-button {
-    background: none !important;
-    border: none;
-    color: #007993;
-    text-decoration: underline;
-    cursor: pointer;
+/* "Reload hooks list" uses the generic .toolbar-button + the shared .sbb-icon-reload icon (Save-form
+   style). Only a touch more icon-to-label breathing room than the generic 5px is set here. */
+#hooks-reload-button .button-image {
+    padding-right: 8px;
 }
 
 #enable-hook-container {
@@ -22,23 +20,11 @@
     margin-bottom: 20px;
 }
 
-#hooks-choose-container div {
-    display: inline-block;
-    margin: 15px 5px;
-}
-
-#hooks-choose-container label {
-    border: 1px solid #DEDEDE;
-    padding: 10px;
-    cursor: pointer;
-    /* Card lays out as "hook name" + radio (inline-flex from generic radios.css).
-       Add a gap so the text doesn't stick to the radio, and drop the radio's default
-       right margin so it sits symmetrically within the card padding. */
-    gap: 8px;
-}
-
-#hooks-choose-container label input[type="radio"] {
-    margin: 0;
+/* The hook tab bar uses the shared generic tabs.css (via common.css); the active state is driven by a
+   JS .active class (settings.js) since the hook count is dynamic. Only the top spacing under the
+   reload button is added here. */
+#hooks-choose-container .tabs {
+    margin-top: 15px;
 }
 
 #hook-description-container {

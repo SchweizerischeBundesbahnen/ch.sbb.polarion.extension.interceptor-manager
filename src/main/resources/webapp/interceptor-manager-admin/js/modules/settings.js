@@ -114,26 +114,36 @@ function readHooksList(reload) {
                 return;
             }
 
-            container.replaceChildren(); //remove div content
+            container.replaceChildren(); //remove previous content
+
+            const tabs = document.createElement("ul");
+            tabs.className = "tabs";
+
+            const setActiveTab = (activeTab) => {
+                tabs.querySelectorAll(".tab").forEach(tab => tab.classList.toggle("active", tab === activeTab));
+            };
 
             for (const interceptor of hooks) {
-                let div = document.createElement("div");
-                let label = document.createElement("label");
+                const tab = document.createElement("li");
+                tab.className = "tab";
+                const label = document.createElement("label");
                 label.innerHTML = interceptor.name;
 
-                let radio = document.createElement("input");
+                const radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = "hook-name";
                 radio.id = interceptor.name;
                 radio.addEventListener('change', () => {
+                    setActiveTab(tab);
                     Hooks.selectedHook = interceptor;
                     readSelectedHook();
                 });
 
                 label.appendChild(radio);
-                div.appendChild(label);
-                container.appendChild(div);
+                tab.appendChild(label);
+                tabs.appendChild(tab);
             }
+            container.appendChild(tabs);
 
             if (Hooks.selectedHook === undefined || reload) { //currently selected hook may disappear after reload
                 Hooks.selectedHook = hooks[0];
@@ -142,7 +152,9 @@ function readHooksList(reload) {
                 ctx.getElementById('info-modal-content').innerText = "Hooks list reloaded successfully. Total hooks: " + hooks.length;
                 window.MicroModal.show('info-modal');
             }
-            ctx.getElementById(Hooks.selectedHook.name).checked = true;
+            const selectedRadio = ctx.getElementById(Hooks.selectedHook.name);
+            selectedRadio.checked = true;
+            setActiveTab(selectedRadio.closest(".tab"));
             readSelectedHook();
         },
         onError: () => ctx.setLoadingErrorNotificationVisible(true)

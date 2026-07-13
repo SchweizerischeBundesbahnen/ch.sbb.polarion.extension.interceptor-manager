@@ -22,7 +22,7 @@
     <h1 id="hooks-settings-header">Interceptor Manager: Hooks settings</h1>
 
     <div id="hooks-reload-container">
-        <button id="hooks-reload-button" type="submit" title="Reload jar files from the hooks containing folder">Reload hooks list</button>
+        <button id="hooks-reload-button" class="toolbar-button" type="submit" title="Reload jar files from the hooks containing folder"><span class="button-image sbb-icon-reload" role="img" aria-label="Reload"></span>Reload hooks list</button>
     </div>
 
     <div id="hooks-choose-container">
