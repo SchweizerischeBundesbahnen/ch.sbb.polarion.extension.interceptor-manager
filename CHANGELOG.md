@@ -1,5 +1,23 @@
 # Changelog
 
+## [7.1.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v7.0.0...v7.1.0) (2026-07-14)
+
+
+### Features
+
+* align admin UI with Polarion 2606 theme ([#182](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/182)) ([68eb669](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/68eb669b121a4edbb36953708a4ef2ccb40b25a7)), closes [#181](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/181)
+* Polarion UI 2606 restyle ([#185](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/185)) ([fe70998](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/fe70998f785e04b703be79d40cae58d36cbb73a8))
+
+
+### Bug Fixes
+
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v15.1.0 ([#174](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/174)) ([70878cf](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/70878cf333bcdd68120fa700bd6706b43a047098))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v15.2.0 ([#183](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/183)) ([2d46311](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/2d463119f53b390e0e0324f58034d1ac644abc79))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v15.2.1 ([#184](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/184)) ([90fa43a](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/90fa43aee9ee3291aa562025b9b8fb03ca58765a))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v15.3.2 ([#186](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/186)) ([c246962](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/c246962971a6de6d04145a16fc86fc2480411765))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v15.4.1 ([#189](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/189)) ([be9a1e6](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/be9a1e6937cfbd37af6c87cc9dfaa7695c1a6cc9))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v15.4.2 ([#191](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/191)) ([ac3bfe8](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/ac3bfe842922b32c4718596e9bba0039c5c1b348))
+
 ## [7.0.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v6.0.2...v7.0.0) (2026-06-12)
 
 
