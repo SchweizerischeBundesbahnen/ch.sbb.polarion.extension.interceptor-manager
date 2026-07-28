@@ -227,6 +227,23 @@ describe('Hooks settings page', () => {
     await vi.waitFor(() => expect(document.body.textContent).toContain('Total hooks: 2'));
   });
 
+  it('stays quiet for a hook whose settings were never persisted', async () => {
+    // Reading an unsaved hook answers the backend's defaults, and HookSettings.defaultValues() stamps
+    // them with the *installed* version - so the versions match and there is nothing to warn about.
+    // Verified against a live Polarion: /default-content reports the installed version.
+    await mount(
+      routes([
+        {
+          method: 'GET',
+          match: /\/hook-settings\/[^/]+\/content/,
+          respond: () => jsonResponse({ enabled: false, properties: 'a=1', hookVersion: '1.0.0' }),
+        },
+      ]),
+    );
+
+    expect(document.querySelector('.alert-warning')).toBeNull();
+  });
+
   it('warns when the stored values came from another version of the hook', async () => {
     await mount(
       routes([
