@@ -1,0 +1,187 @@
+:root {
+  --im-muted: var(--sbb-color-text-muted, #6b6b6b);
+  --im-accent: var(--sbb-color-accent, #0d5c9e);
+  --im-border: var(--sbb-color-border, #d5d5d5);
+  --im-bg-hover: var(--sbb-color-bg-hover, #f2f6fa);
+  /* Polarion admin-page look (from the generic common.css / about.css). */
+  --im-code-border: #dfe1e6;
+  --im-code-bg: #f4f5f7;
+}
+
+/* App root (App.tsx: <div class="app standard-admin-page">). Nothing is declared for `.app` here on
+   purpose: react-sbb-polarion's PageLayout.css owns the whole page shell — the body-margin reset, the
+   outer padding, the font family, the 13px admin base size and the text color — so every extension
+   shares one look. `standard-admin-page` (also from RSP's bundled style.css) supplies the --sbb-*
+   control tokens and the Polarion-styled checkboxes, so no per-app checkbox rules here either. */
+
+.feature-list a {
+  color: var(--im-accent);
+  text-decoration: none;
+}
+
+.feature-list a:hover {
+  text-decoration: underline;
+}
+
+.landing-intro {
+  color: var(--im-muted);
+  line-height: 1.5;
+}
+
+.landing-scope {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+
+.landing-scope select,
+.landing-scope .searchable-dropdown {
+  width: 260px;
+  min-width: 260px;
+  max-width: 100%;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.feature-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid var(--im-border);
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.feature-list li:hover {
+  background: var(--im-bg-hover);
+}
+
+.feature-list a {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.feature-desc {
+  color: var(--im-muted);
+  font-size: 13px;
+}
+
+/* Inline code in the dev Landing stub's prose. Scoped: a bare `code` selector also reaches the
+   <code> inside RSP's PropertiesEditor highlight layer, and its font-size would pull that layer out
+   of alignment with the textarea above it. */
+.landing code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.9em;
+  border: 1px solid var(--im-code-border);
+  background-color: var(--im-code-bg);
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+/* Alert styling for the dev Landing stub only. The Configuration page's banners use generic's own
+   notification boxes (`.notifications .alert-*`, bundled in react-sbb-polarion's style.css), which is
+   what the legacy notifications.jsp rendered - scoping these here keeps the two from mixing. */
+.landing .alert {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.landing .alert-error {
+  background: #fdeaea;
+  border: 1px solid #e6b0b0;
+  color: #a12020;
+}
+
+.landing .alert a {
+  color: inherit;
+  font-weight: 600;
+}
+
+/* The About page (and its .markdown-body README article headings) is the shared
+   @grigoriev/react-sbb-polarion component; its styles ship in the lib's bundled style.css. */
+
+/* --- Hooks settings page --------------------------------------------------------------------- */
+
+/* The properties editor is the page: it should reach the bottom of Polarion's admin iframe, as the
+   legacy settings.jsp did. Scoped to this feature (App.tsx puts `feature-<id>` on the app root) so
+   About and the Landing stub keep RSP's plain document flow. */
+.app.feature-settings {
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app.feature-settings .page,
+.app.feature-settings .page-body,
+.app.feature-settings .hooks-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* Without this a flex item refuses to shrink below its content height, and the editor - which is
+     what should absorb the leftover space - would instead push the toolbar off the page. */
+  min-height: 0;
+}
+
+/* "Reload hooks list" sits right-aligned above the tab bar, as in the legacy page. */
+.hooks-reload {
+  text-align: end;
+}
+
+/* Generic's .toolbar-button places its icon 5px from the label; this bar wants a touch more. */
+.hooks-reload .button-image {
+  padding-right: 8px;
+}
+
+.hooks-page .tabs {
+  margin-top: 15px;
+}
+
+/* The selected hook's item types, action type, version and description, in generic's info-box look. */
+.hook-description {
+  font-size: 13px;
+  margin: 20px 0 10px;
+  padding: 16px;
+  background: #e5f2f4;
+  overflow: hidden; /* contain the floated icon */
+}
+
+/* Info icon floated so the multi-line text wraps beside it and it aligns with the first line - a
+   fixed background-position drifted between lines. */
+.hook-description::before {
+  content: '';
+  float: left;
+  width: 16px;
+  height: 16px;
+  margin: 1px 10px 0 0;
+  background: var(--sbb-info-icon) center / contain no-repeat;
+}
+
+.enable-hook {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* The field label above the editor, matching generic common.css `.label-block`. */
+.hooks-page .label-block {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.hook-properties-editor {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+/* The gray "…hidden after the next save" hint inside the newer-version warning. */
+.alert-note {
+  color: #999999;
+}

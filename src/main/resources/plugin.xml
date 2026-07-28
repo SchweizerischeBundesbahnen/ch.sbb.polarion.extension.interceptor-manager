@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
+    <!-- Two webapp contexts: the REST API, and the React app - which serves both the Vite bundle and
+         the administration-menu icons. One extension element holds them, as Polarion's own
+         com.polarion.alm.ui does. -->
     <extension
             point="com.polarion.portal.tomcat.webapps">
         <webapp
                 name="polarion/interceptor-manager"
                 contextRoot="webapp/interceptor-manager">
         </webapp>
-    </extension>
-    <extension
-            point="com.polarion.portal.tomcat.webapps">
         <webapp
-                name="polarion/interceptor-manager-admin"
-                contextRoot="webapp/interceptor-manager-admin">
+                name="polarion/interceptor-manager-app"
+                contextRoot="webapp/interceptor-manager-app">
         </webapp>
     </extension>
 </plugin>
