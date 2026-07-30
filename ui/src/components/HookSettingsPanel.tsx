@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ConfigurationButtons, PropertiesEditor, RevisionsTable, useConfirm } from '@grigoriev/react-sbb-polarion';
+import { CodeEditor, ConfigurationButtons, RevisionsTable, useConfirm } from '@grigoriev/react-sbb-polarion';
 import type { Revision } from '@grigoriev/react-sbb-polarion';
 import { toast } from 'sonner';
 import useHooks from '../services/hooks';
@@ -154,7 +154,8 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
         <label htmlFor="properties-input">Hook properties</label>
       </div>
       {loaded ? (
-        <PropertiesEditor
+        <CodeEditor
+          language="properties"
           id="properties-input"
           className="hook-properties-editor"
           value={properties}
