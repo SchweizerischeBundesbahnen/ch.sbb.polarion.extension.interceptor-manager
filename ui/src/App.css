@@ -73,7 +73,7 @@
 }
 
 /* Inline code in the dev Landing stub's prose. Scoped: a bare `code` selector also reaches the
-   <code> inside RSP's PropertiesEditor highlight layer, and its font-size would pull that layer out
+   <code> inside RSP's CodeEditor highlight layer, and its font-size would pull that layer out
    of alignment with the textarea above it. */
 .landing code {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
