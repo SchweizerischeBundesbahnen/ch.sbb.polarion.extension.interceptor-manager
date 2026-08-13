@@ -58,8 +58,10 @@
 
         <google.guice.version>7.0.0</google.guice.version>
 
-        <!--suppress UnresolvedMavenProperty -->
-        <markdown2html-maven-plugin.failOnError>${env.MARKDOWN2HTML_MAVEN_PLUGIN_FAIL_ON_ERROR}</markdown2html-maven-plugin.failOnError>
+        <!-- A broken README.md -> about.html conversion fails the build instead of shipping an
+             empty About page. markdown2html renders locally since 1.7.x - no GitHub API, no token -
+             so the same setting is right in CI, in a deploy job and on a developer machine. -->
+        <markdown2html-maven-plugin.failOnError>true</markdown2html-maven-plugin.failOnError>
         <org.osgi.framework.version>1.10.0</org.osgi.framework.version>
         <org.osgi.util.tracker.version>1.5.4</org.osgi.util.tracker.version>
     </properties>
