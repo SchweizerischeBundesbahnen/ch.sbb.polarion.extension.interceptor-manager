@@ -31,7 +31,9 @@ public class InterceptorManagerRestApplication extends GenericRestApplication {
 
     @Override
     protected @NotNull Set<Class<?>> getGenericControllerClasses() {
-        // we do not remove NamedSettingsInternalController because it is still needed for fetching revisions list (in common.js from generic extension)
+        // only the public NamedSettingsApiController is dropped - hook settings are exposed through this
+        // extension's own /internal endpoints instead. NamedSettingsInternalController stays: HooksSettingsInternalController
+        // delegates every settings call to it (see its `settingsController` field).
         return super.getGenericControllerClasses().stream().filter(c -> !NamedSettingsApiController.class.equals(c)).collect(Collectors.toSet());
     }
 }
