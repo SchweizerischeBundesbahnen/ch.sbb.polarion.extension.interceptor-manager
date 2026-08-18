@@ -1,6 +1,6 @@
 # Interceptor Manager UI
 
-A React + Vite single-page app on [react-sbb-polarion](https://github.com/grigoriev/react-sbb-polarion)
+A React + Vite single-page app on [react-sbb-polarion](https://github.com/SchweizerischeBundesbahnen/react-sbb-polarion)
 (RSP). It replaces the two legacy admin JSPs — `about.jsp` (a two-line wrapper around generic's
 server-rendered About) and `configuration.jsp` with its `configuration.js` module.
 
