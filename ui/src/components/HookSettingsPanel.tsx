@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { CodeEditor, ConfigurationButtons, RevisionsTable, useConfirm } from '@grigoriev/react-sbb-polarion';
-import type { Revision } from '@grigoriev/react-sbb-polarion';
+import { CodeEditor, ConfigurationButtons, RevisionsTable, useConfirm } from '@sbb-polarion/react-sbb-polarion';
+import type { Revision } from '@sbb-polarion/react-sbb-polarion';
 import { toast } from 'sonner';
 import useHooks from '../services/hooks';
 import type { Hook, HookSettings } from '../services/hooks';

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { PageLayout, Tabs } from '@grigoriev/react-sbb-polarion';
+import { PageLayout, Tabs } from '@sbb-polarion/react-sbb-polarion';
 import { toast } from 'sonner';
 import HookSettingsPanel from '../components/HookSettingsPanel';
 import useHooks from '../services/hooks';
