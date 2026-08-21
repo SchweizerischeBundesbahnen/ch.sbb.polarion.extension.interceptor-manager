@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import type { Revision } from '@grigoriev/react-sbb-polarion';
+import type { Revision } from '@sbb-polarion/react-sbb-polarion';
 import useRemote from './useRemote';
 
 /**

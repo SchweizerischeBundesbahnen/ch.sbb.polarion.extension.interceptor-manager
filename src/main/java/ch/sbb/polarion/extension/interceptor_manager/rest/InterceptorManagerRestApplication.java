@@ -31,7 +31,7 @@ public class InterceptorManagerRestApplication extends GenericRestApplication {
 
     @Override
     protected @NotNull Set<Class<?>> getGenericControllerClasses() {
-        // we do not remove NamedSettingsInternalController because it is still needed for fetching revisions list (in common.js from generic extension)
+        // remove unwanted default settings endpoints from Swagger UI
         return super.getGenericControllerClasses().stream().filter(c -> !NamedSettingsApiController.class.equals(c)).collect(Collectors.toSet());
     }
 }
