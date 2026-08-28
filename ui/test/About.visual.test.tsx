@@ -3,7 +3,7 @@ import { cleanup, render } from 'vitest-browser-react';
 import { page } from 'vitest/browser';
 import App from '../src/App';
 import { installFetchMock } from './mockFetch';
-import { settleBeforeCapture } from './visualHelpers';
+import { settleBeforeCapture, settleLayout } from './visualHelpers';
 
 // Docker-only full-page snapshot of the About page (the shared RSP About component fed this app's
 // endpoints, mocked): the extension-info / properties / status tables, the README article - and this
@@ -69,6 +69,7 @@ describe.skipIf(!__PIXEL_REFERENCES__)('About page visual', () => {
 
     await vi.waitFor(() => expect(document.querySelector('article.markdown-body')).not.toBeNull());
     const app = document.querySelector('.app') as HTMLElement;
+    await settleLayout();
     await page.viewport(1280, Math.ceil(app.scrollHeight) + 40);
     await settleBeforeCapture();
     await expect(page.elementLocator(app)).toMatchScreenshot('about-loaded');
