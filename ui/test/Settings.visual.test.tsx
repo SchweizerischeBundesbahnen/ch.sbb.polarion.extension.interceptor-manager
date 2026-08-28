@@ -3,6 +3,7 @@ import { cleanup, render } from 'vitest-browser-react';
 import { page } from 'vitest/browser';
 import Settings from '../src/pages/Settings';
 import { installFetchMock, jsonResponse } from './mockFetch';
+import { settleBeforeCapture, settleLayout } from './visualHelpers';
 
 // Docker-only snapshot of the Hooks settings page: the tab bar (RSP `Tabs`), the selected hook's
 // description, the Enable checkbox, the .properties editor with its syntax highlighting, and the
@@ -52,7 +53,9 @@ describe.skipIf(!__PIXEL_REFERENCES__)('Hooks settings page visual', () => {
 
     await vi.waitFor(() => expect(document.querySelector('#properties-input')).not.toBeNull());
     const app = document.querySelector('.app') as HTMLElement;
+    await settleLayout();
     await page.viewport(1280, Math.ceil(app.scrollHeight) + 40);
+    await settleBeforeCapture();
     await expect(page.elementLocator(app)).toMatchScreenshot('settings-loaded');
   });
 });
