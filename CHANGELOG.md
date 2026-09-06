@@ -1,5 +1,15 @@
 # Changelog
 
+## [7.2.1](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v7.2.0...v7.2.1) (2026-09-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/react-dom to v19.2.7 ([#267](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/267)) ([dcba303](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/dcba3038f3f611557cf5815210b3105a6b058345))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v16.1.0 ([#263](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/263)) ([1d0d72e](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/1d0d72e942acf6bfd942333ee3346d2806b4e0a6))
+* **deps:** update dependency globals to v17.12.0 ([#265](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/265)) ([82e9fcc](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/82e9fcce68d7a440a8a4fa175465b914b041b622))
+* **deps:** update dependency typescript-eslint to v8.69.0 ([#261](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/261)) ([a4ce5f8](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/a4ce5f8560b8c7f94a0f2801fcf90c6edbdb205e))
+
 ## [7.2.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v7.1.1...v7.2.0) (2026-08-21)
 
 
