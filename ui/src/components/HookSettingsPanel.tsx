@@ -140,7 +140,10 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
         Hook version: <b>{hook.version}</b>
         <br />
         <br />
-        {hook.description}
+        {/* Descriptions carry markup (<br>, <ul>, <b>) and are compiled into the hook jar an
+            administrator deploys server-side - the same trust level as the extension itself. The
+            legacy page rendered them with innerHTML too, so escaping them here showed raw tags. */}
+        <div dangerouslySetInnerHTML={{ __html: hook.description }} />
       </div>
 
       <div className="enable-hook">
