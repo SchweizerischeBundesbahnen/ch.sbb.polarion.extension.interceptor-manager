@@ -110,6 +110,18 @@ describe('Hooks settings page', () => {
     expect(description).toContain('Checks the first thing.');
   });
 
+  it('renders the markup a hook description carries', async () => {
+    // Hook descriptions are written as HTML in the hook jar: lists and line breaks must render, not
+    // show up as raw tags.
+    const rich = [{ ...HOOKS[0], description: 'Blocked IF:<br><ul><li>it is <b>not</b> a draft</li></ul>' }];
+    await mount(routes([], rich));
+
+    const description = document.querySelector('.hook-description')!;
+    expect(description.querySelectorAll('li')).toHaveLength(1);
+    expect(description.querySelector('li b')!.textContent).toBe('not');
+    expect(description.textContent).not.toContain('<li>');
+  });
+
   it('shows item and action types it has no name for as they came', async () => {
     // Hooks ship in their own jars, so a newer one can report a type this UI predates.
     const exotic = [{ ...HOOKS[0], actionType: 'ARCHIVE', itemTypes: ['RICH_PAGE'] }];

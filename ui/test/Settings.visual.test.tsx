@@ -9,12 +9,21 @@ import { settleBeforeCapture, settleLayout } from './visualHelpers';
 // description, the Enable checkbox, the .properties editor with its syntax highlighting, and the
 // Save / Cancel / Default / Revisions toolbar. This is the page a styling change - here or in the
 // shared library - would move without any behaviour test noticing.
+//
+// The selected hook's description is HTML, as real hooks write it: this snapshot is what shows that
+// the markup renders as a list and not as raw tags.
 
 const HOOKS = [
   {
     name: 'FirstHook',
     version: '1.0.0',
-    description: 'Checks the first thing.',
+    description:
+      'User can NOT delete workitems IF:<br>' +
+      '<ul>' +
+      '<li>document is not in <b>Draft</b> status</li>' +
+      '<li>there are incoming links for the current workitem</li>' +
+      '<li>the "status" field had history of changed status</li>' +
+      '</ul>',
     actionType: 'SAVE',
     itemTypes: ['WORKITEM', 'MODULE_COMMENT'],
   },
