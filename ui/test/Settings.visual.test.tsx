@@ -90,6 +90,9 @@ describe.skipIf(!__PIXEL_REFERENCES__)('Hooks settings page visual', () => {
     toggle.click();
     await vi.waitFor(() => expect(toggle.getAttribute('aria-expanded')).toBe('true'));
 
+    // Back to the default before measuring, as in the test below: the page fills the window, so a
+    // viewport left tall by the previous test would measure tall and this capture would inherit it.
+    await page.viewport(1280, 720);
     const app = document.querySelector('.app') as HTMLElement;
     await settleLayout();
     await page.viewport(1280, Math.ceil(app.scrollHeight) + 40);

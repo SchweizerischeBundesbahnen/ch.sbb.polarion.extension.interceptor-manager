@@ -1,6 +1,7 @@
 import { Toaster } from '@sbb-polarion/react-sbb-polarion';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from 'vitest-browser-react';
+import { page } from 'vitest/browser';
 import { COLLAPSED_HEIGHT } from '../src/components/HookSettingsPanel';
 import Settings from '../src/pages/Settings';
 import { type Route, installFetchMock, jsonResponse } from './mockFetch';
@@ -60,6 +61,13 @@ const enableBox = () => document.querySelector<HTMLInputElement>('#enable-hook')
 const editor = () => document.querySelector<HTMLTextAreaElement>('#properties-input')!;
 const infoBox = () => document.querySelector<HTMLElement>('.hook-description')!;
 const collapseToggle = () => document.querySelector<HTMLButtonElement>('.hook-description-toggle');
+// Two lines of description at 1280px and four at 600px: it fits the folded box on a wide page and
+// does not on a narrow one, which is the only thing the ResizeObserver exists to notice.
+const REWRAPPING_DESCRIPTION =
+  'This hook refuses the save when the work item is not in a draft status, when a referring ' +
+  'document is not in a draft status, or when an incoming link comes from an item another hook ' +
+  'has already rejected.';
+
 const longDescription = (rules: number) =>
   'User can NOT delete workitems IF:<br><ul>' +
   Array.from({ length: rules }, (_, i) => `<li>rule number ${i + 1}</li>`).join('') +
@@ -156,6 +164,20 @@ describe('Hooks settings page', () => {
     expect(infoBox().getBoundingClientRect().height).toBeLessThan(COLLAPSED_HEIGHT);
     expect(collapseToggle()).toBeNull();
     expect(document.querySelector('.hook-description-fade')).toBeNull();
+  });
+
+  it('offers the handle as soon as the page is too narrow, and takes it back', async () => {
+    // The observer's own case. A mount-time measurement passes the three tests above; only this one
+    // fails if the box stops being re-measured, or if the measurement and the clip start chasing
+    // each other (see `align-items` and `box-sizing` on .hook-description).
+    await mount(routes([], [{ ...HOOKS[0], description: REWRAPPING_DESCRIPTION }]));
+    expect(collapseToggle()).toBeNull();
+
+    await page.viewport(600, 720);
+    await vi.waitFor(() => expect(collapseToggle()).not.toBeNull());
+
+    await page.viewport(1280, 720);
+    await vi.waitFor(() => expect(collapseToggle()).toBeNull());
   });
 
   it('folds the next hook back up when a tab is switched', async () => {
