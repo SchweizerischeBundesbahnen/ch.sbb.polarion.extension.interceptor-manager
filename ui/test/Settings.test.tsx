@@ -1,6 +1,7 @@
 import { Toaster } from '@sbb-polarion/react-sbb-polarion';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from 'vitest-browser-react';
+import { COLLAPSED_HEIGHT } from '../src/components/HookSettingsPanel';
 import Settings from '../src/pages/Settings';
 import { type Route, installFetchMock, jsonResponse } from './mockFetch';
 
@@ -57,6 +58,13 @@ const tabLabels = () => Array.from(document.querySelectorAll('.tabs .tab')).map(
 const activeTab = () => (document.querySelector('.tabs .tab.active')?.textContent ?? '').trim();
 const enableBox = () => document.querySelector<HTMLInputElement>('#enable-hook')!;
 const editor = () => document.querySelector<HTMLTextAreaElement>('#properties-input')!;
+const infoBox = () => document.querySelector<HTMLElement>('.hook-description')!;
+const collapseToggle = () => document.querySelector<HTMLButtonElement>('.hook-description-toggle');
+const longDescription = (rules: number) =>
+  'User can NOT delete workitems IF:<br><ul>' +
+  Array.from({ length: rules }, (_, i) => `<li>rule number ${i + 1}</li>`).join('') +
+  '</ul>';
+
 const button = (label: string): HTMLButtonElement => {
   const all = Array.from(document.querySelectorAll<HTMLButtonElement>('button'));
   const found = all.find((b) => (b.textContent ?? '').trim() === label);
@@ -120,6 +128,54 @@ describe('Hooks settings page', () => {
     expect(description.querySelectorAll('li')).toHaveLength(1);
     expect(description.querySelector('li b')!.textContent).toBe('not');
     expect(description.textContent).not.toContain('<li>');
+  });
+
+  it('folds a description that does not fit, and unfolds it on demand', async () => {
+    // Real hooks document every property they ever gained, which buries the editor below a box the
+    // height of the window. Anything taller than the collapsed box is offered as a handle instead.
+    await mount(routes([], [{ ...HOOKS[0], description: longDescription(20) }]));
+
+    await vi.waitFor(() => expect(collapseToggle()).not.toBeNull());
+    expect(collapseToggle()!.textContent).toContain('Show more');
+    expect(collapseToggle()!.getAttribute('aria-expanded')).toBe('false');
+    expect(infoBox().getBoundingClientRect().height).toBe(COLLAPSED_HEIGHT);
+    expect(document.querySelector('.hook-description-fade')).not.toBeNull();
+
+    collapseToggle()!.click();
+
+    await vi.waitFor(() => expect(collapseToggle()!.textContent).toContain('Show less'));
+    expect(collapseToggle()!.getAttribute('aria-expanded')).toBe('true');
+    expect(infoBox().getBoundingClientRect().height).toBeGreaterThan(COLLAPSED_HEIGHT);
+    // The fade says "there is more below"; with everything on screen it would be a lie.
+    expect(document.querySelector('.hook-description-fade')).toBeNull();
+  });
+
+  it('leaves a description that fits unfolded, with no handle', async () => {
+    await mount(routes([], [{ ...HOOKS[0], description: 'Checks one thing.' }]));
+
+    expect(infoBox().getBoundingClientRect().height).toBeLessThan(COLLAPSED_HEIGHT);
+    expect(collapseToggle()).toBeNull();
+    expect(document.querySelector('.hook-description-fade')).toBeNull();
+  });
+
+  it('folds the next hook back up when a tab is switched', async () => {
+    // Every hook gets its own verdict: unfolding a long one must not leave the next one unfolded.
+    const both = [
+      { ...HOOKS[0], description: longDescription(20) },
+      { ...HOOKS[1], description: longDescription(20) },
+    ];
+    await mount(routes([], both));
+
+    await vi.waitFor(() => expect(collapseToggle()).not.toBeNull());
+    collapseToggle()!.click();
+    await vi.waitFor(() => expect(collapseToggle()!.textContent).toContain('Show less'));
+
+    document.querySelectorAll<HTMLInputElement>('.tabs input[type="radio"]')[1].click();
+
+    await vi.waitFor(() => expect(editor().value).toBe('b=2'));
+    await vi.waitFor(() => expect(collapseToggle()).not.toBeNull());
+    expect(collapseToggle()!.textContent).toContain('Show more');
+    expect(infoBox().getBoundingClientRect().height).toBe(COLLAPSED_HEIGHT);
   });
 
   it('shows item and action types it has no name for as they came', async () => {

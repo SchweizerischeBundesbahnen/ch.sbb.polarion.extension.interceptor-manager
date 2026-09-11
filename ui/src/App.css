@@ -145,24 +145,94 @@
   margin-top: 15px;
 }
 
-/* The selected hook's item types, action type, version and description, in generic's info-box look. */
-.hook-description {
-  font-size: 13px;
+/* Box and its collapse handle move as one block, which keeps the spacing the box alone used to have. */
+.hook-info {
   margin: 20px 0 10px;
-  padding: 16px;
-  background: #e5f2f4;
-  overflow: hidden; /* contain the floated icon */
 }
 
-/* Info icon floated so the multi-line text wraps beside it and it aligns with the first line - a
-   fixed background-position drifted between lines. */
+/* The selected hook's item types, action type, version and description, in generic's info-box look.
+   Icon and text are flex siblings: a float would not push the flex row of facts aside. */
+.hook-description {
+  position: relative; /* anchors the fade to the clipped edge */
+  display: flex;
+  /* NOT the default `stretch`: while the box is clipped it has a definite height, and a stretched item
+     would be that height instead of its own. The measurement below reads the body's height, so the two
+     would chase each other - clip to 110px, measure 110px, decide it fits, unclip, measure 159px, clip. */
+  align-items: flex-start;
+  overflow: hidden;
+  /* The collapsed height is the height of the whole box, padding included - the page around this app
+     does not set a global border-box, so without this the clip would leave the padding on top of it. */
+  box-sizing: border-box;
+  font-size: 13px;
+  padding: 16px;
+  background: #e5f2f4;
+  transition: max-height 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hook-description {
+    transition: none;
+  }
+}
+
+/* Shown only while collapsed: the description does not stop at the cut, it runs out of sight. */
+.hook-description-fade {
+  position: absolute;
+  inset: auto 0 0;
+  height: 36px;
+  background: linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0 / 12%));
+  pointer-events: none;
+}
+
+/* A handle hanging off the bottom of the box, not a button under it: flush against the box, in the
+   box's own color, rounded and shadowed only where it leaves the box. */
+.hook-description-toggle {
+  display: block;
+  margin: 0 auto;
+  padding: 0 18px 1px;
+  border: none;
+  /* Square where it meets the box, and a radius small enough that the curve stays at the bottom - at
+     12px it spanned most of a handle this low and the whole thing read as rounded. */
+  border-radius: 0 0 8px 8px;
+  line-height: 16px;
+  background: #e5f2f4;
+  box-shadow: 0 2px 3px rgb(0 0 0 / 15%);
+  font: inherit;
+  font-size: 12px;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hook-description-toggle:hover {
+  background: #d7ebee;
+}
+
+/* Info icon aligned with the first line of the text beside it. */
 .hook-description::before {
   content: '';
-  float: left;
+  flex: none;
   width: 16px;
   height: 16px;
   margin: 1px 10px 0 0;
   background: var(--sbb-info-icon) center / contain no-repeat;
+}
+
+/* Without this the text column refuses to shrink below its content width and wide descriptions
+   (tables, long code lines) push the box past the page. */
+.hook-description-body {
+  min-width: 0;
+  flex: 1;
+}
+
+/* Item types, action type and version on one line, each wrapping as a whole when space runs out. */
+.hook-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+}
+
+.hook-description-text {
+  margin-top: 12px;
 }
 
 .enable-hook {
