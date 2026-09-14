@@ -34,14 +34,14 @@ public class HookSettings extends GenericNamedSettings<HookModel> {
     @Override
     public @NotNull HookModel read(@NotNull String scope, @NotNull SettingId id, @Nullable String revisionName) {
         HookModel model = super.read(scope, id, revisionName);
-        model.setValidationErrors(SettingEntriesValidator.validate(hook, model));
+        model.setValidationErrors(SettingEntriesValidator.validateRequiredEntries(hook, model));
         return model;
     }
 
     @Override
     public void beforeSave(@NotNull HookModel what) {
         what.setHookVersion(hook.getVersion());
-        List<String> validationErrors = SettingEntriesValidator.validate(hook, what);
+        List<String> validationErrors = SettingEntriesValidator.validateForSave(hook, what);
         if (!validationErrors.isEmpty()) {
             throw new SettingsValidationException(validationErrors);
         }

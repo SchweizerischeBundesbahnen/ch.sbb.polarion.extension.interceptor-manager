@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -41,7 +42,7 @@ class SettingEntriesValidatorTest {
     void hookWithoutDeclaredEntriesIsNeverReported() {
         HookModel model = new HookModel(true, "1.0.0", "anything=goes");
 
-        assertTrue(SettingEntriesValidator.validate(new TestHook(), model).isEmpty());
+        assertTrue(SettingEntriesValidator.validateRequiredEntries(new TestHook(), model).isEmpty());
     }
 
     @Test
@@ -52,14 +53,14 @@ class SettingEntriesValidatorTest {
                 errorMessage=nope
                 """);
 
-        assertTrue(SettingEntriesValidator.validate(new RequiringTestHook("projects", "types.*", "errorMessage"), model).isEmpty());
+        assertTrue(SettingEntriesValidator.validateRequiredEntries(new RequiringTestHook("projects", "types.*", "errorMessage"), model).isEmpty());
     }
 
     @Test
     void everyMissingEntryIsReportedOnce() {
         HookModel model = new HookModel(true, "1.0.0", "projects=*");
 
-        List<String> errors = SettingEntriesValidator.validate(new RequiringTestHook("projects", "types.*", "errorMessage"), model);
+        List<String> errors = SettingEntriesValidator.validateRequiredEntries(new RequiringTestHook("projects", "types.*", "errorMessage"), model);
 
         assertEquals(List.of(
                 SettingEntriesValidator.MISSING_MATCHING_ENTRY_MESSAGE.formatted("types.*"),
@@ -73,18 +74,18 @@ class SettingEntriesValidatorTest {
         HookModel model = new HookModel(true, "1.0.0", "# projects=*");
 
         assertEquals(List.of(SettingEntriesValidator.MISSING_ENTRY_MESSAGE.formatted("projects")),
-                SettingEntriesValidator.validate(new RequiringTestHook("projects"), model));
+                SettingEntriesValidator.validateRequiredEntries(new RequiringTestHook("projects"), model));
     }
 
     @Test
     void blankDeclaredNamesAreIgnored() {
         HookModel model = new HookModel(true, "1.0.0", "projects=*");
 
-        assertTrue(SettingEntriesValidator.validate(new RequiringTestHook("projects", " "), model).isEmpty());
+        assertTrue(SettingEntriesValidator.validateRequiredEntries(new RequiringTestHook("projects", " "), model).isEmpty());
     }
 
     @Test
-    void theHooksOwnValidationMessageIsAppended() {
+    void theHooksOwnValidationMessageIsAppendedOnTheSavePath() {
         HookModel model = new HookModel(true, "1.0.0", "");
         RequiringTestHook hook = new RequiringTestHook("projects") {
             @Override
@@ -94,18 +95,52 @@ class SettingEntriesValidatorTest {
         };
 
         assertEquals(List.of(SettingEntriesValidator.MISSING_ENTRY_MESSAGE.formatted("projects"), "Some validation error"),
-                SettingEntriesValidator.validate(hook, model));
+                SettingEntriesValidator.validateForSave(hook, model));
     }
 
     @Test
     void nothingIsReportedWithoutAHookOrAModel() {
-        assertTrue(SettingEntriesValidator.validate(null, new HookModel(true, "1.0.0", "")).isEmpty());
-        assertTrue(SettingEntriesValidator.validate(mock(IActionHook.class), null).isEmpty());
+        assertTrue(SettingEntriesValidator.validateRequiredEntries(null, new HookModel(true, "1.0.0", "")).isEmpty());
+        assertTrue(SettingEntriesValidator.validateRequiredEntries(mock(IActionHook.class), null).isEmpty());
     }
 
     @Test
     void nullPropertiesAreTreatedAsNoEntries() {
-        assertFalse(SettingEntriesValidator.validate(new RequiringTestHook("projects"), new HookModel(true, "1.0.0", null)).isEmpty());
+        assertFalse(SettingEntriesValidator.validateRequiredEntries(new RequiringTestHook("projects"), new HookModel(true, "1.0.0", null)).isEmpty());
+    }
+
+    @Test
+    void theHooksOwnValidationIsNotRunOnTheReadPath() {
+        // It is arbitrary hook code documented as running when an administrator submits settings. The read
+        // path is reached through loadSettings() while a work item is being saved, so it must stay out.
+        HookModel model = new HookModel(true, "1.0.0", "projects=*");
+        AtomicBoolean called = new AtomicBoolean(false);
+        RequiringTestHook hook = new RequiringTestHook("projects") {
+            @Override
+            public String validateSettings(HookModel ignored) {
+                called.set(true);
+                return "Some validation error";
+            }
+        };
+
+        assertEquals(List.of(), SettingEntriesValidator.validateRequiredEntries(hook, model));
+        assertFalse(called.get());
+    }
+
+    @Test
+    void aHookWhichDeclaresNullIsTreatedAsDeclaringNothing() {
+        // @NotNull on the interface is documentation: the implementations come from separately built jars,
+        // and an exception here would break the path which decides whether the hook runs at all.
+        HookModel model = new HookModel(true, "1.0.0", "");
+        RequiringTestHook hook = new RequiringTestHook() {
+            @Override
+            public @NotNull List<String> getRequiredSettingEntryNames() {
+                return null;
+            }
+        };
+
+        assertEquals(List.of(), SettingEntriesValidator.validateRequiredEntries(hook, model));
+        assertEquals(List.of(), SettingEntriesValidator.validateForSave(hook, model));
     }
 
     private static class TestHook extends ActionHook {
