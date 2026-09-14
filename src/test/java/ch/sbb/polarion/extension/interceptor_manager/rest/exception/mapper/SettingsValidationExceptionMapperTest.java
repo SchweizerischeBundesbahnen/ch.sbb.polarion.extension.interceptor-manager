@@ -51,7 +51,8 @@ class SettingsValidationExceptionMapperTest {
     @Test
     void theReportedProblemsCanNotBeChangedThroughTheEntity() {
         ValidationErrorEntity entity = (ValidationErrorEntity) mapper.toResponse(new SettingsValidationException(List.of("first problem"))).getEntity();
+        List<String> reported = entity.getValidationErrors();
 
-        assertThrows(UnsupportedOperationException.class, () -> entity.getValidationErrors().add("another problem"));
+        assertThrows(UnsupportedOperationException.class, () -> reported.add("another problem"));
     }
 }
