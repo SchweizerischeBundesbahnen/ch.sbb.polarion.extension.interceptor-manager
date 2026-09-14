@@ -33,6 +33,9 @@ public class SettingEntriesValidator {
      * Defensive throughout, because this runs on the read path and {@link HookModel} is read while a work
      * item is being saved: a hook jar built separately can return null where {@code @NotNull} says it will not.
      */
+    @SuppressWarnings("java:S2583") // the null check below is dead code only if @NotNull holds, and nothing
+    // enforces it at runtime: hooks are compiled into their own jars against this interface, so the annotation
+    // is a contract for their authors rather than a guarantee for this method
     public @NotNull List<String> validateRequiredEntries(@Nullable IActionHook hook, @Nullable HookModel model) {
         if (model == null || !(hook instanceof RequireSettingEntries requiring)) {
             return List.of();

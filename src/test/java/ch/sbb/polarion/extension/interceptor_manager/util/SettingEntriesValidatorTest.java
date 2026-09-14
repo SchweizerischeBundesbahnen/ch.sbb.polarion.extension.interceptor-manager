@@ -143,6 +143,19 @@ class SettingEntriesValidatorTest {
         assertEquals(List.of(), SettingEntriesValidator.validateForSave(hook, model));
     }
 
+    @Test
+    void aDuplicatedKeyDoesNotThrowOnTheReadPath() {
+        // A hand-edited document can repeat a key. This map is built while a work item is being saved, so an
+        // exception here would fail that save and the settings page which is the only place to fix it.
+        HookModel model = new HookModel(true, "1.0.0", """
+                types.myProject=task
+                types.myProject=defect
+                """);
+
+        assertEquals(List.of(), SettingEntriesValidator.validateRequiredEntries(new RequiringTestHook("types.*"), model));
+        assertEquals("defect", model.getPropertiesMap().get("types.myProject"), "the last value of a repeated key wins");
+    }
+
     private static class TestHook extends ActionHook {
         TestHook() {
             super(ItemType.WORKITEM, ActionType.SAVE, "1.0.0", "description");

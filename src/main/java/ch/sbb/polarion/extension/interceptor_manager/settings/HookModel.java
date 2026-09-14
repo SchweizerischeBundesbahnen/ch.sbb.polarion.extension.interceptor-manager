@@ -76,11 +76,19 @@ public class HookModel extends SettingsModel {
         properties = deserializeEntry(PROPERTIES, serializedString);
     }
 
+    /**
+     * The entries of the properties document, last one wins for a key which appears twice.
+     * <p>
+     * The merge function is what keeps a duplicated key from throwing: this map is built while a work item is
+     * being saved, so an administrator's typo would otherwise fail the save of every item, and fail the
+     * settings page which is the only place to remove the duplicate. Last-wins is what
+     * {@link java.util.Properties} does with a repeated key.
+     */
     @JsonIgnore
     public Map<String, String> getPropertiesMap() {
         return properties == null ? new HashMap<>() : properties.lines()
                 .filter(line -> line.contains("="))
                 .map(line -> line.split("=", 2))
-                .collect(Collectors.toMap(tokens -> tokens[0].trim(), tokens -> tokens[1].trim()));
+                .collect(Collectors.toMap(tokens -> tokens[0].trim(), tokens -> tokens[1].trim(), (first, second) -> second));
     }
 }
