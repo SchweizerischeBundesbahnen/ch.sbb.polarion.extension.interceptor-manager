@@ -16,6 +16,7 @@ import jakarta.ws.rs.ext.Provider;
 public class SettingsValidationExceptionMapper implements ExceptionMapper<SettingsValidationException> {
     private static final Logger logger = Logger.getLogger(SettingsValidationExceptionMapper.class);
 
+    @Override
     public Response toResponse(SettingsValidationException e) {
         logger.error("Invalid hook settings: " + e.getMessage(), e);
         return Response.status(Response.Status.BAD_REQUEST.getStatusCode())

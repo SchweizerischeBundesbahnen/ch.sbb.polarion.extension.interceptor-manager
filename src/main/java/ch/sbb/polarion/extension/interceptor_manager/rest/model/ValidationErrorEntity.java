@@ -23,4 +23,13 @@ public class ValidationErrorEntity extends ErrorEntity {
         super(message);
         this.validationErrors = List.copyOf(validationErrors);
     }
+
+    /**
+     * Declared rather than left to Lombok, which generates the same body but no {@code @Override}, so the
+     * compiler never checks that it really overrides {@link ErrorEntity}'s.
+     */
+    @Override
+    protected boolean canEqual(Object other) {
+        return other instanceof ValidationErrorEntity;
+    }
 }
