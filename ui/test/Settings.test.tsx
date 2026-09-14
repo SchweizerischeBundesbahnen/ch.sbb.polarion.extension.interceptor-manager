@@ -371,6 +371,32 @@ describe('Hooks settings page', () => {
     expect(editor().value).toBe('a=1');
   });
 
+  it('keeps the reported problems when a save fails for an unrelated reason', async () => {
+    // A network error or a 500 changed nothing, so the stored settings are still as incomplete as the load
+    // said they were. Only a successful save, or one rejected with its own list, may replace the alert.
+    await mount(
+      routes([
+        {
+          method: 'GET',
+          match: /\/hook-settings\/[^/]+\/content/,
+          respond: () =>
+            jsonResponse({
+              enabled: true,
+              properties: 'a=1',
+              validationErrors: ['Settings must contain the entry "projects"'],
+            }),
+        },
+        { method: 'PUT', match: /\/hook-settings\/[^/]+\/content/, json: { message: 'boom' }, status: 500 },
+      ]),
+    );
+    await vi.waitFor(() => expect(document.querySelector('.validation-errors')).not.toBeNull());
+
+    button('Save').click();
+
+    await vi.waitFor(() => expect(document.body.textContent).toContain('boom'));
+    expect(document.querySelectorAll('.validation-errors li')).toHaveLength(1);
+  });
+
   it('clears the reported problems once a save succeeds', async () => {
     await mount(
       routes([

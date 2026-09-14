@@ -121,8 +121,11 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
     } catch (e) {
       // A rejected save lists every problem in the alert above, so the toast only says that the save failed -
       // repeating the whole list in it would say the same thing twice, at the other end of the page.
+      //
+      // A failure of any other kind - a network error, a 500, an SVN error - changed nothing, so whatever the
+      // alert already said about the stored settings is still true and must stay on the page.
       const rejected = e instanceof SettingsError && e.validationErrors.length > 0;
-      setValidationErrors(rejected ? (e as SettingsError).validationErrors : []);
+      if (rejected) setValidationErrors((e as SettingsError).validationErrors);
       toast.error(
         rejected
           ? 'Data not saved: the settings are incomplete.'
