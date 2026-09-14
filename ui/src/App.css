@@ -251,7 +251,9 @@
   margin-bottom: 10px;
 }
 
-/* The gray "…hidden after the next save" hint inside the newer-version warning. */
-.alert-note {
-  color: #999999;
+/* The list of missing setting entries inside the red validation alert. */
+.validation-errors ul {
+  margin: 4px 0;
+  padding-left: 20px;
+  list-style: disc;
 }

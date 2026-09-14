@@ -43,6 +43,15 @@ const CONTENT = {
   hookVersion: '1.0.0',
 };
 
+/** What the backend reports for settings which miss entries the installed hook version needs. */
+const INCOMPLETE_CONTENT = {
+  ...CONTENT,
+  validationErrors: [
+    'Settings must contain the entry "projects"',
+    'Settings must contain an entry matching "types.*", where "*" stands for any selector',
+  ],
+};
+
 const routesFor = (hooks: typeof HOOKS): Route[] => [
   { method: 'GET', match: /\/hooks\?/, respond: () => jsonResponse(hooks) },
   { method: 'GET', match: /\/hook-settings\/[^/]+\/content/, respond: () => jsonResponse(CONTENT) },
@@ -71,6 +80,29 @@ describe.skipIf(!__PIXEL_REFERENCES__)('Hooks settings page visual', () => {
     await page.viewport(1280, Math.ceil(app.scrollHeight) + 40);
     await settleBeforeCapture();
     await expect(page.elementLocator(app)).toMatchScreenshot('settings-loaded');
+  });
+
+  it('a hook whose stored settings miss the entries its version needs', async () => {
+    // The red box that replaced the old "persisted by a different version" warning: it names every
+    // missing entry instead of hinting that something may have changed.
+    installFetchMock([
+      { method: 'GET', match: /\/hooks\?/, respond: () => jsonResponse(HOOKS) },
+      { method: 'GET', match: /\/hook-settings\/[^/]+\/content/, respond: () => jsonResponse(INCOMPLETE_CONTENT) },
+      { method: 'GET', match: /\/hook-settings\/[^/]+\/revisions/, respond: () => jsonResponse([]) },
+    ]);
+    render(
+      <div className="app standard-admin-page">
+        <Settings />
+      </div>,
+    );
+
+    await vi.waitFor(() => expect(document.querySelector('.validation-errors')).not.toBeNull());
+    await page.viewport(1280, 720);
+    const app = document.querySelector('.app') as HTMLElement;
+    await settleLayout();
+    await page.viewport(1280, Math.ceil(app.scrollHeight) + 40);
+    await settleBeforeCapture();
+    await expect(page.elementLocator(app)).toMatchScreenshot('settings-validation-errors');
   });
 
   it('the same hook with its description unfolded', async () => {
@@ -107,8 +139,6 @@ describe.skipIf(!__PIXEL_REFERENCES__)('Hooks settings page visual', () => {
     const everyType = [
       {
         name: 'EveryItemTypeHook',
-        // Matches CONTENT.hookVersion: a mismatch adds the yellow version warning, and this snapshot
-        // is about the facts row, not about that box.
         version: '1.0.0',
         description: 'Checks something about all of them.',
         actionType: 'SAVE',

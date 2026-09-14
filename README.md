@@ -52,6 +52,28 @@ Changes only take effect after restart of Polarion.
 
 Use Administration -> Interceptor Manager -> Settings page to enable/disable or set specific properties for each existing hook.
 
+#### Required setting entries
+
+A hook can declare the setting entries it reads, by implementing `RequireSettingEntries`:
+
+```java
+public class MyHook extends ActionHook implements HookExecutor, RequireSettingEntries {
+
+    @Override
+    public @NotNull List<String> getRequiredSettingEntryNames() {
+        return List.of("projects", "types.*", "errorMessage");
+    }
+}
+```
+
+The settings page reports every declared entry which the stored settings miss, and refuses to save
+settings which miss one. This is how an administrator learns that a new hook version added an entry.
+
+Declare each name as it appears in `getDefaultSettings()`. A `*` segment stands for any one selector, so
+`types.*` accepts `types.*` and `types.myProject` alike. The number of segments must match.
+
+Implementing the interface is optional. The settings of a hook which does not implement it are not checked.
+
 ### Hooks installation
 
 #### Standalone jar hooks

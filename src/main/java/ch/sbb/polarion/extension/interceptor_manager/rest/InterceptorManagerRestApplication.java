@@ -7,6 +7,7 @@ import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksApiCon
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksInternalController;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksSettingsApiController;
 import ch.sbb.polarion.extension.interceptor_manager.rest.controller.HooksSettingsInternalController;
+import ch.sbb.polarion.extension.interceptor_manager.rest.exception.mapper.SettingsValidationExceptionMapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -27,6 +28,11 @@ public class InterceptorManagerRestApplication extends GenericRestApplication {
                 HooksInternalController.class,
                 HooksApiController.class
         );
+    }
+
+    @Override
+    protected @NotNull Set<Object> getExtensionExceptionMapperSingletons() {
+        return Set.of(new SettingsValidationExceptionMapper());
     }
 
     @Override
