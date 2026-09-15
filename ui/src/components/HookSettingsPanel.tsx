@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import { CodeEditor, ConfigurationButtons, RevisionsTable, useConfirm } from '@sbb-polarion/react-sbb-polarion';
 import type { Revision } from '@sbb-polarion/react-sbb-polarion';
 import { toast } from 'sonner';
-import useHooks from '../services/hooks';
+import useHooks, { SettingsError } from '../services/hooks';
 import type { Hook, HookSettings } from '../services/hooks';
 
 /** Backend enum names, as they read in the description panel. Unknown values are shown as they come. */
@@ -35,7 +35,7 @@ interface HookSettingsPanelProps {
  * with the standard Save / Cancel / Default / Revisions toolbar.
  *
  * The page mounts this per selected hook (`key={hook.name}`), so every piece of state here - the
- * loaded values, the version warning, whether revisions are open - belongs to that one hook and is
+ * loaded values, the validation errors, whether revisions are open - belongs to that one hook and is
  * discarded with it. That is also why the hook arrives as a plain non-optional prop: the panel simply
  * does not exist while nothing is selected, so no handler has to ask whether it is.
  */
@@ -47,7 +47,7 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
   const [properties, setProperties] = useState('');
   const [loaded, setLoaded] = useState(false);
   const [loadingError, setLoadingError] = useState(false);
-  const [otherVersion, setOtherVersion] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [showRevisions, setShowRevisions] = useState(false);
   const [revisionsToken, setRevisionsToken] = useState(0);
   const [expanded, setExpanded] = useState(false);
@@ -90,45 +90,54 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
     setProperties(settings.properties ?? '');
   }, []);
 
-  /** Read the stored values. Only the first read judges the version: a revert must not clear the warning. */
-  const readSettings = useCallback(
-    async (checkVersion: boolean) => {
-      setLoadingError(false);
-      try {
-        const settings = await hooksApi.loadContent(hook.name);
-        applySettings(settings);
-        if (checkVersion) {
-          setOtherVersion(settings.hookVersion !== hook.version);
-        }
-        setLoaded(true);
-      } catch {
-        setLoadingError(true);
-        setLoaded(true);
-      }
-    },
-    [hooksApi, applySettings, hook.name, hook.version],
-  );
+  /**
+   * Read the stored values. The backend derives the validation errors on every read, so reopening the hook
+   * after it was upgraded reports the entries the new version needs before anything is edited.
+   */
+  const readSettings = useCallback(async () => {
+    setLoadingError(false);
+    try {
+      const settings = await hooksApi.loadContent(hook.name);
+      applySettings(settings);
+      setValidationErrors(settings.validationErrors ?? []);
+      setLoaded(true);
+    } catch {
+      setLoadingError(true);
+      setLoaded(true);
+    }
+  }, [hooksApi, applySettings, hook.name]);
 
   useEffect(() => {
-    void readSettings(true);
+    void readSettings();
   }, [readSettings]);
 
   const handleSave = async () => {
     toast.dismiss();
     try {
       await hooksApi.saveContent(hook.name, { enabled, properties });
-      setOtherVersion(false);
+      setValidationErrors([]);
       setRevisionsToken((t) => t + 1);
       toast.success('Data successfully saved.');
     } catch (e) {
-      toast.error((e as Error).message || 'Error occurred during saving the data.');
+      // A rejected save lists every problem in the alert above, so the toast only says that the save failed -
+      // repeating the whole list in it would say the same thing twice, at the other end of the page.
+      //
+      // A failure of any other kind - a network error, a 500, an SVN error - changed nothing, so whatever the
+      // alert already said about the stored settings is still true and must stay on the page.
+      const rejected = e instanceof SettingsError && e.validationErrors.length > 0;
+      if (rejected) setValidationErrors((e as SettingsError).validationErrors);
+      toast.error(
+        rejected
+          ? 'Data not saved: the settings are incomplete.'
+          : (e as Error).message || 'Error occurred during saving the data.',
+      );
     }
   };
 
   const handleCancel = async () => {
     if (!(await confirm('Are you sure you want to cancel editing and revert all changes made?'))) return;
     toast.dismiss();
-    await readSettings(false);
+    await readSettings();
   };
 
   const handleRevertToDefault = async () => {
@@ -136,6 +145,8 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
     toast.dismiss();
     try {
       applySettings(await hooksApi.loadDefaultContent(hook.name));
+      // The hook's own defaults satisfy its own required entries, so nothing is left to report.
+      setValidationErrors([]);
       toast.success("Default values set. Don't forget to save the data before leaving.");
     } catch {
       setLoadingError(true);
@@ -144,7 +155,11 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
 
   const handleRevertToRevision = async (revision: Revision) => {
     try {
-      applySettings(await hooksApi.loadContent(hook.name, revision.name));
+      const settings = await hooksApi.loadContent(hook.name, revision.name);
+      applySettings(settings);
+      // An old revision can miss an entry the installed version needs, and it is about to become the values
+      // in the editor - so it is judged exactly like the stored ones.
+      setValidationErrors(settings.validationErrors ?? []);
       toast.success(`Data reverted to revision ${revision.name}. Don't forget to save the data before leaving.`);
     } catch {
       setLoadingError(true);
@@ -153,21 +168,6 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
 
   return (
     <>
-      {/* generic's notifications.jsp block, verbatim: `.notifications .alert-*` (bundled in RSP's
-          style.css) is what gives these the yellow/red boxes with the warning triangle. */}
-      {(otherVersion || loadingError) && (
-        <div className="notifications">
-          {otherVersion && (
-            <div className="alert alert-warning">
-              The settings below were persisted by a different version of this hook, which can lead to unexpected
-              behaviour. Consider checking if persisted data is still relevant.{' '}
-              <span className="alert-note">This message will be hidden after the next save.</span>
-            </div>
-          )}
-          {loadingError && <div className="alert alert-error">Error occurred loading data</div>}
-        </div>
-      )}
-
       <div className="hook-info">
         {/* An explicit max-height in both states, rather than `none` when open: the CSS transition needs
             a number to animate to, and the observer above keeps the open one honest as the page resizes. */}
@@ -217,6 +217,26 @@ export default function HookSettingsPanel({ hook }: HookSettingsPanelProps) {
           <span>Enable</span>
         </label>
       </div>
+
+      {/* generic's notifications.jsp block, verbatim: `.notifications .alert-*` (bundled in RSP's
+          style.css) is what gives these the yellow/red boxes with the warning triangle. */}
+      {(validationErrors.length > 0 || loadingError) && (
+        <div className="notifications">
+          {validationErrors.length > 0 && (
+            <div className="alert alert-error validation-errors">
+              The settings below are incomplete for version {hook.version} of this hook. They can not be saved and the
+              hook can misbehave until they are repaired:
+              <ul>
+                {/* Keyed by index: two errors can be byte-identical, and the list is static and never reordered */}
+                {validationErrors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {loadingError && <div className="alert alert-error">Error occurred loading data</div>}
+        </div>
+      )}
 
       <div className="label-block">
         <label htmlFor="properties-input">Hook properties</label>

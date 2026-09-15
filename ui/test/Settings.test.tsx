@@ -28,9 +28,9 @@ const HOOKS = [
   },
 ];
 
-const SETTINGS: Record<string, { enabled: boolean; properties: string; hookVersion: string }> = {
-  FirstHook: { enabled: true, properties: 'a=1', hookVersion: '1.0.0' },
-  SecondHook: { enabled: false, properties: 'b=2', hookVersion: '2.0.0' },
+const SETTINGS: Record<string, { enabled: boolean; properties: string; validationErrors?: string[] }> = {
+  FirstHook: { enabled: true, properties: 'a=1' },
+  SecondHook: { enabled: false, properties: 'b=2' },
 };
 
 const hookOf = (url: string): string => decodeURIComponent(/\/hook-settings\/([^/]+)\//.exec(url)![1]);
@@ -203,7 +203,7 @@ describe('Hooks settings page', () => {
   it('shows item and action types it has no name for as they came', async () => {
     // Hooks ship in their own jars, so a newer one can report a type this UI predates.
     const exotic = [{ ...HOOKS[0], actionType: 'ARCHIVE', itemTypes: ['RICH_PAGE'] }];
-    SETTINGS.FirstHook = { enabled: true, properties: 'a=1', hookVersion: '1.0.0' };
+    SETTINGS.FirstHook = { enabled: true, properties: 'a=1' };
     await mount(routes([], exotic));
 
     const description = document.querySelector('.hook-description')!.textContent ?? '';
@@ -317,36 +317,106 @@ describe('Hooks settings page', () => {
     await vi.waitFor(() => expect(document.body.textContent).toContain('Total hooks: 2'));
   });
 
-  it('stays quiet for a hook whose settings were never persisted', async () => {
-    // Reading an unsaved hook answers the backend's defaults, and HookSettings.defaultValues() stamps
-    // them with the *installed* version - so the versions match and there is nothing to warn about.
-    // Verified against a live Polarion: /default-content reports the installed version.
-    await mount(
-      routes([
-        {
-          method: 'GET',
-          match: /\/hook-settings\/[^/]+\/content/,
-          respond: () => jsonResponse({ enabled: false, properties: 'a=1', hookVersion: '1.0.0' }),
-        },
-      ]),
-    );
+  it('stays quiet for settings the backend reports as complete', async () => {
+    await mount();
 
-    expect(document.querySelector('.alert-warning')).toBeNull();
+    expect(document.querySelector('.validation-errors')).toBeNull();
   });
 
-  it('warns when the stored values came from another version of the hook', async () => {
+  it('reports the entries missing from the stored settings as soon as the hook is opened', async () => {
+    // The backend derives this list on every read, so an upgraded hook names what it needs before the
+    // administrator edits anything - which is the case the old "different version" warning only hinted at.
     await mount(
       routes([
         {
           method: 'GET',
           match: /\/hook-settings\/[^/]+\/content/,
-          respond: () => jsonResponse({ enabled: true, properties: 'a=1', hookVersion: '0.9.0' }),
+          respond: () =>
+            jsonResponse({
+              enabled: true,
+              properties: 'a=1',
+              validationErrors: ['Settings must contain the entry "projects"'],
+            }),
         },
       ]),
     );
 
-    await vi.waitFor(() => expect(document.querySelector('.notifications .alert-warning')).not.toBeNull());
-    expect(document.querySelector('.alert-warning')!.textContent).toContain('different version of this hook');
+    await vi.waitFor(() => expect(document.querySelector('.notifications .validation-errors')).not.toBeNull());
+    const items = Array.from(document.querySelectorAll('.validation-errors li')).map((li) => li.textContent);
+    expect(items).toEqual(['Settings must contain the entry "projects"']);
+  });
+
+  it('lists every problem of a rejected save and keeps the values in the editor', async () => {
+    await mount(
+      routes([
+        {
+          method: 'PUT',
+          match: /\/hook-settings\/[^/]+\/content/,
+          json: {
+            message: 'Hook settings can not be saved:',
+            validationErrors: [
+              'Settings must contain the entry "projects"',
+              'Settings must contain an entry matching "types.*"',
+            ],
+          },
+          status: 400,
+        },
+      ]),
+    );
+
+    button('Save').click();
+
+    await vi.waitFor(() => expect(document.querySelector('.validation-errors')).not.toBeNull());
+    expect(document.querySelectorAll('.validation-errors li')).toHaveLength(2);
+    expect(editor().value).toBe('a=1');
+  });
+
+  it('keeps the reported problems when a save fails for an unrelated reason', async () => {
+    // A network error or a 500 changed nothing, so the stored settings are still as incomplete as the load
+    // said they were. Only a successful save, or one rejected with its own list, may replace the alert.
+    await mount(
+      routes([
+        {
+          method: 'GET',
+          match: /\/hook-settings\/[^/]+\/content/,
+          respond: () =>
+            jsonResponse({
+              enabled: true,
+              properties: 'a=1',
+              validationErrors: ['Settings must contain the entry "projects"'],
+            }),
+        },
+        { method: 'PUT', match: /\/hook-settings\/[^/]+\/content/, json: { message: 'boom' }, status: 500 },
+      ]),
+    );
+    await vi.waitFor(() => expect(document.querySelector('.validation-errors')).not.toBeNull());
+
+    button('Save').click();
+
+    await vi.waitFor(() => expect(document.body.textContent).toContain('boom'));
+    expect(document.querySelectorAll('.validation-errors li')).toHaveLength(1);
+  });
+
+  it('clears the reported problems once a save succeeds', async () => {
+    await mount(
+      routes([
+        {
+          method: 'GET',
+          match: /\/hook-settings\/[^/]+\/content/,
+          respond: () =>
+            jsonResponse({
+              enabled: true,
+              properties: 'a=1',
+              validationErrors: ['Settings must contain the entry "projects"'],
+            }),
+        },
+      ]),
+    );
+    await vi.waitFor(() => expect(document.querySelector('.validation-errors')).not.toBeNull());
+
+    button('Save').click();
+
+    await vi.waitFor(() => expect(document.querySelector('.validation-errors')).toBeNull());
   });
 
   it('says so, and offers no editor, when no hooks are installed', async () => {

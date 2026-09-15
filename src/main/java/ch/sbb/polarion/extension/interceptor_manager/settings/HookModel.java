@@ -3,14 +3,18 @@ package ch.sbb.polarion.extension.interceptor_manager.settings;
 import ch.sbb.polarion.extension.generic.settings.SettingsModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -31,6 +35,33 @@ public class HookModel extends SettingsModel {
     private String hookVersion;
     private String properties;
 
+    /**
+     * The problems which make these settings unusable, empty when they are complete. Derived from the hook's
+     * {@link ch.sbb.polarion.extension.interceptor_manager.model.RequireSettingEntries} declaration on every
+     * read, never stored. Published on read only: a client which sends the model back must not be able to
+     * declare its own settings valid.
+     */
+    @Builder.Default
+    @Schema(description = "The problems which make these settings unusable, empty when they are complete")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<String> validationErrors = List.of();
+
+    /**
+     * The constructor as it was before validation errors existed, kept so that a hook which builds a model
+     * itself still compiles. Validation errors are derived, so there is nothing to pass in here.
+     */
+    public HookModel(boolean enabled, String hookVersion, String properties) {
+        this(enabled, hookVersion, properties, List.of());
+    }
+
+    /**
+     * Null-safe by hand: {@code @NoArgsConstructor} leaves the field null, because {@code @Builder.Default}
+     * moves the initializer above out of the constructors. Every read path goes through this getter.
+     */
+    public @NotNull List<String> getValidationErrors() {
+        return validationErrors == null ? List.of() : validationErrors;
+    }
+
     @Override
     protected String serializeModelData() {
         return serializeEntry(ENABLED, String.valueOf(enabled)) +
@@ -45,11 +76,19 @@ public class HookModel extends SettingsModel {
         properties = deserializeEntry(PROPERTIES, serializedString);
     }
 
+    /**
+     * The entries of the properties document, last one wins for a key which appears twice.
+     * <p>
+     * The merge function is what keeps a duplicated key from throwing: this map is built while a work item is
+     * being saved, so an administrator's typo would otherwise fail the save of every item, and fail the
+     * settings page which is the only place to remove the duplicate. Last-wins is what
+     * {@link java.util.Properties} does with a repeated key.
+     */
     @JsonIgnore
     public Map<String, String> getPropertiesMap() {
         return properties == null ? new HashMap<>() : properties.lines()
                 .filter(line -> line.contains("="))
                 .map(line -> line.split("=", 2))
-                .collect(Collectors.toMap(tokens -> tokens[0].trim(), tokens -> tokens[1].trim()));
+                .collect(Collectors.toMap(tokens -> tokens[0].trim(), tokens -> tokens[1].trim(), (first, second) -> second));
     }
 }

@@ -15,43 +15,58 @@ export interface Hook {
 }
 
 /**
- * Stored values of one hook. `hookVersion` is the version of the hook that wrote them - compared
- * against the installed hook's version to warn that the settings predate it.
+ * Stored values of one hook. `validationErrors` lists what the installed hook version needs and the stored
+ * settings do not have - the backend derives it on every read, so it is present without ever being stored.
  */
 export interface HookSettings {
   enabled: boolean;
   properties: string;
-  hookVersion?: string;
+  validationErrors?: string[];
 }
 
-/** Extract a human-readable error message from a failed Response (mirrors ExtensionContext.callAsync). */
-async function errorMessage(response: Response): Promise<string> {
+/**
+ * A rejected save. `validationErrors` carries the individual problems when the backend reported them one by
+ * one; it is empty for every other failure, which leaves only the message.
+ */
+export class SettingsError extends Error {
+  readonly validationErrors: string[];
+
+  constructor(message: string, validationErrors: string[] = []) {
+    super(message);
+    this.name = 'SettingsError';
+    this.validationErrors = validationErrors;
+  }
+}
+
+/** Build the error for a failed Response (mirrors ExtensionContext.callAsync, plus the validation list). */
+async function responseError(response: Response): Promise<SettingsError> {
   const text = await response.text().catch(() => '');
   if (text) {
     try {
       const parsed = JSON.parse(text) as {
         message?: string;
         errorMessage?: string;
+        validationErrors?: string[];
       };
-      if (parsed?.message) return parsed.message;
-      if (parsed?.errorMessage) return parsed.errorMessage;
+      const message = parsed?.message ?? parsed?.errorMessage;
+      if (message) return new SettingsError(message, parsed.validationErrors ?? []);
     } catch {
-      return text;
+      return new SettingsError(text);
     }
   }
-  return `HTTP ${response.status}`;
+  return new SettingsError(`HTTP ${response.status}`);
 }
 
 async function jsonOrThrow<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    throw new Error(await errorMessage(response));
+    throw await responseError(response);
   }
   return (await response.json()) as T;
 }
 
 async function okOrThrow(response: Response): Promise<void> {
   if (!response.ok) {
-    throw new Error(await errorMessage(response));
+    throw await responseError(response);
   }
 }
 
