@@ -68,6 +68,15 @@ npm run lint:fix        # ESLint: auto-fix what it can
 The repo's pre-commit hooks run `format:check`, `lint` and the dockerized coverage suite on any change
 under `ui/`. They are check-only and never modify your files.
 
+## Accessibility checks
+
+The shared checks of react-sbb-polarion ("Accessibility checks for the extensions" in its README) run in two layers:
+
+- **Lint:** `eslint.config.js` builds on `polarionEslintConfig`, which applies the `jsx-a11y` recommended rules to `src/`.
+- **Tests:** each page's test file has an `accessibility` block that scans the rendered page with `pageViolations()` (axe-core, WCAG A/AA).
+
+For a new page or page state, add a case to that page's test file. Do not add a separate `a11y.test.tsx`.
+
 ## Production build
 
 `npm run build` emits the bundle to `ui/dist/app` with base path
