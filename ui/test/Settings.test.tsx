@@ -1,4 +1,5 @@
 import { Toaster } from '@sbb-polarion/react-sbb-polarion';
+import { pageViolations } from '@sbb-polarion/react-sbb-polarion/testing';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from 'vitest-browser-react';
 import { page } from 'vitest/browser';
@@ -523,5 +524,79 @@ describe('Hooks settings page', () => {
     button('Save').click();
 
     await vi.waitFor(() => expect(document.body.textContent).toContain(expected));
+  });
+});
+
+describe('Hooks settings page, accessibility', () => {
+  it('has no WCAG A/AA violations', async () => {
+    await mount();
+    expect(await pageViolations()).toEqual([]);
+  });
+
+  it('has no WCAG A/AA violations with a long description unfolded', async () => {
+    await mount(routes([], [{ ...HOOKS[0], description: longDescription(20) }]));
+    await vi.waitFor(() => expect(collapseToggle()).not.toBeNull());
+    collapseToggle()!.click();
+    await vi.waitFor(() => expect(collapseToggle()!.getAttribute('aria-expanded')).toBe('true'));
+    expect(await pageViolations()).toEqual([]);
+  });
+
+  it('has no WCAG A/AA violations with incomplete settings reported', async () => {
+    await mount(
+      routes([
+        {
+          method: 'GET',
+          match: /\/hook-settings\/[^/]+\/content/,
+          json: { enabled: true, properties: 'a=1', validationErrors: ['Settings must contain the entry "projects"'] },
+        },
+      ]),
+    );
+    await vi.waitFor(() => expect(document.querySelector('.validation-errors')).not.toBeNull());
+    expect(await pageViolations()).toEqual([]);
+  });
+
+  it('has no WCAG A/AA violations with the revisions open', async () => {
+    await mount(
+      routes([
+        {
+          method: 'GET',
+          match: /\/hook-settings\/[^/]+\/revisions/,
+          json: [{ name: '4321', date: '2026-01-01', author: 'jdoe' }],
+        },
+      ]),
+    );
+    button('Revisions').click();
+    await vi.waitFor(() => expect(document.querySelector('.revision-number')).not.toBeNull());
+    expect(await pageViolations()).toEqual([]);
+  });
+
+  it('has no WCAG A/AA violations with the confirm dialog open', async () => {
+    await mount();
+    button('Cancel').click();
+    await vi.waitFor(() => expect(document.querySelector('.rsp-modal')).not.toBeNull());
+    expect(await pageViolations()).toEqual([]);
+  });
+
+  it('has no WCAG A/AA violations when no hooks are installed', async () => {
+    installFetchMock(routes([], []));
+    render(<Settings />);
+    await vi.waitFor(() => expect(document.querySelector('.alert-warning')).not.toBeNull());
+    expect(await pageViolations()).toEqual([]);
+  });
+
+  it('has no WCAG A/AA violations when the hooks list could not be loaded', async () => {
+    installFetchMock([{ method: 'GET', match: /\/hooks\?/, json: { message: 'boom' }, status: 500 }]);
+    render(<Settings />);
+    await vi.waitFor(() => expect(document.querySelector('.alert-error')).not.toBeNull());
+    expect(await pageViolations()).toEqual([]);
+  });
+
+  it('has no WCAG A/AA violations when the settings could not be read', async () => {
+    installFetchMock(
+      routes([{ method: 'GET', match: /\/hook-settings\/[^/]+\/content/, json: { message: 'boom' }, status: 500 }]),
+    );
+    render(<Settings />);
+    await vi.waitFor(() => expect(document.querySelector('.alert-error')).not.toBeNull());
+    expect(await pageViolations()).toEqual([]);
   });
 });
