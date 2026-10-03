@@ -1,5 +1,26 @@
 # Changelog
 
+## [7.3.1](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v7.3.0...v7.3.1) (2026-10-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/node to v24.13.5 ([#289](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/289)) ([5d4572e](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/5d4572e5173dbe77bdd075af78e9aca6569cea92))
+* **deps:** update dependency @types/node to v24.13.6 ([#296](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/296)) ([2db76fe](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/2db76fe5ce3747d934f71b476fd26baa89d3c221))
+* **deps:** update dependency @types/node to v24.19.0 ([#307](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/307)) ([6ef2ae2](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/6ef2ae23bddd39530659bf6f6ee1e5e820d5e671))
+* **deps:** update dependency ch.sbb.polarion.extensions:ch.sbb.polarion.extension.generic to v16.2.0 ([#308](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/308)) ([6976803](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/69768038e07fa25d67da998cdf8a291da340a420))
+* **deps:** update dependency eslint to v10.11.0 ([#295](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/295)) ([5b09637](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/5b096379db7f1779e315d3de64454979b316a5dc))
+* **deps:** update dependency prettier to v3.9.7 ([#292](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/292)) ([5c1f96c](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/5c1f96c20a1e4f8f62eed2931edb4b52c3e22e72))
+* **deps:** update dependency prettier to v3.9.8 ([#293](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/293)) ([f4a115c](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/f4a115cdc7dada3e551c1a0123a08e1655a1649b))
+* **deps:** update dependency prettier to v3.9.9 ([#302](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/302)) ([432bc10](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/432bc10d139e9c25b18dc94c74215aac84e27095))
+* **deps:** update dependency typescript-eslint to v8.70.1 ([#297](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/297)) ([8c4a2fa](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/8c4a2fa8c650a32b8194e40c406ac69a9f406568))
+* **deps:** update dependency typescript-eslint to v8.71.0 ([#309](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/309)) ([66d7e05](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/66d7e0508da5546ab8dac7c07a6a0cfb95fc02f7))
+* **deps:** update dependency vite to v8.3.1 ([#304](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/304)) ([d4da405](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/d4da4054b36c68775993d68167625eda7f8d8d27))
+* **deps:** update npm to v12.1.0 ([#301](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/301)) ([a098f00](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/a098f000da5d9a30e403c33630cc2029ac307917))
+* **deps:** update vitest monorepo to v5.0.1 ([#290](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/290)) ([6cb8b98](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/6cb8b987480e13f9aed6dc47911bbd9985819508))
+* **deps:** update vitest monorepo to v5.0.2 ([#306](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/306)) ([fc2f970](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/fc2f9707285cdf03df38ee983466d21919da3d71))
+* **deps:** update vitest monorepo to v5.0.3 ([#310](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/issues/310)) ([f944c67](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/commit/f944c6710bf35860d232c4c2f56ee3e9c0e836f9))
+
 ## [7.3.0](https://github.com/SchweizerischeBundesbahnen/ch.sbb.polarion.extension.interceptor-manager/compare/v7.2.0...v7.3.0) (2026-09-15)
 
 
