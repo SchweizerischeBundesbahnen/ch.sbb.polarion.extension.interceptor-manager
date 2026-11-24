@@ -33,7 +33,8 @@ class HookJarUtilsTest {
     @Test
     void jarWithoutManifestIsReportedAsSuch() throws IOException {
         File file = tempDir.resolve("no-manifest.jar").toFile();
-        try (ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(file))) {
+        try (FileOutputStream out = new FileOutputStream(file);
+             ZipOutputStream zip = new ZipOutputStream(out)) {
             zip.putNextEntry(new ZipEntry("readme.txt"));
             zip.write("no manifest here".getBytes());
             zip.closeEntry();
@@ -48,7 +49,8 @@ class HookJarUtilsTest {
         File file = tempDir.resolve("no-main-class.jar").toFile();
         Manifest manifest = new Manifest();
         manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
-        try (JarOutputStream jar = new JarOutputStream(new FileOutputStream(file), manifest)) {
+        try (FileOutputStream out = new FileOutputStream(file);
+             JarOutputStream jar = new JarOutputStream(out, manifest)) {
             jar.putNextEntry(new ZipEntry("readme.txt"));
             jar.write("no Main-Class here".getBytes());
             jar.closeEntry();

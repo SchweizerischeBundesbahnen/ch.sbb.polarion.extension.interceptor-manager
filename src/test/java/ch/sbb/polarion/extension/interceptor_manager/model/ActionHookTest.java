@@ -103,6 +103,21 @@ class ActionHookTest {
     }
 
     @Test
+    void intIsNullWhenTheSettingIsEmptyOrAbsent() {
+        assertNull(new TestHook("someProperty=").getSettingsValueAsInt("someProperty"));
+        assertNull(new TestHook("anotherProperty=4").getSettingsValueAsInt("someProperty"));
+    }
+
+    @Test
+    void gettersReturnWhatTheHookWasConstructedWith() {
+        TestHook hook = new TestHook("");
+
+        assertEquals(List.of(ActionHook.ItemType.WORKITEM), hook.getItemTypes());
+        assertEquals(ActionHook.ActionType.SAVE, hook.getActionType());
+        assertEquals("1.0", hook.getVersion()); // from the mocked manifest
+    }
+
+    @Test
     public void testList() {
         assertEquals(List.of("1", "2", "3"), new TestHook("someProperty=1,2,3").getSettingsValueAsList("someProperty"));
         // we must preserve explicit empty values, clients may filter them if they are not needed in theirs scenario
