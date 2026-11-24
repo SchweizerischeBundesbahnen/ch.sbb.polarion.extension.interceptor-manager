@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+import java.util.jar.Manifest;
 
 @UtilityClass
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -60,10 +61,22 @@ public class HookJarUtils {
         return classList;
     }
 
-    private Class loadJarReturnHookClass(File jarFile) throws IOException, ClassNotFoundException {
-        try (JarInputStream jarInputStream = new JarInputStream(new FileInputStream(jarFile));
+    /**
+     * Package-private for the tests only.
+     */
+    Class loadJarReturnHookClass(File jarFile) throws IOException, ClassNotFoundException {
+        // the file stream is a resource of its own, so that it is closed even when the JarInputStream constructor,
+        // which already reads from it, fails
+        try (FileInputStream fileInputStream = new FileInputStream(jarFile);
+             JarInputStream jarInputStream = new JarInputStream(fileInputStream);
              URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{new URL("jar:file:" + jarFile.getAbsolutePath() + "!/")}, HookJarUtils.class.getClassLoader())) {
-            String mainClassName = jarInputStream.getManifest().getMainAttributes().getValue(MAIN_CLASS_MANIFEST_ATTRIBUTE);
+            // null both for a jar without a manifest and for a file which is not a jar at all: JarInputStream
+            // does not throw for either
+            Manifest manifest = jarInputStream.getManifest();
+            if (manifest == null) {
+                throw new IOException("Jar file " + jarFile.getPath() + " has no MANIFEST, or is not a jar file");
+            }
+            String mainClassName = manifest.getMainAttributes().getValue(MAIN_CLASS_MANIFEST_ATTRIBUTE);
 
             //load all classes from jar and return hook class which name must be declared in the manifest
             Class hookClass = null;

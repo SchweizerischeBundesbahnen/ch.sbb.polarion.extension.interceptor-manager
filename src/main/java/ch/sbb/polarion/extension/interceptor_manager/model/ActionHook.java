@@ -104,6 +104,24 @@ public abstract class ActionHook implements IActionHook {
         return loadSettings(false).isEnabled();
     }
 
+    // The three getters of IActionHook are written out only to carry @Override: Lombok has no way to put it
+    // on the ones it generates which javadoc, running without Lombok, can read (onMethod_ fails there).
+
+    @Override
+    public List<ItemType> getItemTypes() {
+        return itemTypes;
+    }
+
+    @Override
+    public ActionType getActionType() {
+        return actionType;
+    }
+
+    @Override
+    public String getVersion() {
+        return version;
+    }
+
     @JsonIgnore
     @Override
     public abstract String getDefaultSettings();
@@ -136,9 +154,23 @@ public abstract class ActionHook implements IActionHook {
         return stringValue.isEmpty() ? null : Boolean.valueOf(stringValue);
     }
 
+    /**
+     * @return the value as a number, null when the setting is absent or empty
+     * @throws NumberFormatException when the value is there and is not a whole number - deliberately not
+     *                               swallowed, a hook must not go on with a default nobody configured
+     */
     protected Integer getSettingsValueAsInt(@NotNull String settingsId, String... selectors) {
         String stringValue = getSettingsValue(settingsId, selectors);
-        return stringValue.isEmpty() ? null : Integer.valueOf(stringValue);
+        if (stringValue.isEmpty()) {
+            return null;
+        }
+        try {
+            return Integer.valueOf(stringValue);
+        } catch (NumberFormatException e) {
+            NumberFormatException named = new NumberFormatException("Setting '%s' is not a whole number: '%s'".formatted(settingsId, stringValue));
+            named.initCause(e);
+            throw named;
+        }
     }
 
     protected List<String> getSettingsValueAsList(@NotNull String settingsId, String... selectors) {

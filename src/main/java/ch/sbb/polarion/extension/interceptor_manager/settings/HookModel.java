@@ -62,6 +62,16 @@ public class HookModel extends SettingsModel {
         return validationErrors == null ? List.of() : validationErrors;
     }
 
+    /**
+     * Written by hand only to carry {@code @Override}: Lombok generates the same method for
+     * {@code @EqualsAndHashCode} and has no way to annotate it, and it does override the one of
+     * {@link SettingsModel}.
+     */
+    @Override
+    protected boolean canEqual(Object other) {
+        return other instanceof HookModel;
+    }
+
     @Override
     protected String serializeModelData() {
         return serializeEntry(ENABLED, String.valueOf(enabled)) +

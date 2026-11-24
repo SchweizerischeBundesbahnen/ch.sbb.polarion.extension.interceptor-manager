@@ -97,6 +97,25 @@ class ActionHookTest {
         assertThrows(NumberFormatException.class, () -> new TestHook("someProperty=1 200").getSettingsValueAsInt("someProperty"));
         assertThrows(NumberFormatException.class, () -> new TestHook("someProperty=someString").getSettingsValueAsInt("someProperty"));
         assertThrows(NumberFormatException.class, () -> new TestHook("someProperty=0.1").getSettingsValueAsInt("someProperty"));
+
+        TestHook hook = new TestHook("someProperty=someString");
+        NumberFormatException named = assertThrows(NumberFormatException.class, () -> hook.getSettingsValueAsInt("someProperty"));
+        assertEquals("Setting 'someProperty' is not a whole number: 'someString'", named.getMessage());
+    }
+
+    @Test
+    void intIsNullWhenTheSettingIsEmptyOrAbsent() {
+        assertNull(new TestHook("someProperty=").getSettingsValueAsInt("someProperty"));
+        assertNull(new TestHook("anotherProperty=4").getSettingsValueAsInt("someProperty"));
+    }
+
+    @Test
+    void gettersReturnWhatTheHookWasConstructedWith() {
+        TestHook hook = new TestHook("");
+
+        assertEquals(List.of(ActionHook.ItemType.WORKITEM), hook.getItemTypes());
+        assertEquals(ActionHook.ActionType.SAVE, hook.getActionType());
+        assertEquals("1.0", hook.getVersion()); // from the mocked manifest
     }
 
     @Test
@@ -170,10 +189,12 @@ class ActionHookTest {
 
     private LinkedHashMap<String, String> linkedMap(String... values) {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        for (int i = 0; i < values.length; i++) {
-            if (i % 2 == 0) {
-                map.put(values[i], values[i + 1]);
-            }
+        // a plain exception, not an assertion: Sonar counts the assertions of a helper against every test calling it
+        if (values.length % 2 != 0) {
+            throw new IllegalArgumentException("linkedMap takes key/value pairs");
+        }
+        for (int i = 0; i + 1 < values.length; i += 2) {
+            map.put(values[i], values[i + 1]);
         }
         return map;
     }
