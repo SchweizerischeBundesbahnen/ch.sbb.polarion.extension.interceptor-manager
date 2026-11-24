@@ -97,6 +97,9 @@ class ActionHookTest {
         assertThrows(NumberFormatException.class, () -> new TestHook("someProperty=1 200").getSettingsValueAsInt("someProperty"));
         assertThrows(NumberFormatException.class, () -> new TestHook("someProperty=someString").getSettingsValueAsInt("someProperty"));
         assertThrows(NumberFormatException.class, () -> new TestHook("someProperty=0.1").getSettingsValueAsInt("someProperty"));
+
+        NumberFormatException named = assertThrows(NumberFormatException.class, () -> new TestHook("someProperty=someString").getSettingsValueAsInt("someProperty"));
+        assertEquals("Setting 'someProperty' is not a whole number: 'someString'", named.getMessage());
     }
 
     @Test
@@ -170,10 +173,9 @@ class ActionHookTest {
 
     private LinkedHashMap<String, String> linkedMap(String... values) {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        for (int i = 0; i < values.length; i++) {
-            if (i % 2 == 0) {
-                map.put(values[i], values[i + 1]);
-            }
+        assertEquals(0, values.length % 2, "linkedMap takes key/value pairs");
+        for (int i = 0; i + 1 < values.length; i += 2) {
+            map.put(values[i], values[i + 1]);
         }
         return map;
     }
